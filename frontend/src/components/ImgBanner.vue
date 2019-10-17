@@ -1,18 +1,23 @@
 <template>
-    <div>
-        <v-img :src="getImgUrl('baekdu.jpg')" aspect-ratio="1.7" :height="height">
-            <v-layout align-center justify-center row fill-height>
-                <v-flex text-xs-center>
-                    <span
-                        class="text-shadow display-2 text-weight"
-                        style="font-size:15vmin!important; color:white"
-                    >
-                        <slot name="text" />
-                    </span>
-                </v-flex>
-            </v-layout>
-        </v-img>
-    </div>
+  <div>
+    <v-carousel 
+    aspect-ratio="1.7" 
+    :height="height">
+
+        <v-carousel-item
+         v-for="(item,i) in items"
+         :key="i"
+         :src="item.src"
+        >
+               <span
+                class="text-shadow display-2 text-weight"
+                style="font-size:15vmin!important; color:white; align-text:center"
+                >
+                <slot name="text" />
+                </span>
+        </v-carousel-item>
+    </v-carousel>
+  </div>
 </template>
 
 <script>
@@ -26,7 +31,23 @@ export default {
         getImgUrl(img){
             return require('../assets/'+img)
         }
+    },
+    data(){
+        return {
+            items:[
+                {
+                    src:this.getImgUrl('valley.gif')
+                },
+                {
+                    src:this.getImgUrl('mabig.gif')
+                },
+                {
+                    src:this.getImgUrl('beach.gif')
+                }
+            ]
+        }
     }
 
 }
 </script>
+
