@@ -11,7 +11,7 @@
         >
                <span
                 class="text-shadow display-2 text-weight"
-                style="font-size:15vmin!important; color:white; align-text:center"
+                style="font-size:15vmin!important; color:white"
                 >
                 <slot name="text" />
                 </span>

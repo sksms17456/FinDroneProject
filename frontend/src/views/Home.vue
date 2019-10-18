@@ -2,25 +2,42 @@
   <div>
     <!-- 홈 화면(sector1) --> 
    <ImgBanner>
-      <div style="line-height:1.1em; font-weight:bold;" slot="text" class="layout align-center justify-center row fill-height">
-               FinDrone
+      <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
+              FinDrone 
          <br/>
          <br/>FIND YOUR TARGET
       </div>
     </ImgBanner>
-    
-    <!-- 서비스 단계 표시(sector2) -->
-    <v-flex mr-4 xs8 style="height:40px; border-bottom:3px solid black;"></v-flex>
-    <h1> 드론을 이용한 서비스 단계 </h1>
-     <v-container fluid grid-list-md>
+
+    <!-- 개요(sector2) -->
+    <v-layout fluid grid-list-md>
+      <v-img :src="getImgUrl('controldrone.png')">
+          <v-layout row justify-center>
+            <v-flex xs4>
+              <div class="div-block-line-first"></div>
+            </v-flex>
+            <v-flex xs4 style="font-weight:bold;text-align:center">
+              <span style="font-size:2vmin; font-color=#606060">드론 수색, 어렵게만 느껴지셨나요?<br/>
+                                            이제 FinDrone으로 쉽고 간편해집니다.</span>
+            </v-flex>
+            <v-flex xs4>
+              <div class="div-block-line-second"></div>
+            </v-flex>
+          </v-layout>
+      </v-img>
+      <!-- </v-card> -->
+    </v-layout>
+
+    <!-- 서비스 단계 표시(sector3) -->
+     <v-container fluid grid-list-md >
+      <h1 style="text-align:center"> 드론을 이용한 서비스 단계 </h1>
         <v-layout row justify-center>
             <v-flex v-for="(step,index) in steps" :key="index" xs4>
                 <v-card class="hidden-sm-and-down; ma-4">
-                    <v-img
+                    <v-img pd-4
                     :src="step.src"
-                    height="200"
+                    aspect-ratio="1.7" contain
                     ></v-img>
-
                     <v-card-title primary-title>
                     <div>
                         <h3 class="headline mb-0">{{ step.card_title }}</h3>
@@ -32,10 +49,10 @@
         </v-layout>
     </v-container>
 
-    <!-- 주요 서비스 소개(sector3) -->
-    <v-flex mr-4 xs8 style="height:40px; border-bottom:3px solid black;"></v-flex>
-    <h1> 플랫폼 주요 기능 </h1>
-    <v-container fluid grid-list-md>
+    <!-- 주요 서비스 소개(sector4) -->
+    <v-container fluid grid-list-md style="background:#F5F5F5">
+    <h1 style="text-align:center"> 플랫폼 주요 기능 </h1>
+    
       <v-tabs
         color="black"
         dark
@@ -67,7 +84,7 @@
               <v-card>
                 <v-img
                   :src="service.src"
-                  height="200px"
+                  aspect-ratio="1.7" contain
                   >
                   </v-img>
               </v-card>
@@ -128,3 +145,18 @@ export default {
 }
 </script>
 
+<style scoped>
+.div-block-line-first{
+    height:100%;
+    border-right: 2px solid #1f4782;
+    opacity: .55;
+    margin:5px;
+}
+.div-block-line-second{
+    height:100%;
+    border-left: 2px solid #1f4782;
+    opacity: .55;
+    margin:5px;
+}
+
+</style>

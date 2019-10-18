@@ -75,6 +75,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
   export default {
     name:"Find",
     data () {
@@ -133,8 +135,18 @@
     },
     methods: {
       getImgUrl(img){
+        // axios.get('/drone/position',{
+        //   params:{
+
+        //   }
+        // }).then(response => {
+
+        // }).catch(error=>{
+        //   console.error(e)
+        // })
         return require('../assets/'+img)
       },
+
       getDataFromApi () {
         this.loading = true
         return new Promise((resolve, reject) => {
