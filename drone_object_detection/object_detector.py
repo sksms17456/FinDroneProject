@@ -90,7 +90,7 @@ class Detector:
 
         return output_dict
 
-    def start_object_detector(self, image):
+    def run_object_detector(self, image):
         image_expanded = np.expand_dims(image, axis=0)
         output_dict = self.run_inference_for_single_image(image_expanded)
         vis_util.visualize_boxes_and_labels_on_image_array(
