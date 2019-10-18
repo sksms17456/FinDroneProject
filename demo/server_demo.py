@@ -12,12 +12,12 @@ def get_only_coordinate():
     # result = request.get_data()
     # dd =request.data
     result = request.form
-    print(result)
+    print(result.getlist('name'))
     print(result.getlist('x'))
     print(result.getlist('y'))
     print(result.getlist('z'))
-    print(result.getlist('a'))
-    time.sleep(5)
+
+    # time.sleep(5)
     # for key in result.keys():
     #     print(key)
     # print(result.keys())
