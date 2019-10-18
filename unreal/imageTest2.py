@@ -9,45 +9,15 @@ import numpy as np
 
 import airsim
 
-
 # connect to the AirSim simulator
-client = airsim.MultirotorClient(ip='70.12.247.59')
-client.confirmConnection()
-client.enableApiControl(True)
-client.armDisarm(True)
+client = airsim.MultirotorClient()
 
-gdata =client.getGpsData()
-geod = client.getHomeGeoPoint()
-state = client.getMultirotorState()
-pog = client.getPosition()
-loc= client.getGpsLocation()
-bps =client.simGetPose()
-baro = client.getBarometerData()
-mag = client.getMagnetometerData()
-orioir = client.getOrientation()
-# aistate = airsim.MultirotorState().gps_location()
-
-# print(airsim)
-# print()
-# print(aistate)
-print()
-print(orioir)
-print()
-print(geod)
-print()
-s = pprint.pformat(state)
-
-print("state: %s" % s)
+print(client.diterun())
 
 airsim.wait_key('Press any key to takeoff')
 client.takeoffAsync().join()
 
-state = client.getMultirotorState()
-loc= client.getGpsLocation()
-print()
-print(loc)
-print()
-print("state: %s" % pprint.pformat(state))
+# print("state: %s" % pprint.pformat(state))
 
 # responses = client.simGetImages([airsim.ImageRequest("0", airsim.ImageType.Scene, False, False)])
 # response = responses[0]
