@@ -48,7 +48,6 @@ time.sleep(0.5)
 # 카메라 설정
 CAMERA_NAME = ''
 IMAGE_TYPE = airsim.ImageType.Scene
-DECODE_EXTENSION = '.jpg'
 
 # 드론 조작 & 영상 처리
 cv2.startWindowThread()
@@ -82,5 +81,6 @@ frame_generator(10)
 client.reset()
 client.enableApiControl(False)
 cv2.destroyAllWindows()
+detector.closeDetector()
 ```
 
