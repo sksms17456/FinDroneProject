@@ -68,6 +68,7 @@
                         <v-img :src="getImgUrl(drone.src)">
                         </v-img>
                     </v-card-text>
+                    <button @click="getImgUrlFromBack()">New random number</button>
                 </v-card>
             </v-flex>
         </v-layout>
@@ -81,6 +82,7 @@ import axios from 'axios'
     name:"Find",
     data () {
       return {
+        interval: null,
         drones:[
           {
             src:'footerlogo.png',
@@ -133,6 +135,12 @@ import axios from 'axios'
           this.totalDesserts = data.total
         })
     },
+    created(){
+      this.getImgUrlFromBack();
+    },
+    beforeDestroy () {
+	    clearInterval(this.polling)
+    },
     methods: {
       getImgUrl(img){
         // axios.get('/drone/position',{
@@ -146,7 +154,21 @@ import axios from 'axios'
         // })
         return require('../assets/'+img)
       },
-
+      getImgUrlFromBack(){
+        this.polling = setInterval(() => {
+          console.log(1)
+          const path = `http://localhost:5000/api/getImg`
+            axios.get(path)
+            .then(response => {
+              this.drones[2].src = response.data.ImgUrl
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        }, 10)  
+        
+            
+      },
       getDataFromApi () {
         this.loading = true
         return new Promise((resolve, reject) => {
