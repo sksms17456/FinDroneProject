@@ -1,4 +1,12 @@
 <template>
+  <div>
+    <ImgBanner call="central" height="70vh">
+      <div style="line-height:0.75em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
+              FIND YOUR TARGET
+         <br/>
+         <br/> & WACHING YOUR DRONE
+      </div>
+    </ImgBanner>
     <v-container grid-list-xs style="margin-top:50px">
         <v-text-field
             class="mx-3"
@@ -72,13 +80,18 @@
             </v-flex>
         </v-layout>
     </v-container>
+  </div>
 </template>
 
 <script>
+import ImgBanner from '../components/ImgBanner'
 import axios from 'axios'
 
   export default {
-    name:"Find",
+    name:"Central",
+    components:{
+      ImgBanner
+    },
     data () {
       return {
         drones:[

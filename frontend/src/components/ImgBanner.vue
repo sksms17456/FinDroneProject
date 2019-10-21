@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="call==='home'">
     <v-carousel 
     aspect-ratio="1.7" 
     :height="height">
@@ -17,6 +18,17 @@
                 </span>
         </v-carousel-item>
     </v-carousel>
+    </div>
+    <div v-else-if="call==='central'">
+        <v-img :src="getImgUrl('baekdu.jpg')" :height="height">
+            <span
+                class="text-shadow display-2 text-weight"
+                style="font-size:15vmin!important; color:white"
+                >
+                <slot name="text" />
+                </span>
+        </v-img>
+    </div>
   </div>
 </template>
 
@@ -24,6 +36,7 @@
 export default {
     name:'ImgBanner',
     props: {
+        call:{type:String, default:"home"},
         text: { type: String },
         height: { type: String, default: "100vh" }
     },
