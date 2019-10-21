@@ -705,7 +705,8 @@ def visualize_boxes_and_labels_on_image_array(
     groundtruth_box_visualization_color='black',
     skip_scores=False,
     skip_labels=False,
-    skip_track_ids=False):
+    skip_track_ids=False,
+    target_class=None):
   """Overlay labeled boxes on an image with formatted scores and label names.
 
   This function groups boxes that correspond to the same location
@@ -758,10 +759,15 @@ def visualize_boxes_and_labels_on_image_array(
   box_to_instance_boundaries_map = {}
   box_to_keypoints_map = collections.defaultdict(list)
   box_to_track_ids_map = {}
+
+  # 타겟 찾았는지 체크
+  target_finded = False
+
   if not max_boxes_to_draw:
     max_boxes_to_draw = boxes.shape[0]
   for i in range(min(max_boxes_to_draw, boxes.shape[0])):
-    if scores is None or scores[i] > min_score_thresh:
+    if (scores is None or scores[i] > min_score_thresh) and (target_class is None or category_index[classes[i]]['name'] == target_class):
+      target_finded = True
       box = tuple(boxes[i].tolist())
       if instance_masks is not None:
         box_to_instance_masks_map[box] = instance_masks[i]
@@ -837,7 +843,7 @@ def visualize_boxes_and_labels_on_image_array(
           radius=line_thickness / 2,
           use_normalized_coordinates=use_normalized_coordinates)
 
-  return image
+  return target_finded
 
 
 def add_cdf_image_summary(values, name):
