@@ -39,6 +39,11 @@
      output_dict['detection_masks'] : 박스 좌표를 mask로 쓸 수 있도록 convert한 값
      output_dict['image'] : 박스 그려진 이미지
      output_dict['target_finded'] : 타겟 검출 결과 (Boolean)
+     output_dict['drone_controller'] : {
+     		'x': 'turn_left' | 'turn_right'
+     		'y': 'upwards' | 'downwards'
+     		'moving': 'ahead' | 'backwards'
+     	}
      ```
 
      
@@ -99,6 +104,10 @@ def frame_generator(sec):
       x_base = x_base + x
       y_base = y_base + y
       z_base = z_base + z
+      
+      # Tracking Mode일 경우
+      # 드론 방향 수정 내용 출력
+      print(result['drone_controller'])
 
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break

@@ -41,6 +41,8 @@ import tensorflow as tf
 from object_detection.core import standard_fields as fields
 from object_detection.utils import shape_utils
 
+from drone_object_detection import drone_controll
+
 _TITLE_LEFT_MARGIN = 10
 _TITLE_TOP_MARGIN = 10
 STANDARD_COLORS = [
@@ -760,14 +762,16 @@ def visualize_boxes_and_labels_on_image_array(
   box_to_keypoints_map = collections.defaultdict(list)
   box_to_track_ids_map = {}
 
-  # 타겟 찾았는지 체크
-  target_finded = False
+  target_finded = False     # 타겟 찾았는지 체크
+  drone_controller = {}       # 드론 방향 설정
 
   if not max_boxes_to_draw:
     max_boxes_to_draw = boxes.shape[0]
   for i in range(min(max_boxes_to_draw, boxes.shape[0])):
     if (scores is None or scores[i] > min_score_thresh) and (target_class is None or category_index[classes[i]]['name'] == target_class):
+      # 타겟 있을 경우
       target_finded = True
+
       box = tuple(boxes[i].tolist())
       if instance_masks is not None:
         box_to_instance_masks_map[box] = instance_masks[i]
@@ -812,6 +816,10 @@ def visualize_boxes_and_labels_on_image_array(
   # Draw all boxes onto image.
   for box, color in box_to_color_map.items():
     ymin, xmin, ymax, xmax = box
+
+    # 드론이 찾고자 하는 타겟이 하나일 때만 정상적으로 컨트롤 가능
+    drone_controller = drone_controll.direction_controll(box, np.shape(image)[:2])
+
     if instance_masks is not None:
       draw_mask_on_image_array(
           image,
@@ -843,7 +851,7 @@ def visualize_boxes_and_labels_on_image_array(
           radius=line_thickness / 2,
           use_normalized_coordinates=use_normalized_coordinates)
 
-  return target_finded
+  return target_finded, drone_controller
 
 
 def add_cdf_image_summary(values, name):

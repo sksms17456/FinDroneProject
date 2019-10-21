@@ -15,8 +15,8 @@ import cv2
 from cv2 import imdecode, imencode, IMREAD_COLOR
 
 from drone_object_detection import object_detector
-# import object_detection.object_detector as object_detector
 
+# Object Detect 객체 생성
 detector = object_detector.Detector()
 
 # connect to the AirSim simulator
@@ -38,8 +38,8 @@ target_class = 'person'
 
 cv2.startWindowThread()
 def frame_generator(sec):
-  x = 0
-  y = 0
+  x = 1
+  y = 1
   z = -1.0
   v = 0.3
   x_base = 0
@@ -58,10 +58,12 @@ def frame_generator(sec):
       y_base = y_base + y
       z_base = z_base + z
 
+      print(result['drone_controller'])
+
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-frame_generator(20)
+frame_generator(50)
 client.reset()
 client.enableApiControl(False)
  
