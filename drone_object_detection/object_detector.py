@@ -5,9 +5,9 @@ import tensorflow as tf
 import numpy as np
 
 # Object detection imports
-from utils import ops as utils_ops
-from utils import label_map_util
-from utils import visualization_utils as vis_util
+from drone_object_detection.utils import ops as utils_ops
+from drone_object_detection.utils import label_map_util
+from drone_object_detection.utils import visualization_utils as vis_util
 
 # Model preparation
 # What model to download.
@@ -70,7 +70,7 @@ class Detector:
             detection_masks_reframed = utils_ops.reframe_box_masks_to_image_masks(
                 detection_masks, detection_boxes, image.shape[0], image.shape[1])
             detection_masks_reframed = tf.cast(
-                tf.greater(detection_masks_reframed, 0.7), tf.uint8)
+                tf.greater(detection_masks_reframed, 0.5), tf.uint8)
 
             # Follow the convention by adding back the batch dimension
             self.tensor_dict['detection_masks'] = tf.expand_dims(
@@ -91,10 +91,10 @@ class Detector:
             output_dict['detection_masks'] = output_dict['detection_masks'][0]
         return output_dict
 
-    def run_object_detector(self, image):
+    def run_object_detector(self, image, target_class_input):
         image_expanded = np.expand_dims(image, axis=0)
         output_dict = self.run_inference_for_single_image(image_expanded)
-        vis_util.visualize_boxes_and_labels_on_image_array(
+        target_finded, drone_controller = vis_util.visualize_boxes_and_labels_on_image_array(
             image,
             output_dict['detection_boxes'],
             output_dict['detection_classes'],
@@ -103,9 +103,14 @@ class Detector:
             instance_masks=output_dict.get('detection_masks'),
             use_normalized_coordinates=True,
             line_thickness=2,
-            min_score_thresh=0.7
+            min_score_thresh=0.8,
+            target_class=target_class_input
         )
-        return image
+        output_dict['image'] = image
+        output_dict['target_finded'] = target_finded
+        output_dict['drone_controller'] = drone_controller
+        # return image
+        return output_dict
     
     def closeDetector(self):
         self.sess.close()
