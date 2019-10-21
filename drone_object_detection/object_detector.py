@@ -102,7 +102,8 @@ class Detector:
             self.category_index,
             instance_masks=output_dict.get('detection_masks'),
             use_normalized_coordinates=True,
-            line_thickness=2
+            line_thickness=2,
+            min_score_thresh=0.7
         )
         return image
     
