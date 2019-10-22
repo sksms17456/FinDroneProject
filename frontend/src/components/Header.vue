@@ -52,9 +52,9 @@ export default {
             deskToolbarElement.style.background = "#f1f0f0f2";
             deskToolbarElement.style.boxShadow ="0px 1px 10px grey";
             $('.v-btn').css('color','black');
-            deskToolbarElement.style.height="18vh"
+            deskToolbarElement.style.height="16vh"
             headerLogoElement.style.height="7vh";
-            headerTitelElement.style.fontSize="1.3em";
+            headerTitelElement.style.fontSize="1.1em";
             // mobileToolbarElement.style.background = "white";
             // mobileToolbarElement.style.boxShadow ="0px 1px 10px grey";
           }

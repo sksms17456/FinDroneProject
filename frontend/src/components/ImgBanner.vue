@@ -6,7 +6,7 @@
     :height="height">
 
         <v-carousel-item
-         v-for="(item,i) in items"
+         v-for="(item,i) in home_items"
          :key="i"
          :src="item.src"
         >
@@ -20,7 +20,7 @@
     </v-carousel>
     </div>
     <div v-else-if="call==='central'">
-        <v-img :src="getImgUrl('baekdu.jpg')" :height="height">
+        <v-img :src="getImgUrl('controltower.gif')" :height="height">
             <span
                 class="text-shadow display-2 text-weight"
                 style="font-size:15vmin!important; color:white"
@@ -47,7 +47,7 @@ export default {
     },
     data(){
         return {
-            items:[
+            home_items:[
                 {
                     src:this.getImgUrl('valley.gif')
                 },

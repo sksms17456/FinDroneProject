@@ -1,10 +1,10 @@
 <template>
   <div>
-    <ImgBanner call="central" height="70vh">
-      <div style="line-height:0.75em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
-              FIND YOUR TARGET
-         <br/>
-         <br/> & WACHING YOUR DRONE
+    <ImgBanner call="central" height="100vh">
+      <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
+               
+         <br/> WATCH THE DRONES
+         <br/> FIND YOUR TARGET
       </div>
     </ImgBanner>
     <v-container grid-list-xs style="margin-top:50px">
