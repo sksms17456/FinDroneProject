@@ -14,9 +14,25 @@ export default new Router({
       component: Home
     },
     {
-      path:'/find',
-      name:'find',
-      component: () => import(/* webpackChunkName: "about" */ './views/Find.vue')
+      path:'/about',
+      name:'about',
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+    },
+    {
+      path:'/service',
+      name:'serive',
+      component: () => import(/* webpackChunkName: "about" */ './views/Service.vue')
+    },
+    {
+      path:'/central',
+      name:'central',
+      component: () => import(/* webpackChunkName: "about" */ './views/Central.vue')
+    },
+    {
+      path:'*',
+      name:'error',
+      component: () => import(/* webpackChunkName: "about" */ './views/Error.vue')
     }
+    
   ]
 })
