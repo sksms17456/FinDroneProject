@@ -1,24 +1,42 @@
 <template>
-    <div>
-        <v-img :src="getImgUrl('baekdu.jpg')" aspect-ratio="1.7" :height="height">
-            <v-layout align-center justify-center row fill-height>
-                <v-flex text-xs-center>
-                    <span
-                        class="text-shadow display-2 text-weight"
-                        style="font-size:15vmin!important; color:white"
-                    >
-                        <slot name="text" />
-                    </span>
-                </v-flex>
-            </v-layout>
+  <div>
+    <div v-if="call==='home'">
+    <v-carousel 
+    aspect-ratio="1.7" 
+    :height="height">
+
+        <v-carousel-item
+         v-for="(item,i) in home_items"
+         :key="i"
+         :src="item.src"
+        >
+               <span
+                class="text-shadow display-2 text-weight"
+                style="font-size:15vmin!important; color:white"
+                >
+                <slot name="text" />
+                </span>
+        </v-carousel-item>
+    </v-carousel>
+    </div>
+    <div v-else-if="call==='central'">
+        <v-img :src="getImgUrl('controltower.gif')" :height="height">
+            <span
+                class="text-shadow display-2 text-weight"
+                style="font-size:15vmin!important; color:white"
+                >
+                <slot name="text" />
+                </span>
         </v-img>
     </div>
+  </div>
 </template>
 
 <script>
 export default {
     name:'ImgBanner',
     props: {
+        call:{type:String, default:"home"},
         text: { type: String },
         height: { type: String, default: "100vh" }
     },
@@ -26,7 +44,23 @@ export default {
         getImgUrl(img){
             return require('../assets/'+img)
         }
+    },
+    data(){
+        return {
+            home_items:[
+                {
+                    src:this.getImgUrl('valley.gif')
+                },
+                {
+                    src:this.getImgUrl('mabig.gif')
+                },
+                {
+                    src:this.getImgUrl('beach.gif')
+                }
+            ]
+        }
     }
 
 }
 </script>
+
