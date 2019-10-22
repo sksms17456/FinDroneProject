@@ -65,8 +65,8 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         드론 {{index+1}}} 화면 보여줘요~
-                        <v-img :src="getImgUrl(drone.src)">
-                        </v-img>
+                        <v-img :id="index" :src="getDroneImg(drone.src)"></v-img>
+                        <!-- <v-img src="../assets/output.jpg"></v-img> -->
                     </v-card-text>
                     <button @click="getImgUrlFromBack()">New random number</button>
                 </v-card>
@@ -80,21 +80,24 @@ import axios from 'axios'
 import $ from 'jquery'
 
   export default {
-    name:"Find",
+    name:"FindTarget",
     data () {
       return {
         interval: null,
         drones:[
           {
-            src:'output.jpg',
+            src: '../assets/',
+            // src: 'output.jpg',
             position:'',
           },
           {
-            src:'output.jpg',
+            src: '../assets/',
+            // src: 'output.jpg',
             position:'',
           },
           {
-            src:'output.jpg',
+            src: '../assets/',
+            // src: 'output.jpg',
             position:''
           }],
 
@@ -136,7 +139,7 @@ import $ from 'jquery'
           this.totalDesserts = data.total
         })
     },
-    created(){
+    updated(){
       this.getImgUrlFromBack();
     },
     beforeDestroy () {
@@ -146,19 +149,29 @@ import $ from 'jquery'
       getImgUrl(img){
         return require('../assets/'+img)
       },
+      getDroneImg(imgPath){
+        // return require(''+imgPath+'output.jpg')
+        if (imgPath === 'img/') {
+          return require('../../../output.jpg')
+        } else {
+          return require('../assets/output.jpg')
+        }
+      },
       getImgUrlFromBack(){
+        var curThis = this
         this.polling = setInterval(() => {
-          console.log(1)
           const path = `http://localhost:5000/api/getImg`
             axios.get(path)
             .then(response => {
-              this.drones[2].src = response.data.ImgUrl
               console.log(response.data.ImgUrl)
+              curThis.drones[2].src = response.data.ImgUrl
+
+              $('#2').attr("src", this.getDroneImg(curThis.drones[2].src))
             })
             .catch(error => {
               console.log(error)
             })
-        }, 500)  
+          }, 2000)  
         
             
       },
