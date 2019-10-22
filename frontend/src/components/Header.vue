@@ -49,7 +49,7 @@ export default {
           // mobileToolbarElement.style.background = "transparent";
           // mobileToolbarElement.style.boxShadow = "none";
           } else {
-            deskToolbarElement.style.background = "white";
+            deskToolbarElement.style.background = "#f1f0f0f2";
             deskToolbarElement.style.boxShadow ="0px 1px 10px grey";
             $('.v-btn').css('color','black');
             deskToolbarElement.style.height="18vh"
