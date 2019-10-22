@@ -77,6 +77,7 @@
 
 <script>
 import axios from 'axios'
+import $ from 'jquery'
 
   export default {
     name:"Find",
@@ -85,15 +86,15 @@ import axios from 'axios'
         interval: null,
         drones:[
           {
-            src:'footerlogo.png',
+            src:'output.jpg',
             position:'',
           },
           {
-            src:'footerlogo.png',
+            src:'output.jpg',
             position:'',
           },
           {
-            src:'footerlogo.png',
+            src:'output.jpg',
             position:''
           }],
 
@@ -143,15 +144,6 @@ import axios from 'axios'
     },
     methods: {
       getImgUrl(img){
-        // axios.get('/drone/position',{
-        //   params:{
-
-        //   }
-        // }).then(response => {
-
-        // }).catch(error=>{
-        //   console.error(e)
-        // })
         return require('../assets/'+img)
       },
       getImgUrlFromBack(){
@@ -161,11 +153,12 @@ import axios from 'axios'
             axios.get(path)
             .then(response => {
               this.drones[2].src = response.data.ImgUrl
+              console.log(response.data.ImgUrl)
             })
             .catch(error => {
               console.log(error)
             })
-        }, 10)  
+        }, 500)  
         
             
       },

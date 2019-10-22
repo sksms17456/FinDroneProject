@@ -1,11 +1,8 @@
 import os
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from random import *
 from flask_cors import CORS
-
-# app = Flask(__name__,
-#             static_folder="../dist/static",
-#             template_folder="../dist")
+import time
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 STATIC_PATH = os.path.normpath(os.path.join(ROOT_PATH,'frontend','dist'))
@@ -13,17 +10,31 @@ app = Flask(__name__, static_folder=STATIC_PATH, static_url_path='')
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-@app.route('/api/random')
-def random_number():
+drone = {
+            "name" : "myDrone",
+            "x":1,
+            "y":2,
+            "z":3,
+            "img":'output.jpg',
+            "timestamp":time.time()
+        }
+
+@app.route('/api/droneUpdate')
+def update_drone():
+    result = request.form
+    print(result)
+    print()
+    global drone
+    drone.__setitem__('img',result.getlist('img')[0])
+    return drone.get('img')
+
+
+@app.route('/api/getImg')
+def get_Img():
     response = {
-        'randomNumber' : randint(1, 100)
+        'ImgUrl' : drone.get('img')
     }
     return jsonify(response)
-
-# @app.route('/', defaults={'path':''})
-# @app.route('/<path:path>')
-# def catch_all(path):
-#     return render_template("index.html")
 
 @app.route('/')
 def index():
