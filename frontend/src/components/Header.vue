@@ -4,7 +4,7 @@
       <v-container text-md-center>
         <v-toolbar-side-icon class="hidden-sm-and-up"></v-toolbar-side-icon>
         <v-toolbar-items class="hidden-sm-and-down" >
-          <v-flex xs3 text-md-right><v-btn to="/home" flat>Home</v-btn></v-flex>
+          <v-flex xs3 text-md-right><v-btn to="/" flat>Home</v-btn></v-flex>
           <v-flex xs2><v-btn to="/about" flat>About</v-btn></v-flex>
           <v-card style="background:transparent;font-size:1.7em" flat to="/">
               <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/>

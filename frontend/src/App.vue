@@ -1,22 +1,22 @@
 <template>
   <v-app>
-    <div v-if="first">
+    <!-- <div v-if="first">
       <Intro @intro="goHome"/>
-    </div>
+    </div> -->
 
-    <div v-else>
+    <!-- <div v-else> -->
       <Header/>
       <v-content>
         <router-view/>
       </v-content>
       <Scrolltotop/>
       <Footer/>
-    </div>
+    <!-- </div> -->
   </v-app>
 </template>
 
 <script>
-import Intro from './views/Intro'
+// import Intro from './views/Intro'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Scrolltotop from './components/ScrollToTop'
@@ -24,19 +24,19 @@ import Scrolltotop from './components/ScrollToTop'
 export default {
   name: 'App',
   components:{
-    Intro,
+    // Intro,
     Header,
     Scrolltotop,
     Footer
   },
   data () {
     return {
-      first:true
+      // first:true
     }
   },
   methods:{
-    goHome(tile){
-    }
+    // goHome(tile){
+    // }
   }
 }
 </script>
