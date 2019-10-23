@@ -64,10 +64,9 @@ def frame_generator(sec):
           "x":1,
           "y":2,
           "z":3,
-          # "img":"output.af79af48.jpg",
-          # "img": result['image'],
           "img": np_response_image,
-          "timestamp":time.time()
+          "timestamp":time.time(),
+          "iter":i
       }
       requests.post('http://localhost:5000/api/droneUpdate', data=datas)
       client.moveToPositionAsync(x_base, y_base, z_base, v)
@@ -82,7 +81,7 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-frame_generator(10)
+frame_generator(5)
 client.reset()
 client.enableApiControl(False)
  
