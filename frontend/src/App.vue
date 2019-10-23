@@ -1,17 +1,12 @@
 <template>
   <v-app>
-    <div v-if="first">
-      <Intro @intro="goHome"/>
-    </div>
-
-    <div v-else>
-      <Header/>
+    <Intro v-if="first" @goHome="goHome"/>
+    <Header v-if="!first"/>
       <v-content>
         <router-view/>
       </v-content>
       <Scrolltotop/>
-      <Footer/>
-    </div>
+    <Footer v-if="!first"/>
   </v-app>
 </template>
 
@@ -31,11 +26,12 @@ export default {
   },
   data () {
     return {
-      first:true
+      first:false
     }
   },
   methods:{
     goHome(tile){
+      this.first=false
     }
   }
 }
