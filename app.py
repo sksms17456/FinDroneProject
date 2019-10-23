@@ -80,4 +80,5 @@ def get_drone_img():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.config["CACHE_TYPE"] = "null"
+    app.run(host='0.0.0.0',port=5000)

@@ -156,14 +156,14 @@ import $ from 'jquery'
       getImgUrlFromBack(){
         var curThis = this
         this.polling = setInterval(() => {
-          const path = `http://localhost:5000/api/getImg`
+          const path = `/api/getImg`
             axios.get(path)
             .then(response => {
               const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
 
               for(var i=0; i<3; i++){
                 curThis.drones[i].src = contain[i]
-                const path = 'http://localhost:5000/api/getDroneImg?drone='+i +'&num_img=' + contain[i]
+                const path = '/api/getDroneImg?drone='+i +'&num_img=' + contain[i]
                 console.log(curThis.drones[i].src)
                 $('#drone_img_'+ i).attr("src", path)
               }
