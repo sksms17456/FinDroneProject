@@ -7,41 +7,37 @@
          <br/> FIND YOUR TARGET
       </div>
     </ImgBanner>
-    <v-container grid-list-xs style="margin-top:50px">
-        <v-text-field
-            class="mx-3"
-            flat
-            label="Search"
-            prepend-inner-icon="fa-search"
-            solo-inverted
-        ></v-text-field>
-        <v-layout row wrap>
+
+    <div class="layout align-center justify-center" ma-0>
+    <v-btn flat dark @click="goDown" round class="text-xs-center hidden-sm-and-down">
+      <v-icon dark class="bounce_ball" style="margin:auto; font-weight:bold; color:white;">mdi mdi-arrow-down</v-icon>
+    </v-btn>
+    </div>
+
+    <v-container grid-list-xs id="simulation">
+        <h1 style="text-align:center">실시간 드론 중계 현황</h1>
+        <v-layout row wrap style="margin-top:10px">
             <v-flex xs12 md4>
               <v-card>
                     <v-card-title primary-title class="justify-center">
-                        Log Information
+                        Target Log Information
                     </v-card-title>
                     <v-divider></v-divider>
                     <v-card-text>
-                        <div>
-                            <v-data-table
-                            :headers="headers"
-                            :items="desserts"
-                            :pagination.sync="pagination"
-                            :total-items="totalDesserts"
-                            :loading="loading"
-                            class="elevation-1"
-                            >
-                            <template v-slot:items="props">
-                                <td>{{ props.item.name }}</td>
-                                <td class="text-xs-right">{{ props.item.calories }}</td>
-                                <td class="text-xs-right">{{ props.item.fat }}</td>
-                                <td class="text-xs-right">{{ props.item.carbs }}</td>
-                                <td class="text-xs-right">{{ props.item.protein }}</td>
-                                <td class="text-xs-right">{{ props.item.iron }}</td>
-                            </template>
-                            </v-data-table>
-                        </div>
+                      <template>
+                        <v-data-table
+                          :headers="headers"
+                          :items="target"
+                           class="elevation-1"
+                        >
+                          <template v-slot:items="props">
+                            <td class="text-xs-right">{{ props.item.time }}</td>
+                            <td class="text-xs-right">{{ props.item.posy }}</td>
+                            <td class="text-xs-right">{{ props.item.posx }}</td>
+                            <td class="text-xs-right">{{ props.item.posz }}</td>
+                          </template>
+                        </v-data-table>
+                      </template>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -49,7 +45,7 @@
             <v-flex xs12 md8>
                 <v-card>
                     <v-card-title primary-title class="justify-center">
-                        Find Target (전체화면 : pin 찍어라!)
+                        Map Pin
                     </v-card-title>
                     <v-divider></v-divider>
                     <v-card-text>
@@ -61,10 +57,7 @@
                         </v-img>
                     </v-card-text>
                 </v-card>
-            </v-flex>
-        </v-layout>
-
-        <v-layout row wrap>
+                <v-layout row wrap>
               <v-flex v-for="(drone,index) in drones" :key="index" xs4>
                 <v-card >
                     <v-card-title primary-title class="justify-center">
@@ -73,10 +66,15 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         드론 {{index+1}}} 화면 보여줘요~
-                        <v-img :src="getImgUrl(drone.src)">
-                        </v-img>
+                        <div class="v-responsive v-image droneImg" :id="index">
+                            <div class="v-responsive__sizer" style="padding-bottom: 66.6667%;"></div>
+                            <img class="v-image__image v-image__image--cover" :id="'drone_img_'+index" :src="require('../assets/output.jpg')"/>
+                            <div class="v-responsive__content"></div>
+                        </div>
                     </v-card-text>
                 </v-card>
+            </v-flex>
+        </v-layout>
             </v-flex>
         </v-layout>
     </v-container>
@@ -86,6 +84,7 @@
 <script>
 import ImgBanner from '../components/ImgBanner'
 import axios from 'axios'
+import $ from 'jquery'
 
   export default {
     name:"Central",
@@ -94,194 +93,124 @@ import axios from 'axios'
     },
     data () {
       return {
+        simulationOffset:0,
+        headers:[
+          // {
+          //   text: 'Target',
+          //   align: 'left',
+          //   sortable: false,
+          //   value: 'name'
+          // },
+          { text: '시간', value: 'time' },
+          { text: 'Y좌표', value: 'posy' },
+          { text: 'X좌표', value: 'posx' },
+          { text: 'Z좌표', value: 'posz' }
+        ],
+        target:[
+          {
+            name:'Target',
+            src:'footerlogo.png',
+            time:'',
+            posy:'',
+            posx:'',
+            posz:'',
+            state:''
+          }],
         drones:[
           {
+            name:'Drone1',
             src:'footerlogo.png',
-            position:'',
+            time:'',
+            posy:'',
+            posx:'',
+            posz:'',
+            state:''
           },
           {
+            name:'Drone2',
             src:'footerlogo.png',
-            position:'',
+            time:'',
+            posy:'',
+            posx:'',
+            posz:'',
+            state:''
           },
           {
+            name:'Drone3',
             src:'footerlogo.png',
-            position:''
-          }],
-
-        totalDesserts: 0,
-        desserts: [],
-        loading: true,
-        pagination: {},
-        headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ]
+            time:'',
+            posx:'',
+            posy:'',
+            posz:'',
+            state:''
+          }]
       }
     },
-    watch: {
-      pagination: {
-        handler () {
-          this.getDataFromApi()
-            .then(data => {
-              this.desserts = data.items
-              this.totalDesserts = data.total
-            })
-        },
-        deep: true
-      }
-    },
-    mounted () {
-      this.getDataFromApi()
-        .then(data => {
-          this.desserts = data.items
-          this.totalDesserts = data.total
-        })
+    created(){
+      this.getImgUrlFromBack();
     },
     methods: {
       getImgUrl(img){
-        // axios.get('/drone/position',{
-        //   params:{
-
-        //   }
-        // }).then(response => {
-
-        // }).catch(error=>{
-        //   console.error(e)
-        // })
         return require('../assets/'+img)
       },
+      getImgUrlFromBack(){
+        var curThis = this
+        this.polling = setInterval(() => {
+          const path = `http://localhost:5000/api/getImg`
+            axios.get(path)
+            .then(response => {
+              curThis.drones[2].src = response.data.ImgUrl
 
-      getDataFromApi () {
-        this.loading = true
-        return new Promise((resolve, reject) => {
-          const { sortBy, descending, page, rowsPerPage } = this.pagination
-
-          let items = this.getDesserts()
-          const total = items.length
-
-          if (this.pagination.sortBy) {
-            items = items.sort((a, b) => {
-              const sortA = a[sortBy]
-              const sortB = b[sortBy]
-
-              if (descending) {
-                if (sortA < sortB) return 1
-                if (sortA > sortB) return -1
-                return 0
+              if (curThis.drones[2].src.startsWith('img/')) {
+                const path = 'http://localhost:5000/api/getDroneImg?drone=2&num_img=' + response.data.iter
+                $('#drone_img_2').attr("src", path)
               } else {
-                if (sortA < sortB) return -1
-                if (sortA > sortB) return 1
-                return 0
+                $('#2').attr("src", '../assets/output.jpg')
               }
             })
-          }
-
-          if (rowsPerPage > 0) {
-            items = items.slice((page - 1) * rowsPerPage, page * rowsPerPage)
-          }
-
-          setTimeout(() => {
-            this.loading = false
-            resolve({
-              items,
-              total
+            .catch(error => {
+              console.log(error)
             })
-          }, 1000)
-        })
+          }, 1500)
       },
-      getDesserts () {
-        return [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }
-        ]
+      goDown(){
+        this.simulationOffset = $('#simulation').offset();
+        $('html, body').animate({scrollTop : this.simulationOffset.top-100}, 400);
       }
     }
   }
 </script>
+
+<style scoped>
+.bounce_ball {
+    background: transparent;
+    width: 80px;
+    height: 35px;
+    background-size: 100%;
+    left: 50%;
+    bottom: 10px;
+    margin-left: -22px;
+    z-index: 4;
+    opacity: 0.9;
+    -webkit-animation: bounceball 0.9s infinite ease-out;
+}
+.bounce_ball:hover {
+    background-color: black;
+    border-radius: 10rem;
+}
+
+@-webkit-keyframes bounceball {
+    0%,
+    20%,
+    100% {
+        -webkit-transform: translateY(-60px);
+    }
+    30% {
+        -webkit-transform: translateY(-75px);
+    }
+    50% {
+        -webkit-transform: translateY(-51px);
+    }
+}
+
+</style>
