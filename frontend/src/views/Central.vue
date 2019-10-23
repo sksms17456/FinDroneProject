@@ -171,7 +171,7 @@ import $ from 'jquery'
             .catch(error => {
               console.log(error)
             })
-          }, 1500)
+          }, 2000)
       },
       goDown(){
         this.simulationOffset = $('#simulation').offset();
@@ -198,7 +198,6 @@ import $ from 'jquery'
     background-color: black;
     border-radius: 10rem;
 }
-
 @-webkit-keyframes bounceball {
     0%,
     20%,
@@ -212,5 +211,4 @@ import $ from 'jquery'
         -webkit-transform: translateY(-51px);
     }
 }
-
 </style>

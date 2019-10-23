@@ -4,6 +4,8 @@ from random import *
 from flask_cors import CORS
 import time
 
+from PIL import Image
+import numpy as np
 import cv2
 from cv2 import imdecode, imencode, IMREAD_COLOR
 
@@ -18,42 +20,44 @@ drone = {
             "x":1,
             "y":2,
             "z":3,
-            "img":'output.jpg',
-            "timestamp":time.time()
+            "imgPath": "../assets/",
+            "timestamp":time.time(),
+            "iter": 0
         }
-temp = 1
-@app.route('/api/droneUpdate')
+
+@app.route('/api/droneUpdate', methods=['GET', 'POST'])
 def update_drone():
     result = request.form
-    global drone
-    global temp
-    print(result.getlist('img')[0])
-    if temp == 1:
-        cv2.imwrite('frontend/dist/img/output.af79af48.jpg', result.getlist('img')[0])
-        cv2.imwrite('frontend/src/assets/output.jpg', result.getlist('img')[0])
-        drone.__setitem__('img','output.jpg')
-        temp = 0
-    else :
-        cv2.imwrite('frontend/dist/img/output1.fbb7be38.jpg', result.getlist('img')[0])
-        cv2.imwrite('frontend/src/assets/output1.jpg', result.getlist('img')[0])
-        drone.__setitem__('img','output1.jpg')
-        temp = 1
-        
-    
-    return drone.get('img')
+    frame = np.array(result.getlist('img')).astype('uint8')
+    decoded_frame = np.asarray(bytearray(frame), dtype="uint8")
+    decoded_frame = imdecode(decoded_frame, IMREAD_COLOR)
+    cv2.imwrite("drone_output/output.jpg", decoded_frame)
 
+    global drone
+    drone.__setitem__('imgPath', "img/output" + request.form.get('iter') + '.jpg')
+    drone.__setitem__('iter', request.form.get('iter'))
+    return drone.get('imgPath')
 
 @app.route('/api/getImg')
 def get_Img():
+    filename = 'drone_output/output.jpg'
     response = {
-        'ImgUrl' : drone.get('img')
+        'ImgUrl' : drone.get('imgPath'),
+        'iter' : drone.get('iter')
     }
-    print(drone.get('img'))
     return jsonify(response)
 
 @app.route('/')
 def index():
     return app.send_static_file('index.html')
+
+@app.route('/api/getDroneImg')
+def get_drone_img():
+    drone = request.args.get('drone')
+    num_img = request.args.get('num_img')
+
+    filename = 'drone_output/output.jpg'
+    return send_file(filename, mimetype='image/jpg')
 
 if __name__ == '__main__':
     app.run()
