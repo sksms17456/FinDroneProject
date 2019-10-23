@@ -60,7 +60,7 @@ def frame_generator(sec):
       # cv2.imshow('cam', result['image'])
       # cv2.imshow('cam', decoded_frame)
       datas = {
-          "name":"testName",
+          "name":"Drone_1",
           "x":1,
           "y":2,
           "z":3,
@@ -81,7 +81,7 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-frame_generator(5)
+frame_generator(20)
 client.reset()
 client.enableApiControl(False)
  

@@ -68,7 +68,7 @@
                         드론 {{index+1}}} 화면 보여줘요~
                         <div class="v-responsive v-image droneImg" :id="index">
                             <div class="v-responsive__sizer" style="padding-bottom: 66.6667%;"></div>
-                            <img class="v-image__image v-image__image--cover" :id="'drone_img_'+index" :src="require('../assets/output.jpg')"/>
+                            <img class="v-image__image v-image__image--cover" :id="'drone_img_'+index" :src="require('../../../drone_output/output'+index+'.jpg')"/>
                             <div class="v-responsive__content"></div>
                         </div>
                     </v-card-text>
@@ -159,19 +159,19 @@ import $ from 'jquery'
           const path = `http://localhost:5000/api/getImg`
             axios.get(path)
             .then(response => {
-              curThis.drones[2].src = response.data.ImgUrl
+              const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
 
-              if (curThis.drones[2].src.startsWith('img/')) {
-                const path = 'http://localhost:5000/api/getDroneImg?drone=2&num_img=' + response.data.iter
-                $('#drone_img_2').attr("src", path)
-              } else {
-                $('#2').attr("src", '../assets/output.jpg')
+              for(var i=0; i<3; i++){
+                curThis.drones[i].src = contain[i]
+                const path = 'http://localhost:5000/api/getDroneImg?drone='+i +'&num_img=' + contain[i]
+                console.log(curThis.drones[i].src)
+                $('#drone_img_'+ i).attr("src", path)
               }
             })
             .catch(error => {
               console.log(error)
             })
-          }, 2000)
+          }, 1000)
       },
       goDown(){
         this.simulationOffset = $('#simulation').offset();
