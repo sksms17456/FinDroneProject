@@ -66,8 +66,11 @@
                     <v-divider></v-divider>
                     <v-card-text>
                         드론 {{index+1}}} 화면 보여줘요~
-                        <v-img :src="getImgUrl(drone.src)">
-                        </v-img>
+                        <div class="v-responsive v-image droneImg" :id="index">
+                            <div class="v-responsive__sizer" style="padding-bottom: 66.6667%;"></div>
+                            <img class="v-image__image v-image__image--cover" :id="'drone_img_'+index" :src="require('../assets/output.jpg')"/>
+                            <div class="v-responsive__content"></div>
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-flex>
@@ -143,18 +146,32 @@ import $ from 'jquery'
           }]
       }
     },
+    created(){
+      this.getImgUrlFromBack();
+    },
     methods: {
       getImgUrl(img){
-        // axios.get('/drone/position',{
-        //   params:{
-
-        //   }
-        // }).then(response => {
-
-        // }).catch(error=>{
-        //   console.error(e)
-        // })
         return require('../assets/'+img)
+      },
+      getImgUrlFromBack(){
+        var curThis = this
+        this.polling = setInterval(() => {
+          const path = `http://localhost:5000/api/getImg`
+            axios.get(path)
+            .then(response => {
+              curThis.drones[2].src = response.data.ImgUrl
+
+              if (curThis.drones[2].src.startsWith('img/')) {
+                const path = 'http://localhost:5000/api/getDroneImg?drone=2&num_img=' + response.data.iter
+                $('#drone_img_2').attr("src", path)
+              } else {
+                $('#2').attr("src", '../assets/output.jpg')
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
+          }, 1500)
       },
       goDown(){
         this.simulationOffset = $('#simulation').offset();
