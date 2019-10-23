@@ -31,8 +31,8 @@ client.takeoffAsync()
 time.sleep(0.8)
 
 # take Video
-CAMERA_NAME = '0' # 정면
-# CAMERA_NAME = '3' # 아래
+# CAMERA_NAME = '0' # 정면
+CAMERA_NAME = '3' # 아래
 IMAGE_TYPE = airsim.ImageType.Scene
 target_class = 'person'
 
