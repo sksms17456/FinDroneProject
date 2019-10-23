@@ -1,4 +1,12 @@
 <template>
+  <div>
+    <ImgBanner call="central" height="100vh">
+      <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
+               
+         <br/> WATCH THE DRONES
+         <br/> FIND YOUR TARGET
+      </div>
+    </ImgBanner>
     <v-container grid-list-xs style="margin-top:50px">
         <v-text-field
             class="mx-3"
@@ -68,22 +76,28 @@
                         <v-img :id="index" :src="getDroneImg(drone.src)"></v-img>
                         <!-- <v-img src="../assets/output.jpg"></v-img> -->
                     </v-card-text>
-                    <button @click="getImgUrlFromBack()">New random number</button>
                 </v-card>
             </v-flex>
         </v-layout>
     </v-container>
+  </div>
 </template>
 
 <script>
+import ImgBanner from '../components/ImgBanner'
 import axios from 'axios'
-import $ from 'jquery'
 
   export default {
+<<<<<<< HEAD
     name:"FindTarget",
+=======
+    name:"Central",
+    components:{
+      ImgBanner
+    },
+>>>>>>> aae0f650199f0829ddf874ec8e818e18138bc960
     data () {
       return {
-        interval: null,
         drones:[
           {
             src: '../assets/',
@@ -139,16 +153,29 @@ import $ from 'jquery'
           this.totalDesserts = data.total
         })
     },
+<<<<<<< HEAD
     updated(){
       this.getImgUrlFromBack();
     },
     beforeDestroy () {
 	    clearInterval(this.polling)
     },
+=======
+>>>>>>> aae0f650199f0829ddf874ec8e818e18138bc960
     methods: {
       getImgUrl(img){
+        // axios.get('/drone/position',{
+        //   params:{
+
+        //   }
+        // }).then(response => {
+
+        // }).catch(error=>{
+        //   console.error(e)
+        // })
         return require('../assets/'+img)
       },
+<<<<<<< HEAD
       getDroneImg(imgPath){
         // return require(''+imgPath+'output.jpg')
         if (imgPath === 'img/') {
@@ -175,6 +202,9 @@ import $ from 'jquery'
         
             
       },
+=======
+
+>>>>>>> aae0f650199f0829ddf874ec8e818e18138bc960
       getDataFromApi () {
         this.loading = true
         return new Promise((resolve, reject) => {

@@ -45,6 +45,7 @@ def frame_generator(sec):
   x_base = 0
   y_base = 0
   z_base = 0
+  temp = 1
   for i in range(sec):
       response_image = client.simGetImage(CAMERA_NAME, IMAGE_TYPE)
       np_response_image = np.asarray(bytearray(response_image), dtype="uint8")

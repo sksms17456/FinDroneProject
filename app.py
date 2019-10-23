@@ -37,12 +37,12 @@ def update_drone():
     drone.__setitem__('imgPath', "img/")
     return drone.get('imgPath')
 
-
 @app.route('/api/getImg')
 def get_Img():
     response = {
         'ImgUrl' : drone.get('imgPath')
     }
+    print(drone.get('img'))
     return jsonify(response)
 
 @app.route('/')

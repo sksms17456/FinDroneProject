@@ -1,11 +1,11 @@
 <template>
   <div>
     <!-- 홈 화면(sector1) --> 
-   <ImgBanner>
+   <ImgBanner call="home">
       <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
-              FinDrone 
-         <br/>
-         <br/>FIND YOUR TARGET
+               
+         <br/>Start!
+         <br/>with StartDroneTeam
       </div>
     </ImgBanner>
 
