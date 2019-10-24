@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import Intro from './views/Intro.vue'
 import Home from './views/Home.vue'
 
 Vue.use(Router)
@@ -8,10 +9,15 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // {
+    //   path: '/',
+    //   name: 'intro',
+    //   component: Intro
+    // },
     {
-      path: '/',
-      name: 'home',
-      component: Home
+      path:'/',
+      name:'home',
+      component:Home
     },
     {
       path:'/about',
