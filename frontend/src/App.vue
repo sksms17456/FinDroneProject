@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Intro from './views/Intro'
+// import Intro from './views/Intro'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Scrolltotop from './components/ScrollToTop'
@@ -23,14 +23,14 @@ import Scrolltotop from './components/ScrollToTop'
 export default {
   name: 'App',
   components:{
-    Intro,
+    // Intro,
     Header,
     Scrolltotop,
     Footer
   },
   data () {
     return {
-      first:true
+      // first:true
     }
   },
   methods:{
