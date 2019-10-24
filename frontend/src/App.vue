@@ -1,17 +1,16 @@
 <template>
   <v-app>
-    <!-- <div v-if="first">
-      <Intro @intro="goHome"/>
-    </div> -->
-
-    <!-- <div v-else> -->
-      <Header/>
-      <v-content>
+    <div id="introPage">
+    <Intro v-if="first" @goHome="goHome"/>
+    </div>
+    <div>
+    <v-content v-if="!first">
+    <Header/>
         <router-view/>
-      </v-content>
       <Scrolltotop/>
-      <Footer/>
-    <!-- </div> -->
+    <Footer/>
+    </v-content>
+    </div>
   </v-app>
 </template>
 
@@ -35,8 +34,10 @@ export default {
     }
   },
   methods:{
-    // goHome(tile){
-    // }
+    goHome(){
+      this.first=false;
+      this.$router.push('/home').catch(err => {})
+    }
   }
 }
 </script>
