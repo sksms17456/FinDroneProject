@@ -8,7 +8,7 @@
           <v-flex xs2><v-btn to="/about" flat>About</v-btn></v-flex>
           <v-card style="background:transparent;font-size:1.7em" flat to="/">
               <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/>
-              <v-flex xs2><v-btn id="headerTitle" flat large style="text-transform : none !important">FinDrone</v-btn></v-flex>
+              <v-flex xs2><v-btn id="headerTitle" flat large style="text-transform : none !important" to="/">FinDrone</v-btn></v-flex>
           </v-card>
           <v-flex xs2><v-btn to="/service" flat>Service</v-btn></v-flex>
           <v-flex xs3 text-md-left><v-btn to="/central" flat>Central</v-btn></v-flex>
