@@ -104,6 +104,13 @@ export default {
   components:{
     ImgBanner
   },
+  mounted(){
+    window.onpopstate = event => {
+      if(this.$route.path == "/"){
+        this.$router.push("/home");
+      }
+    }
+  },
   methods:{
     getImgUrl(img){
       return require('../assets/'+img)

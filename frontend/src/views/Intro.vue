@@ -49,7 +49,7 @@ export default {
     },
     mounted(){
         const curSelf = this
-        // $('.application--wrap').css('background-image',self.getImgUrl('sample.png'))
+        $('.application--wrap').css('background-image',this.getImgUrl('sample2.png'))
         $("input[type=range]").on("change", function(e) {
             var value = $('').val();
         if(value > 0) {
@@ -85,7 +85,7 @@ export default {
         },
         goHome(){
             console.log("goHome")
-            this.$emit('goHome','') 
+            this.$emit('goHome','')
         }
     }
 }
