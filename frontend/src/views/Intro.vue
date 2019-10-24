@@ -1,19 +1,24 @@
 <template>
-<v-container>
-    <v-layout row wrap>
-        <v-flex mb-4 px-5 xs6>
-            <v-img :src="getImgUrl('launch_drone.png')" contain style="height:100px;widht:100px"></v-img>
-        </v-flex>
-        <v-flex xs6>
-            <h1 style="font-size:2.5em; padding-top:30px">이륙하시겠습니까?</h1>
-        </v-flex>
+<v-container style="height:100vh;" >
+    <v-layout row wrap style="height:60vh">
     </v-layout>
     
-    <v-layout row wrap>
-        <div class="slide-wrap center">
-            <label >밀어서 이륙</label>
-            <input type="range" min="0" max="100" value="0"/>
-        </div>
+    <v-layout row wrap style="height:30vh">
+        <v-layout row wrap style="vertical-align-mid">
+            <v-flex mb-4 px-5 xs5>
+                <v-img :src="getImgUrl('launch_drone.png')" contain style="height:100px;widht:100px" ></v-img>
+            </v-flex>
+            <v-flex xs7>
+                <h1 style="font-size:2.5em; padding-top:30px">이륙하시겠습니까?</h1>
+            </v-flex>
+        </v-layout>
+        
+        <v-layout row wrap>
+            <div class="slide-wrap center">
+                <label >밀어서 이륙</label>
+                <input type="range" min="0" max="100" value="0"/>
+            </div>
+        </v-layout>
     </v-layout>
 
     <!-- <v-layout row wrap>
@@ -80,15 +85,15 @@ export default {
         },
         goHome(){
             console.log("goHome")
-            this.$emit('goHome',true)
+            this.$emit('goHome','') 
         }
     }
 }
 </script>
 <style scoped>
-/* #app{
-    background: url('../assets/sample.png') center;
-} */
+#introPage{
+    background: url('../assets/sample2.png') center !important;
+}
  .container {
     width: 780px;
     margin: 0 auto;
