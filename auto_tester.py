@@ -12,23 +12,32 @@ from drone_object_detection import object_detector
 
 from util import spin_square
 
+# START_POS = {"x_val":165.0, "y_val":-2250.0, "z_val":244.00885}
+# STD_SQUARE = [
+#     [165.0, -2250.0],
+#     [265.0, -2250.0],
+#     [265.0, -2150.0],
+#     [165.0, -2150.0]
+# ]
 START_POS = {"x_val":60049.859375, "y_val":1822.984375, "z_val":13177.371094}
 STD_SQUARE = [
     [60049.859375, 1822.984375],
-    [60149.859375, 1822.984375],
-    [60149.859375, 1922.984375],
-    [60049.859375, 1922.984375],
+    [60099.859375, 1822.984375],
+    [60099.859375, 1872.984375],
+    [60049.859375, 1872.984375]
 ]
 NAME = "Drone1"
 MIN_HEIGHT = 10
-MAX_HEIGHT = 15
+MAX_HEIGHT = 11
 MAX_MOVE_LENGTH = 3
 CAMERA_NAME = '3' # 아래
 TARGET = 'person'
 
 # Object Detect 객체 생성
 detector = object_detector.Detector()
-ss = spin_square.square(STD_SQUARE, 20, 5)
+ss = spin_square.square(STD_SQUARE, 20, 10)
+ss.makeRoute()
+print(ss.getRoute())
 
 class Drone():
     def __init__(self, name, minh, maxh, max_len, spos):
@@ -40,11 +49,12 @@ class Drone():
         self.npos = {"x_val":0., "y_val":0., "z_val":0.}
         self.type = 1   # 1은 추적 드론, 2는 근처 수색 드론, 3은 전체 수색 드론
         self.mod = 1    # 1은 map 수색, 2는 근처 수색, 3은 추적 알고리즘 적용
+        # self.drone = airsim.MultirotorClient(ip="70.12.247.95")
         self.drone = airsim.MultirotorClient()
         self.drone.confirmConnection()
         self.route = ss.getRoute()
+        self.max_route = len(self.route)
         self.myroute = 0
-        print(len(self.route))
     
     def takeoff(self):
         self.drone.enableApiControl(True, vehicle_name=self.name)
@@ -98,6 +108,8 @@ class Drone():
         dy = self.route[self.myroute][1] - self.npos["y_val"]
         if (dx**2) + (dy**2) < 10:
             self.myroute += 1
+            if self.max_route == self.myroute:
+                self.myroute = 0
 
         # x = self.route[self.myroute][0] - self.npos["x_val"]
         # y = self.route[self.myroute][1] - self.npos["y_val"]
@@ -127,7 +139,7 @@ class Drone():
         print(self.npos["x_val"])
         print(self.npos["y_val"])
         # print(self.npos["z_val"])
-        # print(self.h)
+        print(self.h)
 
         return self.npos
     
@@ -140,12 +152,15 @@ def run():
     cv2.startWindowThread()
     d.takeoff()
     i = 0
+    routeSize = len(ss.getRoute())
+    print(routeSize)
 
     while True:
         print("====================== " + str(i))
         d.fly()
-        if d.getRoute() == 120:
-            break
+        # if d.getRoute() == 3:
+        # if d.getRoute() == (routeSize - 1):
+        #     break
         i += 1
 
     d.landing()

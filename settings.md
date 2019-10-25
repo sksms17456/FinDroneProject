@@ -84,4 +84,21 @@ real_T max_distance = 4000.0f / 1;
     }
 }
 ```
+> C:\Users\multicampus\AppData\Local\Programs\Python\Python36\lib\site-packages\airsim  
+airsim 1.2.4 version의 문제
+```py
+# client.py의 getDistanceSensorData의 lidar_name을
+# distance_sensor_name으로 수정!
+    def getDistanceSensorData(self, lidar_name = '', vehicle_name = ''):
+        return DistanceSensorData.from_msgpack(self.client.call('getDistanceSensorData', distance_sensor_name, vehicle_name))
+```
+```py
+# types.py 맨 아래에 추가
+class DistanceSensorData(MsgpackMixin):
+    time_stamp = np.uint64(0)
+    distance = Quaternionr()
+    min_distance = Quaternionr()
+    max_distance = Quaternionr()
+    relative_pose = Pose()
+```
 

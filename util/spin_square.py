@@ -4,14 +4,14 @@ class square:
         self.max = maximum
         self.gap = gap
     
-    def getRoute(self):
+    def makeRoute(self):
         self.std[0][0] -= self.gap
         flyTo = 0
 
         nowX, nowY = self.std[0]
 
-        targetList = []
-        targetList.append([nowX, nowY])
+        self.targetList = []
+        self.targetList.append([nowX, nowY])
 
         while True:
             # 좌하에서 우하
@@ -23,7 +23,7 @@ class square:
                     self.std[0][0] += self.gap
                     self.std[0][1] += self.gap
                 
-                targetList.append([nowX, nowY])
+                self.targetList.append([nowX, nowY])
 
                 if self.std[0][0] >= self.std[2][0]:
                     break
@@ -38,7 +38,7 @@ class square:
                     self.std[1][0] -= self.gap 
                     self.std[1][1] += self.gap 
                 
-                targetList.append([nowX, nowY])
+                self.targetList.append([nowX, nowY])
 
                 if self.std[1][0] <= self.std[3][0]:
                     break
@@ -53,7 +53,7 @@ class square:
                     self.std[2][0] -= self.gap 
                     self.std[2][1] -= self.gap 
                 
-                targetList.append([nowX, nowY])
+                self.targetList.append([nowX, nowY])
 
                 if self.std[2][0] <= self.std[0][0]:
                     break
@@ -68,11 +68,12 @@ class square:
                     self.std[3][0] += self.gap 
                     self.std[3][1] -= self.gap 
                 
-                targetList.append([nowX, nowY])
+                self.targetList.append([nowX, nowY])
 
                 if self.std[3][0] >= self.std[1][0]:
                     break
                 if self.std[3][1] <= self.std[1][1]:
                     break
-                    
-        return targetList
+
+    def getRoute(self):
+        return self.targetList
