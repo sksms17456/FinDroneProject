@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Intro from './views/Intro.vue'
 import Home from './views/Home.vue'
+import About from './views/About.vue'
+import Service from './views/Service.vue'
+import Central from './views/Central.vue'
+import ErrorPage from './views/Error.vue'
+import Index from './components/index.vue'
 
 Vue.use(Router)
 
@@ -11,8 +16,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'intro',
-      component: Intro
+      name: 'index',
+      component: Index
     },
     {
       path:'/home',
@@ -22,23 +27,22 @@ export default new Router({
     {
       path:'/about',
       name:'about',
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      component:About
     },
     {
       path:'/service',
       name:'serive',
-      component: () => import(/* webpackChunkName: "about" */ './views/Service.vue')
+      component:Service
     },
     {
       path:'/central',
       name:'central',
-      component: () => import(/* webpackChunkName: "about" */ './views/Central.vue')
+      component:Central
     },
     {
       path:'*',
       name:'error',
-      component: () => import(/* webpackChunkName: "about" */ './views/Error.vue')
+      component:ErrorPage
     }
-    
   ]
 })
