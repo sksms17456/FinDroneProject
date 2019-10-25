@@ -1,7 +1,11 @@
 <template>
     <div>
         <div v-if="call==='home'">
-           <section id="bilog-bilog"></section>
+            <v-img :src="getImgUrl('background_landing.png')" :height="height">
+                <section id="bilog-bilog"></section>
+                <goDownBtn />
+            </v-img>
+           
             <!-- <v-carousel 
               aspect-ratio="1.7" 
               :height="height">
@@ -38,6 +42,7 @@
 <script>
 import goDownBtn from '../components/goDownBtn'
 import $ from 'jquery'
+import Three from 'three'
 
 var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
 var container, stats;
@@ -62,45 +67,38 @@ export default {
             return require('../assets/'+img)
         },
         init() {
-        container = document.createElement('div',{  id: "particles", class: "particles"});
-        document.getElementById('bilog-bilog').appendChild( container );
-        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-        camera.position.z = 1000;
-        scene = new THREE.Scene();
-        particles = new Array();
-        var PI2 = Math.PI * 2;
-        var material = new THREE.SpriteCanvasMaterial( {
-          //color: 0x3f6e86,
-          color: 0x3f6e86,
-          // color: 0xffffff,
-          program: function ( context ) {
-            context.beginPath();
-            context.arc( 0, 0, .3, 0, PI2, true );
-            context.fill();
-          }
-        } )
-        var i = 0;
-        for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
-          for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
-            particle = particles[ i ++ ] = new THREE.Sprite( material )
-            particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 )
-            particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 )
-            // scene.background = new THREE.Color( 0x254a5d ); // UPDATED
-            scene.add( particle )
-          }
-        }
-        renderer = new THREE.CanvasRenderer()
-        renderer.setPixelRatio( window.devicePixelRatio )
-        renderer = new THREE.CanvasRenderer( { alpha: true }) // gradient
-        renderer.setSize( window.innerWidth, window.innerHeight )
-        container.appendChild( renderer.domElement )
-        //stats = new Stats();
-        //container.appendChild( stats.dom );
-        // document.addEventListener( 'mousemove', this.onDocumentMouseMove, false )
-        // document.addEventListener( 'touchstart', this.onDocumentTouchStart, false )
-        // document.addEventListener( 'touchmove', this.onDocumentTouchMove, false )
-        //
-        window.addEventListener( 'resize', this.onWindowResize, false )
+            container = document.createElement('div',{  id: "particles", class: "particles"});
+            document.getElementById('bilog-bilog').appendChild( container );
+            camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+            camera.position.z = 1000;
+            scene = new THREE.Scene();
+            particles = new Array();
+            var PI2 = Math.PI * 2;
+            var material = new THREE.SpriteCanvasMaterial( {
+              color: 0xffffff,
+              program: function ( context ) {
+                context.beginPath();
+                context.arc( 0, 0, .3, 0, PI2, true );
+                context.fill();
+              }
+            } )
+            var i = 0;
+            for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+              for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+                particle = particles[ i ++ ] = new THREE.Sprite( material )
+                particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 )
+                particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 )
+                scene.background = new THREE.Color( 0x254a5d ); // UPDATED
+                scene.add( particle )
+              }
+            }
+            renderer = new THREE.CanvasRenderer()
+            renderer.setPixelRatio( window.devicePixelRatio )
+            renderer = new THREE.CanvasRenderer( { alpha: true }) // gradient
+            renderer.setSize( window.innerWidth, window.innerHeight )
+            container.appendChild( renderer.domElement )
+            
+            window.addEventListener( 'resize', this.onWindowResize, false )
       },
       onWindowResize() {
         windowHalfX = window.innerWidth / 2;
@@ -109,33 +107,14 @@ export default {
         camera.updateProjectionMatrix();
         renderer.setSize( window.innerWidth, window.innerHeight );
       },
-      onDocumentMouseMove( event ) {
-        mouseX = event.clientX - windowHalfX;
-        mouseY = event.clientY - windowHalfY;
-      },
-      onDocumentTouchStart( event ) {
-        if ( event.touches.length === 1 ) {
-          event.preventDefault();
-          mouseX = event.touches[ 0 ].pageX - windowHalfX;
-          mouseY = event.touches[ 0 ].pageY - windowHalfY;
-        }
-      },
-      onDocumentTouchMove( event ) {
-        if ( event.touches.length === 1 ) {
-          event.preventDefault();
-          mouseX = event.touches[ 0 ].pageX - windowHalfX;
-          mouseY = event.touches[ 0 ].pageY - windowHalfY;
-        }
-      },
       animate() {
         requestAnimationFrame( this.animate );
         this.render();
       },
       render() {
-        // camera.position.x += ( mouseX - camera.position.x ) * .05;
-        // camera.position.y += ( - mouseY - camera.position.y ) * .05;
-        camera.position.x = 100;
-        camera.position.y = 150;
+        camera.position.x = 188;
+        camera.position.y = 152;
+
         camera.lookAt( scene.position );
         var i = 0;
         for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
@@ -181,6 +160,5 @@ export default {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: white;
 }
 </style>
