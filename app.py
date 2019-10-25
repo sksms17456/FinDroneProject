@@ -1,6 +1,5 @@
 import os
 from flask import Flask, render_template, jsonify, request, send_file
-from flask_compress import Compress
 from random import *
 from flask_cors import CORS
 import time
@@ -13,8 +12,6 @@ from cv2 import imdecode, imencode, IMREAD_COLOR
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 STATIC_PATH = os.path.normpath(os.path.join(ROOT_PATH, 'frontend', 'dist'))
 app = Flask(__name__, static_folder=STATIC_PATH, static_url_path='')
-
-compress = Compress()
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 drone = [
@@ -84,5 +81,4 @@ def get_drone_img():
 
 if __name__ == '__main__':
     app.config["CACHE_TYPE"] = "null"
-    Compress(app)
     app.run(host='0.0.0.0',port=5000)

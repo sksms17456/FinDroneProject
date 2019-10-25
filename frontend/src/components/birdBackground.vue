@@ -276,7 +276,7 @@ export default {
       // gui.close();
 
       // Load the background texture
-      var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("baekdu.jpg"));
+      var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("dark-gradient2.jpg"));
       var backgroundMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 0),
         new THREE.MeshBasicMaterial({
@@ -384,8 +384,8 @@ export default {
       return birdG;
     },
     getNewCol(order) {
-      const color1 = 0xe11443;
-      const color2 = 0x17c0e6;
+      const color1 = 0xffff00;
+      const color2 = 0xffffff;
       const c1 = new THREE.Color(color1);
       const c2 = new THREE.Color(color2);
       const gradient = "varianceGradient".indexOf("Gradient") !== -1;
