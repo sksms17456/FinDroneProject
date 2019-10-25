@@ -22,7 +22,7 @@ STD_SQUARE = [
 NAME = "Drone1"
 MIN_HEIGHT = 10
 MAX_HEIGHT = 15
-MAX_MOVE_LENGTH = 2
+MAX_MOVE_LENGTH = 3
 CAMERA_NAME = '3' # 아래
 TARGET = 'person'
 
@@ -38,13 +38,13 @@ class Drone():
         self.max_len = max_len
         self.spos = spos
         self.npos = {"x_val":0., "y_val":0., "z_val":0.}
-        self.target = {"x_val":0., "y_val":0.}
         self.type = 1   # 1은 추적 드론, 2는 근처 수색 드론, 3은 전체 수색 드론
         self.mod = 1    # 1은 map 수색, 2는 근처 수색, 3은 추적 알고리즘 적용
         self.drone = airsim.MultirotorClient()
         self.drone.confirmConnection()
         self.route = ss.getRoute()
         self.myroute = 0
+        print(len(self.route))
     
     def takeoff(self):
         self.drone.enableApiControl(True, vehicle_name=self.name)
@@ -90,24 +90,27 @@ class Drone():
 
         # print(self.npos)
         # print(self.target)
+        print("Target Number = " + str(self.myroute))
+        print("target_x= " + str(self.route[self.myroute][0]))
+        print("target_t= " + str(self.route[self.myroute][1]))
 
         dx = self.route[self.myroute][0] - self.npos["x_val"]
         dy = self.route[self.myroute][1] - self.npos["y_val"]
-        if (dx**2) + (dy**2) > 100:
+        if (dx**2) + (dy**2) < 10:
             self.myroute += 1
 
-        x = self.route[self.myroute][0]
-        y = self.route[self.myroute][1]
+        # x = self.route[self.myroute][0] - self.npos["x_val"]
+        # y = self.route[self.myroute][1] - self.npos["y_val"]
         # x = self.target["x_val"] - self.npos["x_val"]
         # y = self.target["y_val"] - self.npos["y_val"]
-        # print(x)
-        # print(y)
+        print(dx)
+        print(dy)
         # print()
 
-        x = min(x, self.max_len) if x > 0 else max(x, -(self.max_len))
-        y = min(y, self.max_len) if y > 0 else max(y, -(self.max_len))
-        # print(x)
-        # print(y)
+        x = min(dx, self.max_len) if dx > 0 else max(dx, -(self.max_len))
+        y = min(dy, self.max_len) if dy > 0 else max(dy, -(self.max_len))
+        print(x)
+        print(y)
         # print()
         # print()
 
@@ -120,23 +123,30 @@ class Drone():
         self.npos["y_val"] = self.spos["y_val"] + pos.y_val
         self.npos["z_val"] = self.spos["z_val"] - pos.z_val
         self.h = float(self.drone.getDistanceSensorData(vehicle_name=self.name, distance_sensor_name="Distance1").distance)
+        print("Now Position!")
         print(self.npos["x_val"])
         print(self.npos["y_val"])
-        print(self.npos["z_val"])
-        print(self.h)
+        # print(self.npos["z_val"])
+        # print(self.h)
 
         return self.npos
+    
+    def getRoute(self):
+        return self.myroute
 
 d = Drone(NAME, MIN_HEIGHT, MAX_HEIGHT, MAX_MOVE_LENGTH, START_POS)
 
 def run():
     cv2.startWindowThread()
     d.takeoff()
+    i = 0
 
-    for i in range(20):
+    while True:
         print("====================== " + str(i))
         d.fly()
-        d.target["x_val"] += 5
+        if d.getRoute() == 120:
+            break
+        i += 1
 
     d.landing()
     cv2.destroyAllWindows()
