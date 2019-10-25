@@ -6,7 +6,6 @@ import About from './views/About.vue'
 import Service from './views/Service.vue'
 import Central from './views/Central.vue'
 import ErrorPage from './views/Error.vue'
-import Index from './components/index.vue'
 
 Vue.use(Router)
 
@@ -16,8 +15,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'index',
-      component: Index
+      name: 'intro',
+      component: Intro
     },
     {
       path:'/home',

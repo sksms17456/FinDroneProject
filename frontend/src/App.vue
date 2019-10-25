@@ -1,21 +1,21 @@
 <template>
   <v-app>
-    <v-content>
+    <!-- <v-content> -->
     <!-- <Header/> -->
-    <Index/>
-      
-    </v-content>
-    <!-- <div id="introPage">
-    <Intro v-if="introPage" @goHome="goHome"/>
+    <!-- <Index/> -->
+    <!-- </v-content> -->
+
+    <div id="introPage">
+      <Intro v-if="introPage" @goHome="goHome"/>
     </div>
     <div>
-    <v-content v-if="!introPage">
-    <Header/>
+      <v-content v-if="!introPage">
+        <Header/>
         <router-view/>
-      <Scrolltotop/>
-    <Footer/>
-    </v-content> -->
-    <!-- </div> -->
+        <Scrolltotop/>
+        <Footer/>
+      </v-content>
+    </div>
   </v-app>
 </template>
 
@@ -24,12 +24,10 @@ import Intro from './views/Intro'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Scrolltotop from './components/ScrollToTop'
-import Index from './components/index'
 
 export default {
   name: 'App',
   components:{
-    Index,
     Intro,
     Header,
     Scrolltotop,

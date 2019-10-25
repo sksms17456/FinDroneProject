@@ -1,10 +1,14 @@
 <template>
     <div>
         <div v-if="call==='home'">
-            <v-img :src="getImgUrl('background_landing.png')" :height="height">
-                <section id="bilog-bilog"></section>
+            <v-img :height="height">
+                <birdBackground />
                 <goDownBtn />
             </v-img>
+            <!-- <v-img :src="getImgUrl('background_landing.png')" :height="height">
+                <section id="bilog-bilog"></section>
+                <goDownBtn />
+            </v-img> -->
            
             <!-- <v-carousel 
               aspect-ratio="1.7" 
@@ -40,6 +44,7 @@
 </template>
 
 <script>
+import birdBackground from '../components/birdBackground'
 import goDownBtn from '../components/goDownBtn'
 import $ from 'jquery'
 import Three from 'three'
@@ -55,7 +60,8 @@ var windowHalfY = window.innerHeight / 2;
 export default {
     name:'ImgBanner',
     components: {
-      goDownBtn
+      goDownBtn,
+      birdBackground
     },
     props: {
         call:{type:String, default:"home"},
