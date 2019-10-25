@@ -112,8 +112,8 @@ export default {
         this.render();
       },
       render() {
-        camera.position.x = 188;
-        camera.position.y = 152;
+        camera.position.x = 0;
+        camera.position.y = 0;
 
         camera.lookAt( scene.position );
         var i = 0;
