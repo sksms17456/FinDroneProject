@@ -3,14 +3,39 @@
     <!-- 홈 화면(sector1) --> 
    <ImgBanner call="home">
       <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
-               
          <br/>Start!
          <br/>with StartDroneTeam
       </div>
     </ImgBanner>
+    
+    <!-- 간단소개 (sector2) -->
+    <div style="text-align:center">
+      <h1 id="hello">Hello.</h1>
+      <p id="title_sm">This is StartDroneTeam.</p>
+    
+      <div class="hello_text">
+        <p>
+        안녕하세요, '<span>출발 드론팀</span>' 입니다.&nbsp;<br/>
+        저희 FinDrone 사이트에 방문해 주셔서 감사합니다.<br/>
+        FinDrone은 <b>Find</b>와 <b>Drone</b>의 합성어로 드론으로 찾는다는 의미를 갖고 있습니다.<br/>
+        저희는 섬세하고 꼼꼼하게 실종자를 수색하기 위한 뛰어난 수색 알고리즘을 갖추고 있습니다. <br/>
+        골든타임의 중요성을 인지하고 있으며, 보다 많은 실종자를 찾을 수 있도록 오늘도 궁리 중입니다.</p>
+        <p>
+        작은 단서도 놓치지 않도록 황하남 알고리즘 전문가가 전문성을 담아 개발하고 있습니다.<br/>
+        저희 팀의 도움이 필요하시다면 언제든 연락 주세요 ;)</p>
+        </div>
+        <div class="more">
+          <a href="/about" class="more_link">
+            <span class="more_link_text">'출발 드론팀'에 대해 더 궁금하신가요?</span>
+            <v-btn><v-icon>mdi mdi-account-arrow-right</v-icon></v-btn>
+          </a>
+          </div>
 
+      <h1 id="service">SERVICE.</h1>
+    </div>
+    
     <!-- 서비스 단계 표시(sector3) -->
-     <v-container fluid grid-list-md >
+    <v-container fluid grid-list-md >
       <h1 style="text-align:center"> Service Steps Using Drones </h1>
         <v-layout row justify-center>
             <v-flex v-for="(step,index) in steps" :key="index" xs4>
@@ -33,7 +58,6 @@
     <!-- 주요 서비스 소개(sector4) -->
     <v-container fluid grid-list-md style="background:#F5F5F5">
     <h1 style="text-align:center"> 플랫폼 주요 기능 </h1>
-    
       <v-tabs
         color="black"
         dark
@@ -79,6 +103,7 @@
 
 <script>
 import ImgBanner from '../components/ImgBanner'
+import $ from 'jquery'
 
 export default {
   name: 'Home',
@@ -91,12 +116,25 @@ export default {
         this.$router.push("/home");
       }
     }
+   $('#hello').mousemove(function(e){
+     var rXP = (e.pageX - this.offsetLeft-$(this).width()/2);
+     var rYP = (e.pageY - this.offsetTop-$(this).height()/2);
+     $('#hello').css('text-shadow', +rYP/10+'px '+rXP/80+'px rgba(227,6,19,.8), '+rYP/8+'px '+rXP/60+'px rgba(255,237,0,1), '+rXP/70+'px '+rYP/12+'px rgba(0,159,227,.7)');
+   });
+
+   $('#service').mousemove(function(e){
+     var rXP = (e.pageX - this.offsetLeft-$(this).width()/2);
+     var rYP = (e.pageY - this.offsetTop-$(this).height()/2);
+     $('#service').css('text-shadow', +rYP/10+'px '+rXP/80+'px rgba(227,6,19,.8), '+rYP/8+'px '+rXP/60+'px rgba(255,237,0,1), '+rXP/70+'px '+rYP/12+'px rgba(0,159,227,.7)');
+   });
   },
+
   methods:{
     getImgUrl(img){
       return require('../assets/'+img)
     }
   },
+
   data(){
     return{
       steps:[
@@ -134,20 +172,49 @@ export default {
 </script>
 
 <style scoped>
-.div-block-line-first{
-    height:100%;
-    border-right: 2px solid #1f4782;
-    opacity: .55;
-    margin:5px;
+@font-face{
+ font-family:'LotteMartDream';
+ font-style:normal;
+ font-weight:400;
+ src:url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'),
+     url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
 }
-.div-block-line-second{
-    height:100%;
-    border-left: 2px solid #1f4782;
-    opacity: .55;
-    margin:5px;
-}
+
 .container {
   width : 100%;
 }
 
+#hello, #service{
+  text-transform:uppercase;
+  font-size:72px;
+  font-family:'Verdana';
+  padding:30px;
+}
+
+.hello_text {
+  transition: margin .5s, font-size .5s;
+  margin: 2.5em 0 1em;
+  padding: 0 3.5em;
+  font-family: 'LotteMartDream', sans-serif;
+  text-align: center;
+  font-weight: 300;
+  color: #3f3f3f;
+  letter-spacing: 0.025rem;
+  line-height: 1.6em;
+  word-break: keep-all;
+}
+
+#title_sm {
+    display: block;
+    position: relative;
+    z-index: 1;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #aaa;
+    font-weight: 300;
+    text-transform: uppercase;
+    transition: font-size .5s, opacity .5s;
+}
 </style>
