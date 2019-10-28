@@ -2,6 +2,7 @@
   <v-footer
     dark
     height="auto"
+    id="footer"
   >
     <v-card
       flat
@@ -36,9 +37,18 @@
         {icon: 'fab fa-youtube', link: 'https://www.youtube.com/channel/UC-J0CCwYpjfoBxmvcuBGz_w'}
       ]
     }),
+    mounted(){
+      this.init();
+    },
     methods:{
         getImgUrl(img){
             return require('../assets/'+img)
+        },
+        init(){
+          if(this.$route.path=='/sample'){
+            var footerElement = document.getElementById("footer");
+            footerElement.style.display = "none";
+          }
         }
     },
   }

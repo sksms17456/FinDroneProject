@@ -596,7 +596,7 @@ export default {
   top: 0;
   bottom: 0;
   overflow: hidden;
-  cursor: url(http://cur.cursors-4u.net/mechanics/mec-5/mec473.cur), auto !important;
-  /* cursor: url('../asssets/mousePointer.cur'),auto !important; */
+  /* cursor: url(http://cur.cursors-4u.net/mechanics/mec-5/mec473.cur), auto !important; */
+  cursor: url('../assets/dronpointer.png'), auto !important;
 }
 </style>
