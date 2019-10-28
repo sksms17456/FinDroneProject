@@ -32,8 +32,8 @@
                         >
                           <template v-slot:items="props">
                             <td class="text-xs-right">{{ props.item.time }}</td>
-                            <td class="text-xs-right">{{ props.item.posy }}</td>
                             <td class="text-xs-right">{{ props.item.posx }}</td>
+                            <td class="text-xs-right">{{ props.item.posy }}</td>
                             <td class="text-xs-right">{{ props.item.posz }}</td>
                           </template>
                         </v-data-table>
@@ -102,18 +102,18 @@ import $ from 'jquery'
           //   value: 'name'
           // },
           { text: '시간', value: 'time' },
-          { text: 'Y좌표', value: 'posy' },
           { text: 'X좌표', value: 'posx' },
+          { text: 'Y좌표', value: 'posy' },
           { text: 'Z좌표', value: 'posz' }
         ],
         target:[
           {
             name:'Target',
             src:'footerlogo.png',
-            time:'',
-            posy:'',
-            posx:'',
-            posz:'',
+            time:'3',
+            posx:'0',
+            posy:'0',
+            posz:'0',
             state:''
           }],
         drones:[
@@ -160,9 +160,14 @@ import $ from 'jquery'
             axios.get(path)
             .then(response => {
               const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
-
+              const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
               for(var i=0; i<3; i++){
                 curThis.drones[i].src = contain[i]
+                console.log(pos)
+                curThis.target[0].posx = pos[1][0]
+                curThis.target[0].posy = pos[1][1]
+                curThis.target[0].posz = pos[1][2]
+
                 const path = '/api/getDroneImg?drone='+i +'&num_img=' + contain[i]
                 console.log(curThis.drones[i].src)
                 $('#drone_img_'+ i).attr("src", path)
