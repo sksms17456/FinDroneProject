@@ -1,52 +1,57 @@
 <template>
 	<div>
 		<div style="width:50%; display:inline-block;">
-			<v-img
-              :src="getImgUrl(mapImg)"
-              height="65vh"
-            >
-			</v-img>
+			<div class="div_border droneName" style="height:10%">
+				Drone-{{target.idx}}
+			</div>
+			<div class="div_border" style="height:80%">
+				<v-img
+				:src="getImgUrl('detect.png')"
+				height="86.6vh"
+            	>
+				</v-img>
+			</div>
+			<div style="height:10%">
+				<div class="div_border dronePos">X : {{target.x_pos}} </div>
+				<div class="div_border dronePos">Y : {{target.y_pos}} </div>
+				<div class="div_border dronePos">Z : {{target.z_pos}} </div>
+			</div>
 		</div>
+
 		<div style="width:50%; display:inline-block;">
-		<div id="container" style="width:100%"></div>
-		<div id="menu" style="width:inherit">
-			<button id="table">TABLE</button>
-			<button id="sphere">SPHERE</button>
-			<button id="helix">HELIX</button>
-			<button id="grid">GRID</button>
-		</div>
-        
-        <v-dialog v-model="dialog" width="600px">
-                
-                <v-card>
-                    <v-card-title
-                    class="headline grey lighten-2"
-                    primary-title
-                    >
-                    드론00 화면
-                    </v-card-title>
-                    <v-card-text>
-                        <v-img :src="getImgUrl('logo.png')"></v-img>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                    <v-spacer></v-spacer>
-                        <v-btn
-                            color="primary"
-                            flat
-                            @click="dialog = false"
-                        >
-                            닫기
-                        </v-btn>
-                    </v-card-actions>
-                </v-card>
-             </v-dialog>
-        
+			<div id="container" style="width:100%"></div>
+			<div id="menu" style="width:inherit">
+				<button id="table">TABLE</button>
+				<button id="sphere">SPHERE</button>
+				<button id="helix">HELIX</button>
+				<button id="grid">GRID</button>
+			</div>
+			<!-- <v-dialog v-model="dialog" width="600px">
+				<v-card>
+					<v-card-title
+					class="headline grey lighten-2"
+					primary-title
+					>
+					드론00 화면
+					</v-card-title>
+					<v-card-text>
+						<v-img :src="getImgUrl('logo.png')"></v-img>
+					</v-card-text>
+					<v-divider></v-divider>
+					<v-card-actions>
+					<v-spacer></v-spacer>
+						<v-btn
+							color="primary"
+							flat
+							@click="dialog = false"
+						>
+							닫기
+						</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>         -->
     	</div>
-	</div>
-    
+	</div>    
 </template>
 
 <script>
@@ -60,133 +65,69 @@ export default {
     data(){
         return{
 			mapImg: 'mappin.gif',
-            dialog:false,
+			// dialog:false,
+			target : {
+				idx : 1,
+				x_pos : 0,
+				y_pos : 0,
+				z_pos : 0
+			},
             table : [
-				"H", "Hydrogen", "1.00794", 1, 1,
-				"He", "Helium", "4.002602", 2, 1,
-				"Li", "Lithium", "6.941", 3, 1,
-				"Be", "Beryllium", "9.012182", 4, 1,
-				"B", "Boron", "10.811", 5, 1,
-				"C", "Carbon", "12.0107", 6, 1,
-				"N", "Nitrogen", "14.0067", 7, 1,
-				"O", "Oxygen", "15.9994", 8, 1,
-				"F", "Fluorine", "18.9984032", 9, 2,
-				"Ne", "Neon", "20.1797", 10, 2,
-				"Na", "Sodium", "22.98976...", 11, 3,
-				"Mg", "Magnesium", "24.305", 12, 3,
-				"Al", "Aluminium", "26.9815386", 13, 3,
-				"Si", "Silicon", "28.0855", 14, 3,
-				"P", "Phosphorus", "30.973762", 15, 3,
-				"S", "Sulfur", "32.065", 16, 3,
-				"Cl", "Chlorine", "35.453", 17, 3,
-				"Ar", "Argon", "39.948", 18, 3,
-				"K", "Potassium", "39.948", 1, 4,
-				"Ca", "Calcium", "40.078", 2, 4,
-				"Sc", "Scandium", "44.955912", 3, 4,
-				"Ti", "Titanium", "47.867", 4, 4,
-				"V", "Vanadium", "50.9415", 5, 4,
-				"Cr", "Chromium", "51.9961", 6, 4,
-				"Mn", "Manganese", "54.938045", 7, 4,
-				"Fe", "Iron", "55.845", 8, 4,
-				"Co", "Cobalt", "58.933195", 9, 4,
-				"Ni", "Nickel", "58.6934", 10, 4,
-				"Cu", "Copper", "63.546", 11, 4,
-				"Zn", "Zinc", "65.38", 12, 4,
-				"Ga", "Gallium", "69.723", 13, 4,
-				"Ge", "Germanium", "72.63", 14, 4,
-				"As", "Arsenic", "74.9216", 15, 4,
-				"Se", "Selenium", "78.96", 16, 4,
-				"Br", "Bromine", "79.904", 17, 4,
-				"Kr", "Krypton", "83.798", 18, 4,
-				"Rb", "Rubidium", "85.4678", 1, 5,
-				"Sr", "Strontium", "87.62", 2, 5,
-				"Y", "Yttrium", "88.90585", 3, 5,
-				"Zr", "Zirconium", "91.224", 4, 5,
-				"Nb", "Niobium", "92.90628", 5, 5,
-				"Mo", "Molybdenum", "95.96", 6, 5,
-				"Tc", "Technetium", "(98)", 7, 5,
-				"Ru", "Ruthenium", "101.07", 8, 5,
-				"Rh", "Rhodium", "102.9055", 9, 5,
-				"Pd", "Palladium", "106.42", 10, 5,
-				"Ag", "Silver", "107.8682", 11, 5,
-				"Cd", "Cadmium", "112.411", 12, 5,
-				"In", "Indium", "114.818", 13, 5,
-				"Sn", "Tin", "118.71", 14, 5,
-				"Sb", "Antimony", "121.76", 15, 5,
-				"Te", "Tellurium", "127.6", 16, 5,
-				"I", "Iodine", "126.90447", 17, 5,
-				"Xe", "Xenon", "131.293", 18, 5,
-				"Cs", "Caesium", "132.9054", 1, 6,
-				"Ba", "Barium", "132.9054", 2, 6,
-				"La", "Lanthanum", "138.90547", 4, 9,
-				"Ce", "Cerium", "140.116", 5, 9,
-				"Pr", "Praseodymium", "140.90765", 6, 9,
-				"Nd", "Neodymium", "144.242", 7, 9,
-				"Pm", "Promethium", "(145)", 8, 9,
-				"Sm", "Samarium", "150.36", 9, 9,
-				"Eu", "Europium", "151.964", 10, 9,
-				"Gd", "Gadolinium", "157.25", 11, 9,
-				"Tb", "Terbium", "158.92535", 12, 9,
-				"Dy", "Dysprosium", "162.5", 13, 9,
-				"Ho", "Holmium", "164.93032", 14, 9,
-				"Er", "Erbium", "167.259", 15, 9,
-				"Tm", "Thulium", "168.93421", 16, 9,
-				"Yb", "Ytterbium", "173.054", 17, 9,
-				"Lu", "Lutetium", "174.9668", 18, 9,
-				"Hf", "Hafnium", "178.49", 4, 6,
-				"Ta", "Tantalum", "180.94788", 5, 6,
-				"W", "Tungsten", "183.84", 6, 6,
-				"Re", "Rhenium", "186.207", 7, 6,
-				"Os", "Osmium", "190.23", 8, 6,
-				"Ir", "Iridium", "192.217", 9, 6,
-				"Pt", "Platinum", "195.084", 10, 6,
-				"Au", "Gold", "196.966569", 11, 6,
-				"Hg", "Mercury", "200.59", 12, 6,
-				"Tl", "Thallium", "204.3833", 13, 6,
-				"Pb", "Lead", "207.2", 14, 6,
-				"Bi", "Bismuth", "208.9804", 15, 6,
-				"Po", "Polonium", "(209)", 16, 6,
-				"At", "Astatine", "(210)", 17, 6,
-				"Rn", "Radon", "(222)", 18, 6,
-				"Fr", "Francium", "(223)", 1, 7,
-				"Ra", "Radium", "(226)", 2, 7,
-				"Ac", "Actinium", "(227)", 4, 10,
-				"Th", "Thorium", "232.03806", 5, 10,
-				"Pa", "Protactinium", "231.0588", 6, 10,
-				"U", "Uranium", "238.02891", 7, 10,
-				"Np", "Neptunium", "(237)", 8, 10,
-				"Pu", "Plutonium", "(244)", 9, 10,
-				"Am", "Americium", "(243)", 10, 10,
-				"Cm", "Curium", "(247)", 11, 10,
-				"Bk", "Berkelium", "(247)", 12, 10,
-				"Cf", "Californium", "(251)", 13, 10,
-				"Es", "Einstenium", "(252)", 14, 10,
-				"Fm", "Fermium", "(257)", 15, 10,
-				"Md", "Mendelevium", "(258)", 16, 10,
-				"No", "Nobelium", "(259)", 17, 10,
-				"Lr", "Lawrencium", "(262)", 18, 10,
-				"Rf", "Rutherfordium", "(267)", 4, 7,
-				"Db", "Dubnium", "(268)", 5, 7,
-				"Sg", "Seaborgium", "(271)", 6, 7,
-				"Bh", "Bohrium", "(272)", 7, 7,
-				"Hs", "Hassium", "(270)", 8, 7,
-				"Mt", "Meitnerium", "(276)", 9, 7,
-				"Ds", "Darmstadium", "(281)", 10, 7,
-				"Rg", "Roentgenium", "(280)", 11, 7,
-				"Cn", "Copernicium", "(285)", 12, 7,
-				"Nh", "Nihonium", "(286)", 13, 7,
-				"Fl", "Flerovium", "(289)", 14, 7,
-				"Mc", "Moscovium", "(290)", 15, 7,
-				"Lv", "Livermorium", "(293)", 16, 7,
-				"Ts", "Tennessine", "(294)", 17, 7,
-				"Og", "Oganesson", "(294)", 18, 7
+				"1", "0.0", "0.0", "0.0", 1, 1,
+				"2", "0.0", "0.0", "4.002602", 2, 1,
+				"3", "0.0", "0.0", "6.941", 3, 1,
+				"4", "0.0", "0.0", "9.012182", 4, 1,
+				"5", "0.0", "0.0", "10.811", 5, 1,
+				"6", "0.0", "0.0", "12.0107", 6, 1,
+				"7", "0.0", "0.0", "14.0067", 7, 1,
+				"8", "0.0", "0.0", "15.9994", 8, 1,
+				"9", "0.0", "0.0", "26.9815386", 1, 2,
+				"10", "0.0", "0.0", "28.0855", 2, 2,
+				"11", "0.0", "0.0", "30.973762", 3, 2,
+				"12", "0.0", "0.0", "32.065", 4, 2,
+				"13", "0.0", "0.0", "35.453", 5, 2,
+				"14", "0.0", "0.0", "39.948", 6, 2,
+				"15", "0.0", "0.0", "39.948", 7, 2,
+				"16", "0.0", "0.0", "40.078", 8, 2,
+				"17", "0.0", "0.0", "54.938045", 1, 3,
+				"18", "0.0", "0.0", "55.845", 2, 3,
+				"19", "0.0", "0.0", "58.933195", 3, 3,
+				"20", "0.0", "0.0", "58.6934", 4, 3,
+				"21", "0.0", "0.0", "63.546", 5, 3,
+				"22", "0.0", "0.0", "65.38", 6, 3,
+				"23", "0.0", "0.0", "69.723", 7, 3,
+				"24", "0.0", "0.0", "72.63", 8, 3,
+				"25", "0.0", "0.0", "114.818", 1, 4,
+				"26", "0.0", "0.0", "118.71", 2, 4,
+				"27", "0.0", "0.0", "121.76", 3, 4,
+				"28", "0.0", "0.0", "127.6", 4, 4,
+				"29", "0.0", "0.0", "126.90447", 5, 4,
+				"30", "0.0", "0.0", "131.293", 6, 4,				
+				"31", "0.0", "0.0", "144.242", 7, 4,
+				"32", "0.0", "0.0", "(145)", 8, 4,
+				"33", "0.0", "0.0", "85.4678", 1, 5,
+				"34", "0.0", "0.0", "87.62", 2, 5,
+				"35", "0.0", "0.0", "88.90585", 3, 5,
+				"36", "0.0", "0.0", "91.224", 4, 5,
+				"37", "0.0", "0.0", "92.90628", 5, 5,
+				"38", "0.0", "0.0", "95.96", 6, 5,
+				"39", "0.0", "0.0", "(98)", 7, 5,
+				"40", "0.0", "0.0", "101.07", 8, 5,
+				"41", "0.0", "0.0", "132.9054", 1, 6,
+				"42", "0.0", "0.0", "132.9054", 2, 6,
+				"43", "0.0", "0.0", "138.90547", 3, 6,
+				"44", "0.0", "0.0", "140.116", 4, 6,
+				"45", "0.0", "0.0", "140.90765", 5, 6,
+				"46", "0.0", "0.0", "95.96", 6, 6,
+				"47", "0.0", "0.0", "(98)", 7, 6,
+				"48", "0.0", "0.0", "101.07", 8, 6,				
 			],
             camera:'',
             scene:'',
             renderer:'',
 			controls:'',
 			objects : [],
-			targets : { table: [], sphere: [], helix: [], grid: [] }
+			targets : { table: [], sphere: [], helix: [], grid: [] },
         }
     },
     mounted(){
@@ -197,41 +138,54 @@ export default {
         getImgUrl(img){
             return require('../assets/'+img);
         },
-        change(){
-            console.log("불렷어")
-            this.dialog=true
-        },
+        // change(){
+        //     console.log()
+		// 	this.dialog=true
+			
+        // },
         init() {
 			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-			this.camera.position.z = 1100
+			this.camera.position.z = 1600
             this.scene = new THREE.Scene();
             var self= this;
 				// table
-			for ( var i = 0; i < this.table.length; i += 5 ) {
+			for ( var i = 0; i < this.table.length; i += 6 ) {
 				var element = document.createElement( 'div' );
 				element.className = 'element';
                 element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
 
-                element.addEventListener('click',function() {
-                    self.change();
-                },false)
-                
 				var number = document.createElement( 'div' );
 				number.className = 'number';
-				number.textContent = ( i / 5 ) + 1;
+				number.style = 'text-align:center; width:100%; top:2px; font-size:15px; right:0px;'
+				number.textContent = ( i / 6 ) + 1;
                 element.appendChild( number );
-                
+
 				var symbol = document.createElement( 'img' );
-				symbol.className = 'symbol';
+				symbol.className = 'symbol '+ String(( i / 6 ) + 1);
+				symbol.style = 'top:20px; height:90px;'
                 // symbol.textContent = this.table[ i ];
                 symbol.src=this.getImgUrl('detect.png')
                 element.appendChild( symbol );
                 
 				var details = document.createElement( 'div' );
-				details.className = 'details';
-				details.innerHTML = this.table[ i + 1 ] + '<br>' + this.table[ i + 2 ];
+				details.className = 'details '+ String(( i / 6 ) + 1);
+				details.style = 'bottom:5px;'
+				details.innerHTML = this.table[ i + 1 ] + '<br>' + this.table[ i + 2 ] + '<br>' + this.table[ i + 3 ];
                 element.appendChild( details );
-                
+				
+				element.addEventListener('click',function() {
+					// self.change();
+					// self.target.idx = this.getElementsByClassName('number')[0].textContent;
+					// self.target.x_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[0];
+					// self.target.y_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[1];
+					// self.target.z_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[2];
+					document.getElementsByClassName('details 4')[0].innerHTML = '1.1' + '<br>' + '2.2' + '<br>' + '3.3'
+					self.target.idx = this.getElementsByClassName('number')[0].textContent;
+					self.target.x_pos = self.table[((self.target.idx-1)*6)+1];
+					self.target.y_pos = self.table[((self.target.idx-1)*6)+2];
+					self.target.z_pos = self.table[((self.target.idx-1)*6)+3];
+				},false)
+
 				var object = new CSS3DObject( element );
 				object.position.x = Math.random() * 4000 - 2000;
 				object.position.y = Math.random() * 4000 - 2000;
@@ -240,8 +194,8 @@ export default {
                 this.objects.push( object );
                 
 				var object = new THREE.Object3D();
-				object.position.x = ( this.table[ i + 3 ] * 140 ) - 1330;
-				object.position.y = - ( this.table[ i + 4 ] * 180 ) + 990;
+				object.position.x = ( this.table[ i + 4 ] * 140 ) - 620;
+				object.position.y = - ( this.table[ i + 5 ] * 180 ) + 660;
 				this.targets.table.push( object );
             }
                 
@@ -410,6 +364,23 @@ a {
 	color: rgba(127,255,255,0.75);
 }
 
+.div_border{
+	border:1.5px solid black;
+}
+
+.droneName{
+	font-size: 40px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.dronePos{
+	display:inline-block; 
+	width:33.3%;
+	text-align: center;
+	font-weight: bold;
+	font-size:25px;
+}
 button {
     color: rgba(127,255,255,0.75);
 	background: transparent;
