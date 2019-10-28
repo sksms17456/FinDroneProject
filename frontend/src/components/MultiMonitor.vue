@@ -1,7 +1,15 @@
 <template>
-    <div>
-		<div id="container"></div>
-		<div id="menu">
+	<div>
+		<div style="width:50%; display:inline-block;">
+			<v-img
+              :src="getImgUrl(mapImg)"
+              height="65vh"
+            >
+			</v-img>
+		</div>
+		<div style="width:50%; display:inline-block;">
+		<div id="container" style="width:100%"></div>
+		<div id="menu" style="width:inherit">
 			<button id="table">TABLE</button>
 			<button id="sphere">SPHERE</button>
 			<button id="helix">HELIX</button>
@@ -36,7 +44,9 @@
                 </v-card>
              </v-dialog>
         
-    </div>
+    	</div>
+	</div>
+    
 </template>
 
 <script>
@@ -49,20 +59,21 @@ export default {
     name:'MultiMonitor',
     data(){
         return{
+			mapImg: 'mappin.gif',
             dialog:false,
             table : [
 				"H", "Hydrogen", "1.00794", 1, 1,
-				"He", "Helium", "4.002602", 18, 1,
-				"Li", "Lithium", "6.941", 1, 2,
-				"Be", "Beryllium", "9.012182", 2, 2,
-				"B", "Boron", "10.811", 13, 2,
-				"C", "Carbon", "12.0107", 14, 2,
-				"N", "Nitrogen", "14.0067", 15, 2,
-				"O", "Oxygen", "15.9994", 16, 2,
-				"F", "Fluorine", "18.9984032", 17, 2,
-				"Ne", "Neon", "20.1797", 18, 2,
-				"Na", "Sodium", "22.98976...", 1, 3,
-				"Mg", "Magnesium", "24.305", 2, 3,
+				"He", "Helium", "4.002602", 2, 1,
+				"Li", "Lithium", "6.941", 3, 1,
+				"Be", "Beryllium", "9.012182", 4, 1,
+				"B", "Boron", "10.811", 5, 1,
+				"C", "Carbon", "12.0107", 6, 1,
+				"N", "Nitrogen", "14.0067", 7, 1,
+				"O", "Oxygen", "15.9994", 8, 1,
+				"F", "Fluorine", "18.9984032", 9, 2,
+				"Ne", "Neon", "20.1797", 10, 2,
+				"Na", "Sodium", "22.98976...", 11, 3,
+				"Mg", "Magnesium", "24.305", 12, 3,
 				"Al", "Aluminium", "26.9815386", 13, 3,
 				"Si", "Silicon", "28.0855", 14, 3,
 				"P", "Phosphorus", "30.973762", 15, 3,
@@ -192,7 +203,7 @@ export default {
         },
         init() {
 			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-		    this.camera.position.z = 3000;
+			this.camera.position.z = 1100
             this.scene = new THREE.Scene();
             var self= this;
 				// table
@@ -268,7 +279,7 @@ export default {
 			}
 				//
 			this.renderer = new CSS3DRenderer();
-			this.renderer.setSize( window.innerWidth, window.innerHeight );
+			this.renderer.setSize( window.innerWidth/2, window.innerHeight );
 			document.getElementById( 'container' ).appendChild( this.renderer.domElement );
             
                 //

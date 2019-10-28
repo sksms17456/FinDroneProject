@@ -9,28 +9,9 @@
       </div>
     </ImgBanner>
 
-    <!-- 개요(sector2) -->
-    <v-layout fluid grid-list-md>
-      <v-img :src="getImgUrl('controldrone.png')">
-          <v-layout row justify-center>
-            <v-flex xs4>
-              <div class="div-block-line-first"></div>
-            </v-flex>
-            <v-flex xs4 style="font-weight:bold;text-align:center">
-              <span style="font-size:2vmin; font-color=#606060">드론 수색, 어렵게만 느껴지셨나요?<br/>
-                                            이제 FinDrone으로 쉽고 간편해집니다.</span>
-            </v-flex>
-            <v-flex xs4>
-              <div class="div-block-line-second"></div>
-            </v-flex>
-          </v-layout>
-      </v-img>
-      <!-- </v-card> -->
-    </v-layout>
-
     <!-- 서비스 단계 표시(sector3) -->
      <v-container fluid grid-list-md >
-      <h1 style="text-align:center"> 드론을 이용한 서비스 단계 </h1>
+      <h1 style="text-align:center"> Service Steps Using Drones </h1>
         <v-layout row justify-center>
             <v-flex v-for="(step,index) in steps" :key="index" xs4>
                 <v-card class="hidden-sm-and-down; ma-4">
@@ -38,8 +19,8 @@
                     :src="step.src"
                     aspect-ratio="1.7" contain
                     ></v-img>
-                    <v-card-title primary-title>
-                    <div>
+                    <v-card-title primary-title style="text-align:center">
+                    <div style="width:100%">
                         <h3 class="headline mb-0">{{ step.card_title }}</h3>
                         <div> {{ step.card_text }} </div>
                     </div>
@@ -164,6 +145,9 @@ export default {
     border-left: 2px solid #1f4782;
     opacity: .55;
     margin:5px;
+}
+.container {
+  width : 100%;
 }
 
 </style>
