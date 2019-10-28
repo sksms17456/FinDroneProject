@@ -22,3 +22,4 @@ yarn-error.log*
 
 # Tensorflow Example
 /tensorflow
+/drone_object_detection/images
