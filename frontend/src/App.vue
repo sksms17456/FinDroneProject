@@ -12,7 +12,7 @@
         <Footer/>
       </v-content>
     </div>
-    
+
   </v-app>
 </template>
 
@@ -33,6 +33,22 @@ export default {
   data () {
     return {
       introPage:true
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      // 경로 변경에 반응하여...
+      var deskToolbarElement = document.getElementById("deskToolbar");
+      var deskFooterElement = document.getElementById('footer');
+      if(to.path === '/central'){
+        deskToolbarElement.style.display = "none";
+        deskFooterElement.style.display = "none";
+
+      }
+      else{
+        deskToolbarElement.style.display = "block";
+        deskFooterElement.style.display = "block";
+      }
     }
   },
 
