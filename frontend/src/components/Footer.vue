@@ -45,7 +45,7 @@
             return require('../assets/'+img)
         },
         init(){
-          if(this.$route.path=='/sample'){
+          if(this.$route.path=='/central'){
             var footerElement = document.getElementById("footer");
             footerElement.style.display = "none";
           }

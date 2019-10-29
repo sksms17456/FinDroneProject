@@ -4,7 +4,6 @@ import Intro from './views/Intro.vue'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Service from './views/Service.vue'
-import Central from './views/Central.vue'
 import ErrorPage from './views/Error.vue'
 import MultiMonitor from './components/MultiMonitor.vue'
 
@@ -36,17 +35,12 @@ export default new Router({
         {
             path: '/central',
             name: 'central',
-            component: Central
+            component: MultiMonitor
         },
         {
             path: '*',
             name: 'error',
             component: ErrorPage
-        },
-        {
-            path: '/sample',
-            name: 'sample',
-            component: MultiMonitor
         }
     ]
 })

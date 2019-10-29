@@ -24,20 +24,20 @@
           <br />저희 <b>FinDrone</b> 사이트에 방문해 주셔서 감사합니다.
           <br />FinDrone은
           <b>Find</b>와
-          <b>Drone</b>의 합성어로 '드론으로 찾는다'는 의미를 갖고 있습니다.
+          <b>Drone</b>의 합성어로 '드론으로 찾는다'라는 의미를 갖고 있습니다.
           <br />저희는 섬세하고 꼼꼼하게 실종자를 수색하기 위한 뛰어난 수색 알고리즘을 갖추고 있습니다.
           <br />골든타임의 중요성을 인지하고 있으며, 보다 많은 실종자를 찾을 수 있도록 오늘도 궁리 중입니다.
         </p>
         <p>
-          작은 단서도 놓치지 않도록 황하남 알고리즘 전문가가 전문성을 담아 개발하고 있습니다.
+          작은 단서도 놓치지 않도록 '황하남 알고리즘 전문가'가 전문성을 담아 개발하고 있습니다.
           <br />저희 팀의 도움이 필요하시다면 언제든 연락 주세요 :)
         </p>
       </div>
       <div class="more">
         <a href="/about" class="more_link">
           <span class="more_link_text">'출발 드론팀'에 대해 더 궁금하신가요?</span>
-          <v-btn fab></v-btn>
         </a>
+        <v-btn class="button" fab to="/about" > <i class="fas fa-users"></i> </v-btn>
       </div>
 
       <h1 id="service">SERVICE.</h1>
@@ -45,7 +45,7 @@
 
     <!-- 서비스 단계 표시(sector3) -->
     <v-container fluid grid-list-md>
-      <h1 style="text-align:center">1. Service Steps Using Drones</h1>
+      <h1 class="service_title">1. Service Steps Using Drones</h1>
       <v-layout row justify-center>
         <v-flex v-for="(step,index) in steps" :key="index" xs4>
           <v-card class="hidden-sm-and-down; ma-4">
@@ -63,15 +63,23 @@
 
     <!-- 주요 서비스 소개(sector4) -->
     <v-container fluid grid-list-md>
-      <h1 style="text-align:center">2. Platform Main Function</h1>
+      <h1 class="service_title">2. Platform Main Function</h1>
       <v-tabs color="black" dark slider-color="white" centered>
         <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
         <v-tab-item v-for="(service,index) in services" :key="index">
           <v-layout row wrap mt-4>
             <v-flex xs6>
-              <v-card>
-                <v-card-title primary-title>{{service.card_title}}</v-card-title>
-                <v-card-text>{{ service.card_text }}</v-card-text>
+              <v-card style="text-align:center;">
+                
+                <v-card-text>
+                  <h1>{{service.card_title}}</h1><br/>
+                  {{ service.card_text }}</v-card-text>
+                <v-divider></v-divider>
+                <v-card-text> 기능 더 알아보기 
+                    <v-btn icon to="/service" id="goService">
+                      <i class="fas fa-arrow-right"></i>
+                    </v-btn>
+                </v-card-text>
               </v-card>
             </v-flex>
 
@@ -154,18 +162,18 @@ export default {
       steps: [
         {
           src: this.getImgUrl("launch.png"),
-          card_title: "STEP 01 FLY",
-          card_text: "자 날아봅시다~"
+          card_title: "STEP 01 LAUNCH",
+          card_text: "사람, 동물 등의 목표물을 입력하면 3대의 드론이 입력된 목표물을 찾기위해 이륙합니다."
         },
         {
           src: this.getImgUrl("detect.png"),
           card_title: "STEP 02 DETECT",
-          card_text: "타겟을 찾아 봅시다"
+          card_text: "Spin Square 알고리즘을 기반으로 지정된 영역을 수색하기 시작합니다."
         },
         {
           src: this.getImgUrl("stop.png"),
-          card_title: "STEP 03 FIND & WAIT",
-          card_text: "찾았당!"
+          card_title: "STEP 03 TRACE",
+          card_text: "목표물을 발견하면 각 드론들이 전체 수색 / 근방 수색 / 타겟 추적으로 전환되어 임무를 수행합니다."
         }
       ],
       services: [
@@ -250,12 +258,75 @@ export default {
   padding: 0 20px;
   border-radius:0;
   background-color:antiquewhite;
-  transition:border-radius .5s ease-in-out;  
+}
 
+.button {
+  margin-top:25px;
+  font-size: 22px;
+  background: #4FD1C5;
+  background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  }
+
+.button:hover {
+  color: #313133;
+  transform: translateY(-5px);
 }
-.more_link_text:hover{
-  background-color:antiquewhite;
-  border-radius:50%;  
-  transition: height .5s, opacity .5s;
+
+.button::after {
+  content: '';
+  width: 30px; height: 30px;
+  border-radius: 100%;
+  border: 6px solid #00FFCB;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
 }
+
+.service_title{
+  text-align:center;
+  font-family: "LotteMartDream", sans-serif;
+}
+
+#goService {
+  margin-left:10px;
+  margin-bottom:10px;
+}
+
+#goService:hover{
+  margin-left:10px;
+  margin-bottom:10px;
+  left:10%;
+  animation: bounceArrow 0.9s infinite ease-out;
+}
+
+@keyframes bounceArrow {
+    0%,
+    20%,
+    100% {
+        transform: translateX(-60px);
+    }
+    30% {
+        transform: translateX(-65px);
+    }
+    50% {
+        transform: translateX(-60px);
+    }
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+  }
+}
+
 </style>

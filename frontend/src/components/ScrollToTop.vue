@@ -3,16 +3,15 @@
         <v-btn
             v-show="showButton()"
             v-scroll="onScroll"
-            class="md-5 mr-3 elevation-21"
             fab
             bottom
             right
-            color="black"
+            color="white"
             dark
             fixed
             @click="top"
         >
-        <v-icon color="white">mdi mdi-arrow-up</v-icon>
+        <i class="fas fa-arrow-up" color="black" ></i> 
         </v-btn>
     </v-fade-transition>
 </template>
@@ -22,8 +21,7 @@ export default {
     name: "Scrolltotop",
     data() {
         return {
-            offsetTop: 0,
-            icon:"fab fa-arrow-up"
+            offsetTop: 0
         };
     },
     methods: {

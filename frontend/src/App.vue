@@ -1,13 +1,9 @@
 <template>
   <v-app>
-    <!-- <v-content> -->
-    <!-- <Header/> -->
-    <!-- <Index/> -->
-    <!-- </v-content> -->
-
     <div id="introPage">
       <Intro v-if="introPage" @goHome="goHome"/>
     </div>
+
     <div>
       <v-content v-if="!introPage">
         <Header/>
@@ -16,6 +12,7 @@
         <Footer/>
       </v-content>
     </div>
+    
   </v-app>
 </template>
 

@@ -277,6 +277,7 @@ export default {
 
       // Load the background texture
       var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("dark-gradient2.jpg"));
+      // var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("background3.jpg"));
       var backgroundMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 0),
         new THREE.MeshBasicMaterial({
