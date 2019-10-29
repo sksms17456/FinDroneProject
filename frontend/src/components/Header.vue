@@ -11,7 +11,7 @@
             <v-flex xs2><v-btn id="headerTitle" flat large style="text-transform : none !important">FinDrone</v-btn></v-flex>
         </v-card>
         <v-flex xs2><v-btn to="/service" flat>Service</v-btn></v-flex>
-        <v-flex xs3 text-md-left><v-btn to="/central" flat>Central</v-btn></v-flex>
+        <v-flex xs3 text-md-left><v-btn to="/sample" flat>Central</v-btn></v-flex>
       </v-toolbar-items>
     </v-container>
     <v-spacer></v-spacer>
@@ -52,7 +52,7 @@ export default {
           // mobileToolbarElement.style.boxShadow = "none";
           deskToolbarElement.style.display = "block";
         } 
-        else if (curThis.$route.path === '/central') {
+        else if (curThis.$route.path === '/sample') {
           deskToolbarElement.style.display = "none";
         } else {
           deskToolbarElement.style.background = "#f1f0f0f2";

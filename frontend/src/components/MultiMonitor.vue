@@ -1,24 +1,33 @@
 <template>
 	<div>
 		<div style="width:50%; display:inline-block;">
-			<div class="div_border droneName" style="height:10%">
-				Drone-{{target.idx}}
+			<div class="div_border droneName divcolor" style="height:10%">
+				<v-btn to="/home" style="width:50px; margin-bottom:16px;" flat>
+					<v-icon class="iconClass" >fas fa-home</v-icon>
+				</v-btn>
+				<div style="width:500px; display:inline-block;">
+					Drone-{{target.idx}}
+				</div>
+				<v-btn style="width:50px; margin-bottom:16px;" flat>
+					<v-icon class="iconClass">fas fa-map-marked-alt</v-icon>
+				</v-btn>				
 			</div>
-			<div class="div_border" style="height:80%">
-				<v-img
-				:src="getImgUrl('detect.png')"
-				height="86.6vh"
+			<div class="div_border" style="height:630px">
+				<img
+				src='../assets/detect.png'
+				id="screen_img"
+				width="100%"
+				height="100%"
             	>
-				</v-img>
 			</div>
 			<div style="height:10%">
-				<div class="div_border dronePos">X : {{target.x_pos}} </div>
-				<div class="div_border dronePos">Y : {{target.y_pos}} </div>
-				<div class="div_border dronePos">Z : {{target.z_pos}} </div>
+				<div class="div_border dronePos divcolor">{{target.x_pos}} </div>
+				<div class="div_border dronePos divcolor">{{target.y_pos}} </div>
+				<div class="div_border dronePos divcolor">{{target.z_pos}} </div>
 			</div>
 		</div>
 
-		<div style="width:50%; display:inline-block;">
+		<div class = "div_border" style="width:50%; display:inline-block;">
 			<div id="container" style="width:100%"></div>
 			<div id="menu" style="width:inherit">
 				<button id="table">TABLE</button>
@@ -26,30 +35,6 @@
 				<button id="helix">HELIX</button>
 				<button id="grid">GRID</button>
 			</div>
-			<!-- <v-dialog v-model="dialog" width="600px">
-				<v-card>
-					<v-card-title
-					class="headline grey lighten-2"
-					primary-title
-					>
-					드론00 화면
-					</v-card-title>
-					<v-card-text>
-						<v-img :src="getImgUrl('logo.png')"></v-img>
-					</v-card-text>
-					<v-divider></v-divider>
-					<v-card-actions>
-					<v-spacer></v-spacer>
-						<v-btn
-							color="primary"
-							flat
-							@click="dialog = false"
-						>
-							닫기
-						</v-btn>
-					</v-card-actions>
-				</v-card>
-			</v-dialog>         -->
     	</div>
 	</div>    
 </template>
@@ -59,6 +44,8 @@ import * as THREE from '../plugins/three.module.js';
 import { TWEEN } from '../plugins/tween.module.min.js';
 import { TrackballControls } from '../plugins/TrackballControls.js';
 import { CSS3DRenderer, CSS3DObject } from '../plugins/CSS3DRenderer.js';
+import axios from 'axios'
+import $ from 'jquery'
 
 export default {
     name:'MultiMonitor',
@@ -70,7 +57,7 @@ export default {
 				idx : 1,
 				x_pos : 0,
 				y_pos : 0,
-				z_pos : 0
+				z_pos : 0,
 			},
             table : [
 				"1", "0.0", "0.0", "0.0", 1, 1,
@@ -129,7 +116,10 @@ export default {
 			objects : [],
 			targets : { table: [], sphere: [], helix: [], grid: [] },
         }
-    },
+	},
+	created(){
+		this.getImgUrlFromBack();
+	},
     mounted(){
         this.init();
 		this.animate();
@@ -137,12 +127,36 @@ export default {
     methods:{
         getImgUrl(img){
             return require('../assets/'+img);
-        },
-        // change(){
-        //     console.log()
-		// 	this.dialog=true
-			
-        // },
+		},
+		getImgUrlFromBack(){
+			var curThis = this
+			this.polling = setInterval(() => {
+				const path = `/api/getImg`
+					axios.get(path)
+					.then(response => {
+						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
+						const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
+						for(var i=0; i<3; i++){
+							curThis.table[i*6+1] = String(pos[i][0]);
+							curThis.table[i*6+2] = String(pos[i][1]);
+							curThis.table[i*6+3] = String(pos[i][2]);
+							const path = '/api/getDroneImg?drone='+i+'&num_img'+contain[i]
+							document.getElementsByClassName('details '+String(i+1))[0].innerHTML = String(pos[i][0]) + '<br>' +String(pos[i][1]) + '<br>' + String(pos[i][2]);
+							document.getElementsByClassName('symbol '+String(i+1))[0].src = path;
+							if(curThis.target.idx==(i+1)){
+								$('#screen_img').attr("src",path);
+							}
+						}
+						var idx = curThis.target.idx;
+						curThis.target.x_pos = pos[idx-1][0];
+						curThis.target.y_pos = pos[idx-1][1];
+						curThis.target.z_pos = pos[idx-1][2];
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			}, 500)
+		},
         init() {
 			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 			this.camera.position.z = 1600
@@ -162,23 +176,19 @@ export default {
 
 				var symbol = document.createElement( 'img' );
 				symbol.className = 'symbol '+ String(( i / 6 ) + 1);
+				symbol.id = 'symbol ' + String(( i / 6 ) + 1);
 				symbol.style = 'top:20px; height:90px;'
-                // symbol.textContent = this.table[ i ];
-                symbol.src=this.getImgUrl('detect.png')
+                symbol.src=this.getImgUrl('footerlogo.png')
                 element.appendChild( symbol );
                 
 				var details = document.createElement( 'div' );
 				details.className = 'details '+ String(( i / 6 ) + 1);
+				details.id = 'details '+ String(( i / 6 ) + 1);
 				details.style = 'bottom:5px;'
 				details.innerHTML = this.table[ i + 1 ] + '<br>' + this.table[ i + 2 ] + '<br>' + this.table[ i + 3 ];
                 element.appendChild( details );
 				
 				element.addEventListener('click',function() {
-					// self.change();
-					// self.target.idx = this.getElementsByClassName('number')[0].textContent;
-					// self.target.x_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[0];
-					// self.target.y_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[1];
-					// self.target.z_pos = this.getElementsByClassName('details')[0].innerHTML.split("<br>")[2];
 					document.getElementsByClassName('details 4')[0].innerHTML = '1.1' + '<br>' + '2.2' + '<br>' + '3.3'
 					self.target.idx = this.getElementsByClassName('number')[0].textContent;
 					self.target.x_pos = self.table[((self.target.idx-1)*6)+1];
@@ -364,12 +374,21 @@ a {
 	color: rgba(127,255,255,0.75);
 }
 
-.div_border{
-	border:1.5px solid black;
+.iconClass{
+	font-size:40px;
+	color: rgba(127,255,255,0.75)!important;
 }
 
+.div_border{
+	border:1.5px solid rgb(255, 255, 255);
+}
+
+.divcolor{
+	background-color: rgba(1, 69, 71, 9.267);
+}
 .droneName{
 	font-size: 40px;
+	color: rgba(127,255,255,0.75);
 	text-align: center;
 	font-weight: bold;
 }
@@ -379,10 +398,11 @@ a {
 	width:33.3%;
 	text-align: center;
 	font-weight: bold;
-	font-size:25px;
+	color: rgba(155, 255, 255, 0.75);
+	font-size:20px;
 }
 button {
-    color: rgba(127,255,255,0.75);
+    color: rgba(155,255,255,0.75);
 	background: transparent;
 	outline: 1px solid rgba(127,255,255,0.75);
 	border: 0px;
