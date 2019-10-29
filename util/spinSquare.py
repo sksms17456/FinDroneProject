@@ -74,6 +74,8 @@ class square:
                     break
                 if self.std[3][1] <= self.std[1][1]:
                     break
-
+        
+        return self
+        
     def getRoute(self):
         return self.targetList
