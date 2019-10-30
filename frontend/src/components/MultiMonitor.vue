@@ -1,18 +1,18 @@
 <template>
 	<div>
-		<div style="width:50%; display:inline-block;">
-			<div class="div_border droneName divcolor" style="height:10%">
+		<div style="width:50%; float:left;">
+			<div class="droneName divcolor" style="height:10%">
 				<v-btn to="/home" style="width:50px; margin-bottom:16px;" flat>
 					<v-icon class="iconClass" >fas fa-home</v-icon>
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
-				<v-btn style="width:50px; margin-bottom:16px;" flat>
+				<v-btn to="/rootmap" style="width:50px; margin-bottom:16px;" flat>
 					<v-icon class="iconClass">fas fa-map-marked-alt</v-icon>
 				</v-btn>				
 			</div>
-			<div class="div_border" style="height:630px">
+			<div style="height:628px">
 				<img
 				src='../assets/detect.png'
 				id="screen_img"
@@ -21,13 +21,13 @@
             	>
 			</div>
 			<div style="height:10%">
-				<div class="div_border dronePos divcolor">{{target.x_pos}} </div>
-				<div class="div_border dronePos divcolor">{{target.y_pos}} </div>
-				<div class="div_border dronePos divcolor">{{target.z_pos}} </div>
+				<div class="dronePos divcolor">{{target.x_pos}} </div>
+				<div class="dronePos divcolor">{{target.y_pos}} </div>
+				<div class="dronePos divcolor">{{target.z_pos}} </div>
 			</div>
 		</div>
 
-		<div class = "div_border" style="width:50%; display:inline-block;">
+		<div class = "div_border" style="width:50%; float:left;">
 			<div id="container" style="width:100%"></div>
 			<div id="menu" style="width:inherit">
 				<button id="table">TABLE</button>
@@ -379,9 +379,6 @@ a {
 	color: rgba(127,255,255,0.75)!important;
 }
 
-.div_border{
-	border:1.5px solid rgb(255, 255, 255);
-}
 
 .divcolor{
 	background-color: rgba(1, 69, 71, 9.267);

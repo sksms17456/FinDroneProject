@@ -70,6 +70,10 @@ def get_Img():
 
 
 @app.route('/')
+@app.route('/central')
+@app.route('/home')
+@app.route('/service')
+@app.route('/about')
 def index():
     return app.send_static_file('index.html')
 
