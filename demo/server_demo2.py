@@ -28,16 +28,36 @@ def update_drone():
     decoded_frame = cv2.imdecode(decoded_frame, cv2.IMREAD_COLOR)
     cv2.imwrite("dd.jpg", decoded_frame)
 
-    response = {
-        "name":3,
-        "x":300,
-        "y":200,
-        "isFind":False
-    }
+    datas = [
+        {
+            "number":1,
+            "x":0,
+            "y":0,
+            "isFind":False
+        },
+        {
+            "number":2,
+            "x":650,
+            "y":-31700,
+            "isFind":True
+        },
+        {
+            "number":3,
+            "x":0,
+            "y":0,
+            "isFind":False
+        }
+    ]
+
+    response = []
+    for data in datas:
+        if data["isFind"]:
+            response.append(data)
+
     end = time.time()
     print("{}번째 iter 서버 내부 걸린 시간 : {}".format(result.getlist('iter'), (end - start)))
 
-    return jsonify(response)
+    return jsonify({"list":response})
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=5000)

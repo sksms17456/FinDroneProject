@@ -10,7 +10,7 @@ from cv2 import imdecode, imencode, IMREAD_COLOR
 
 from drone_object_detection import object_detector
 
-from util import spinSquare
+from util import spinSquare, oneSquare
 
 # 기본 드론 정보
 DRONE_INFOS = {
@@ -60,17 +60,17 @@ class Drone():
         self.npos = {"x_val":0., "y_val":0., "z_val":0.}
         self.isFind = False
         self.aiResult = None
-        self.serverRes = {
-            "name":None,
-            "x":None,
-            "y":None,
-            "isFind":False
-        }
+        self.serverRes = []
         self.findCnt = 0
 
         self.mainRoute = spinSquare.square(routeInfo["pos"], routeInfo["max"], routeInfo["gap"]).makeRoute().getRoute()
         self.mainRouteLen = len(self.mainRoute)
         self.nowMainRouteNum = 1
+
+        self.oneSquareService = oneSquare.square()
+        self.subRoute = []
+        self.subRouteLen = 0
+        self.nowSubRouteNum = 0
 
         self.drone = airsim.MultirotorClient()
         self.drone.confirmConnection()
@@ -95,21 +95,53 @@ class Drone():
     def moveToV(self, x, y, z, c=1):
         self.drone.moveByVelocityAsync(x, y, z, c, vehicle_name=self.name).join()
         self.drone.moveByVelocityAsync(0, 0, 0, 1, vehicle_name=self.name).join()
+        
+    def doTracking(self, vAtFind, height):
+        x = self.npos["x_val"]
+        y = self.npos["y_val"]
 
-    def fly(self, maxLen, height, target):
-        _ = self.getNowPosition()
+        if self.aiResult["target_finded"]:
+            if self.aiResult["drone_controller"]["x"] == "turn_left":
+                y -= vAtFind
+            elif self.aiResult["drone_controller"]["x"] == "turn_right":
+                y += vAtFind
 
+            if self.aiResult["drone_controller"]["y"] == "upwards":
+                x += vAtFind
+            elif self.aiResult["drone_controller"]["y"] == "downwards":
+                x -= vAtFind
         z = self.h - height
-
-        dx = target[0] - self.npos["x_val"]
-        dy = target[1] - self.npos["y_val"]
-
-        x = min(dx, maxLen) if dx > 0 else max(dx, -(maxLen))
-        y = min(dy, maxLen) if dy > 0 else max(dy, -(maxLen))
 
         self.moveToV(x, y, z)
 
-        return True if (dx**2) + (dy**2) < 10 else False
+    def doMainPatrol(self, maxLen, height):
+        _ = self.getNowPosition()
+
+        dx = self.mainRoute[self.nowMainRouteNum][0] - self.npos["x_val"]
+        dy = self.mainRoute[self.nowMainRouteNum][1] - self.npos["y_val"]
+        if (dx**2) + (dy**2) < 10:
+            self.nowMainRouteNum = 1 if self.mainRouteLen == self.nowMainRouteNum else self.nowMainRouteNum + 1
+
+        x = min(dx, maxLen) if dx > 0 else max(dx, -(maxLen))
+        y = min(dy, maxLen) if dy > 0 else max(dy, -(maxLen))
+        z = self.h - height
+
+        self.moveToV(x, y, z)
+
+    def doSubPatrol(self, maxLen, height, x, y):
+        _ = self.getNowPosition()
+        self.subRoute, self.subRouteLen = self.oneSquareService.makeRoute(self.subRoute, [x, y], 50).getRoute()
+
+        dx = self.subRoute[self.nowSubRouteNum][0] - self.npos["x_val"]
+        dy = self.subRoute[self.nowSubRouteNum][1] - self.npos["y_val"]
+        if (dx**2) + (dy**2) < 10:
+            self.nowSubRouteNum = 1 if self.subRouteLen == self.nowSubRouteNum else self.nowSubRouteNum + 1
+
+        x = min(dx, maxLen) if dx > 0 else max(dx, -(maxLen))
+        y = min(dy, maxLen) if dy > 0 else max(dy, -(maxLen))
+        z = self.h - height
+
+        self.moveToV(x, y, z)
     
     def capture(self, iter, cameraNum, target):
         _ = self.getNowPosition()
@@ -119,7 +151,7 @@ class Drone():
         response_image = self.drone.simGetImage(cameraNum, self.IMAGE_TYPE, vehicle_name = self.name)
         decoded_frame = imdecode(np.asarray(bytearray(response_image), dtype="uint8"), IMREAD_COLOR)
 
-        resize_img = cv2.resize(decoded_frame, dsize=(244, 180), interpolation=cv2.INTER_CUBIC)
+        resize_img = cv2.resize(decoded_frame, dsize=(256, 192), interpolation=cv2.INTER_CUBIC)
         encoded_resize_img = cv2.imencode(".png", resize_img)
         self.request_img = np.asarray(bytearray(encoded_resize_img[1]), dtype="uint8")
 
@@ -148,9 +180,9 @@ class Drone():
         cv2.waitKey(1)
     
     def postServer(self, i):
-        start = time.time()
         datas = {
             "name" : self.name,
+            "number" : self.number,
             "x" : self.npos["x_val"],
             "y" : self.npos["y_val"],
             "z" : self.npos["z_val"],
@@ -159,11 +191,9 @@ class Drone():
             "timestamp":time.time(),
             "iter":i
         }
+
         res = requests.post('http://localhost:5000/api/droneUpdate', data=datas)
-        # res = requests.post('http://localhost:5000/api/droneUpdate')
-        end = time.time()
-        print("{}번째 iter 서버에 갔다오는데 걸린 시간 : {}".format(iter, (end - start)))
-        self.serverRes = res.json()
+        self.serverRes = res.json()["list"]
 
     def getNowPosition(self):
         pos = self.drone.simGetGroundTruthKinematics(vehicle_name=self.name).position
@@ -185,27 +215,21 @@ def run():
     while True:
         print("====================== " + str(i))
         if d.isFind:
-            dx = d.npos["x_val"]
-            dy = d.npos["y_val"]
-
-            if d.aiResult["target_finded"]:
-                if d.aiResult["drone_controller"]["x"] == "turn_left":
-                    dy -= 1
-                elif d.aiResult["drone_controller"]["x"] == "turn_right":
-                    dy += 1
-
-                if d.aiResult["drone_controller"]["y"] == "upwards":
-                    dx += 1
-                elif d.aiResult["drone_controller"]["y"] == "downwards":
-                    dx -= 1
-
-            d.fly(1, MAIN_HEIGHT - 2, [dx, dy])
-        else:
-            if d.serverRes["isFind"]:
+            if len(d.serverRes) >= 2:
+                # 내 근처에 나보다 빠른 번호가 target을 찾았다면 나는 Main 혹은 Sub 루트
+                # 아니라면 추적
                 pass
             else:
-                if d.fly(MAX_MOVE_LENGTH, MAIN_HEIGHT, d.mainRoute[d.nowMainRouteNum]):
-                    d.nowMainRouteNum = 1 if d.mainRouteLen == d.nowMainRouteNum else d.nowMainRouteNum + 1
+                # 추적(속도, 높이)
+                d.doTracking(2, MAIN_HEIGHT - 2)
+        else:
+            if len(d.serverRes) >= 1:
+                # 내 앞 번호가 찾았으면 sub
+                # 아니라면 main 패트롤
+                d.doSubPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT - 1, d.serverRes[0]["x"], d.serverRes[0]["y"])
+                pass
+            else:
+                d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
 
         d.capture(i, CAMERA_NAME, TARGET)
         d.postServer(i)
