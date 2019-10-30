@@ -40,7 +40,7 @@ export default {
       // 경로 변경에 반응하여...
       var deskToolbarElement = document.getElementById("deskToolbar");
       var deskFooterElement = document.getElementById('footer');
-      if(to.path === '/central'){
+      if(to.path === '/central' || to.path === '/rootmap'){
         deskToolbarElement.style.display = "none";
         deskFooterElement.style.display = "none";
 

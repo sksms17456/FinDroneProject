@@ -48,5 +48,10 @@ export default new Router({
             name: 'error',
             component: ErrorPage
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if(to.path != from.path){
+            return { x: 0, y: 0 }
+        }
+    }
 })

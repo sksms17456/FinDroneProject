@@ -15,14 +15,14 @@ export default {
   name: 'goDownBtn',
   data(){
       return{
-          scrollTop:0
+          scrollTop:0,
+          serviceOffset:0
       }
   },
   methods: {
     goDown(){
-      console.log("goDown")
-      this.simulationOffset = $('#simulation').offset();
-      $('html, body').animate({scrollTop : this.simulationOffset.top}, 400);
+      this.serviceOffset = $('#serviceMainTitle').offset();
+      $('html, body').animate({scrollTop : this.serviceOffset.top-100}, 400);
     }
   }
 }
@@ -30,7 +30,6 @@ export default {
 
 <style scoped>
 .bounce_ball {
-    /* position: relative; */
     width: 80px;
     height: 35px;
     border-radius: 10rem;

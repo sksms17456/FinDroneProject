@@ -40,7 +40,7 @@ export default {
         var headerLogoElement = document.getElementById("headerLogo");
         var headerTitelElement = document.getElementById("headerTitle");
         var headerBtn = document.getElementsByClassName("v-btn");
-         if(curThis.$route.path === '/central' ){
+         if(curThis.$route.path === '/central' || curThis.$route.path === '/rootmap'){
           deskToolbarElement.style.display = "none";
         }
         else{
@@ -78,6 +78,9 @@ export default {
 .v-btn{
   font-size:1.55em;
   font-weight:bold;
+}
+.v-btn:hover{
+  background-color: transparent;
 }
 
 </style>

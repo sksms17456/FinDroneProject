@@ -7,8 +7,8 @@
     <v-card
       flat
       tile
-      class="indigo lighten-1 white--text text-xs-center"
-      style="width:100%"
+      class="text-xs-center"
+      style="width:100%; background-color:#002148;"
     >
       <v-card-text class="white--text">
         <v-btn
@@ -45,7 +45,7 @@
             return require('../assets/'+img)
         },
         init(){
-          if(this.$route.path=='/central'){
+          if(this.$route.path==='/central' || this.$$route.path==='/rootmap'){
             var footerElement = document.getElementById("footer");
             footerElement.style.display = "none";
           }
