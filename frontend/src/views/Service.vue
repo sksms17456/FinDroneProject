@@ -1,5 +1,5 @@
 <template>
-    <div class="sector">
+    <div class="sector" id="serviceBox">
       <h1>SERVICE.</h1>
       <v-tabs color="black" dark slider-color="white" centered>
         <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>

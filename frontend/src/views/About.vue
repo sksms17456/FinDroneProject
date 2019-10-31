@@ -1,5 +1,5 @@
 <template>
-    <div class="sector">
+    <div class="sector" id="aboutBox">
       <p id="about_Title">Hello.</p>
       <p id="title_sm">This is Start Drone Team.</p>
 

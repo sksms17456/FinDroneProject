@@ -1,5 +1,5 @@
 <template>
-    <div class="sector">
+    <div class="sector" id="systemBox">
       <h1 id="systemTitle">SYSTEM.</h1>
       <v-container id="systemContainer">
         <v-img :src="getImgUrl('System.png')"></v-img>

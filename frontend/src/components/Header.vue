@@ -2,14 +2,36 @@
   <v-toolbar id="deskToolbar" fixed>
     <v-container id="headerContainer">
       <v-toolbar-items>
-        <v-btn to="/home" flat id="headerLogoBox">
+        <v-btn v-scroll="onScroll"
+               @click="toTop"
+               to="/home"
+               flat 
+               id="headerLogoBox">
           <v-img id="headerLogo" :src="getImgUrl('logoText.png')" contain/>
         </v-btn>
-        <div><v-btn to="/about" flat>About</v-btn></div>
-        <div><v-btn to="/system" flat>System</v-btn></div>
-        <div><v-btn to="/service" flat>Service</v-btn></div>
-        <div><v-btn to="/application" flat>Application</v-btn></div>
-        <div><v-btn to="/central" flat>Central</v-btn></div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toAbout"
+                 flat>About</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toSystem"
+                 flat>System</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toService"
+                 flat>Service</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toApplication"
+                 flat>Application</v-btn>
+        </div>
+        <div>
+          <v-btn to="/central" flat>Central</v-btn>
+        </div>
       </v-toolbar-items>
     </v-container>
   </v-toolbar>
@@ -19,9 +41,48 @@
 import $ from "jquery";
 
 export default {
+  name: 'mainHeader',
   methods:{
     getImgUrl(img){
       return require('../assets/'+img)
+    },
+    toTop() {
+      window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toAbout() {
+      window.scrollTo({
+          top: $('#aboutBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toSystem() {
+      window.scrollTo({
+          top: $('#systemBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toService() {
+      window.scrollTo({
+          top: $('#serviceBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toApplication() {
+      window.scrollTo({
+          top: $('#applicationBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    onScroll() {
+      this.offsetTop = window.scrollY;
     }
   },
   mounted() {
@@ -44,7 +105,7 @@ export default {
         }
       }).scroll();
     });
-  },
+  }
 }
 </script>
 
