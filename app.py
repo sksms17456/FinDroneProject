@@ -16,28 +16,25 @@ app = Flask(__name__, static_folder=STATIC_PATH, static_url_path='')
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 drone = [
     {
-        "name": "myDrone",
-        "x": 1,
-        "y": 2,
-        "z": 3,
+        "name": "Drone_0",
+        "pos": [0,0,0],
         "timestamp": time.time(),
-        "iter": 0
+        "iter": 0,
+        "find": 0
     },
     {
-        "name": "myDrone",
-        "x": 1,
-        "y": 2,
-        "z": 3,
+        "name": "Drone1",
+        "pos" : [0,0,0],
         "timestamp": time.time(),
-        "iter": 0
+        "iter": 0,
+        "find": 0
     },
     {
-        "name": "myDrone",
-        "x": 1,
-        "y": 2,
-        "z": 3,
+        "name": "Drone_2",
+        "pos": [0,0,0],
         "timestamp": time.time(),
-        "iter": 0
+        "iter": 0,
+        "find": 0
     }
 ]
 
@@ -49,10 +46,14 @@ def update_drone():
     decoded_frame = imdecode(decoded_frame, IMREAD_COLOR)
     name =  result.getlist('name')[0][-1]
     cv2.imwrite("drone_output/output"+name+".jpg", decoded_frame)
-
     global drone
     drone[int(name)].__setitem__('iter', request.form.get('iter'))
-    return name
+    drone[int(name)].__setitem__('pos', [request.form.get('x'), request.form.get('y'),request.form.get('z')]) 
+    print(drone[int(name)].get('pos'))
+    name = {
+        'name' : 'name'
+    }
+    return jsonify(name)
 
 
 @app.route('/api/getImg')
@@ -60,12 +61,19 @@ def get_Img():
     response = {
         'iter0': drone[0].get('iter'),
         'iter1': drone[1].get('iter'),
-        'iter2': drone[2].get('iter')
+        'iter2': drone[2].get('iter'),
+        'pos0' : drone[0].get('pos'),
+        'pos1' : drone[1].get('pos'),
+        'pos2' : drone[2].get('pos'),
     }
     return jsonify(response)
 
 
 @app.route('/')
+@app.route('/central')
+@app.route('/home')
+@app.route('/service')
+@app.route('/about')
 def index():
     return app.send_static_file('index.html')
 

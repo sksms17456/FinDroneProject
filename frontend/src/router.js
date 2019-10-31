@@ -4,8 +4,8 @@ import Intro from './views/Intro.vue'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Service from './views/Service.vue'
-import Central from './views/Central.vue'
 import ErrorPage from './views/Error.vue'
+import RootMap from './views/RootMap.vue'
 import MultiMonitor from './components/MultiMonitor.vue'
 
 Vue.use(Router)
@@ -36,17 +36,22 @@ export default new Router({
         {
             path: '/central',
             name: 'central',
-            component: Central
+            component: MultiMonitor
+        },
+        {
+            path: '/rootmap',
+            name: 'rootmap',
+            component: RootMap
         },
         {
             path: '*',
             name: 'error',
             component: ErrorPage
-        },
-        {
-            path: '/sample',
-            name: 'sample',
-            component: MultiMonitor
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if(to.path != from.path){
+            return { x: 0, y: 0 }
+        }
+    }
 })

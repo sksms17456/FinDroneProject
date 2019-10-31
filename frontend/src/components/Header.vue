@@ -40,6 +40,11 @@ export default {
         var headerLogoElement = document.getElementById("headerLogo");
         var headerTitelElement = document.getElementById("headerTitle");
         var headerBtn = document.getElementsByClassName("v-btn");
+         if(curThis.$route.path === '/central' || curThis.$route.path === '/rootmap'){
+          deskToolbarElement.style.display = "none";
+        }
+        else{
+
         if ($(window).scrollTop() < 300) {
           deskToolbarElement.style.background = "transparent";
           deskToolbarElement.style.boxShadow = "none";
@@ -51,10 +56,8 @@ export default {
           // mobileToolbarElement.style.background = "transparent";
           // mobileToolbarElement.style.boxShadow = "none";
           deskToolbarElement.style.display = "block";
-        } 
-        else if (curThis.$route.path === '/central') {
-          deskToolbarElement.style.display = "none";
-        } else {
+        }
+        else {
           deskToolbarElement.style.background = "#f1f0f0f2";
           deskToolbarElement.style.boxShadow ="0px 1px 10px grey";
           $('.v-btn').css('color','black');
@@ -63,6 +66,7 @@ export default {
           headerTitelElement.style.fontSize="1.1em";
           // mobileToolbarElement.style.background = "white";
           // mobileToolbarElement.style.boxShadow ="0px 1px 10px grey";
+        }
         }
       }).scroll();
     });
@@ -74,6 +78,9 @@ export default {
 .v-btn{
   font-size:1.55em;
   font-weight:bold;
+}
+.v-btn:hover{
+  background-color: transparent;
 }
 
 </style>

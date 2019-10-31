@@ -29,7 +29,7 @@
 
             </v-carousel> -->
         </div>
-        <div v-else-if="call==='central'">
+        <div v-else-if="call==='service'">
             <v-img :src="getImgUrl('controltower.gif')" :height="height">
                 <span
                     class="text-shadow display-2 text-weight"
