@@ -45,7 +45,7 @@
             return require('../assets/'+img)
         },
         init(){
-          if(this.$route.path==='/central' || this.$$route.path==='/rootmap'){
+          if(this.$route.path==='/central' || this.$route.path==='/rootmap'){
             var footerElement = document.getElementById("footer");
             footerElement.style.display = "none";
           }

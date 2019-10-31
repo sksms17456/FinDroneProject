@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="mainDisplay">
     <div id="introPage">
       <Intro v-if="introPage" @goHome="goHome"/>
     </div>
@@ -71,3 +71,9 @@ export default {
 
 }
 </script>
+
+<style scoped>
+#mainDisplay {
+  background-color: white;
+}
+</style>
