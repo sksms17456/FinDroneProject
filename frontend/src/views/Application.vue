@@ -1,6 +1,6 @@
 <template>
     <div class="sector">
-      <p class="mainTitle">APPLICATION</p>
+      <h1>APPLICATION</h1>
       <v-tabs color="black" dark slider-color="white" centered>
         <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
         <v-tab-item v-for="(service,index) in services" :key="index">
