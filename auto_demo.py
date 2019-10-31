@@ -97,7 +97,8 @@ class Drone():
             "timestamp":time.time(),
             "iter":i
         }
-        requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+        res = requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+        print(res.json())
         decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
         result = detector.run_object_detector(decoded_frame, TARGET)
         
