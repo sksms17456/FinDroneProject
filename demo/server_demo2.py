@@ -28,26 +28,31 @@ def update_drone():
     decoded_frame = cv2.imdecode(decoded_frame, cv2.IMREAD_COLOR)
     cv2.imwrite("dd.jpg", decoded_frame)
 
+
+
     datas = [
         {
-            "number":result.getlist('number'),
-            "x":result.getlist('x'),
-            "y":result.getlist('y'),
-            "isFind":result.getlist('isFind')
+            "number":int(result.get('number')),
+            "x":float(result.get('x')),
+            "y":float(result.get('y')),
+            "isFind":False
         },
         {
             "number":2,
-            "x":650,
-            "y":-31700,
+            "x":5689.6681594848633,
+            "y":-31701.806481838226,
             "isFind":True
         },
         {
             "number":3,
-            "x":0,
-            "y":0,
+            "x":689.6681594848633,
+            "y":-31701.806481838226,
             "isFind":False
         }
     ]
+
+    if result.get('isFind') == "True":
+        datas[0]["isFind"] = True
 
     response = []
     for data in datas:

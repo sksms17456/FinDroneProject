@@ -113,8 +113,8 @@ class Drone():
         self.drone.moveByVelocityAsync(0, 0, 0, 1, vehicle_name=self.name).join()
         
     def doTracking(self, vAtFind, height):
-        x = self.npos["x_val"]
-        y = self.npos["y_val"]
+        x = 0
+        y = 0
 
         if self.aiResult["target_finded"]:
             if self.aiResult["drone_controller"]["x"] == "turn_left":
@@ -136,7 +136,7 @@ class Drone():
         dx = self.mainRoute[self.nowMainRouteNum][0] - self.npos["x_val"]
         dy = self.mainRoute[self.nowMainRouteNum][1] - self.npos["y_val"]
         if (dx**2) + (dy**2) < 10:
-            self.nowMainRouteNum = 1 if self.mainRouteLen == self.nowMainRouteNum else self.nowMainRouteNum + 1
+            self.nowMainRouteNum = 1 if self.mainRouteLen == self.nowMainRouteNum + 1 else self.nowMainRouteNum + 1
 
         x = min(dx, maxLen) if dx > 0 else max(dx, -(maxLen))
         y = min(dy, maxLen) if dy > 0 else max(dy, -(maxLen))
@@ -146,12 +146,12 @@ class Drone():
 
     def doSubPatrol(self, maxLen, height, x, y):
         _ = self.getNowPosition()
-        self.subRoute, self.subRouteLen = self.oneSquareService.makeRoute(self.subRoute, [x, y], 50).getRoute()
+        self.subRoute, self.subRouteLen = self.oneSquareService.makeRoute(self.subRoute, [x, y], 20).getRoute()
 
         dx = self.subRoute[self.nowSubRouteNum][0] - self.npos["x_val"]
         dy = self.subRoute[self.nowSubRouteNum][1] - self.npos["y_val"]
         if (dx**2) + (dy**2) < 10:
-            self.nowSubRouteNum = 1 if self.subRouteLen == self.nowSubRouteNum else self.nowSubRouteNum + 1
+            self.nowSubRouteNum = 0 if self.subRouteLen == self.nowSubRouteNum + 1 else self.nowSubRouteNum + 1
 
         x = min(dx, maxLen) if dx > 0 else max(dx, -(maxLen))
         y = min(dy, maxLen) if dy > 0 else max(dy, -(maxLen))
@@ -162,7 +162,7 @@ class Drone():
     def capture(self, iter, cameraNum, target):
         _ = self.getNowPosition()
 
-        print("Now [x:{}, y:{}, z:{}]".format(self.npos["x_val"], self.npos["y_val"], self.h))
+        # print("Now [x:{}, y:{}, z:{}]".format(self.npos["x_val"], self.npos["y_val"], self.h))
 
         response_image = self.drone.simGetImage(cameraNum, self.IMAGE_TYPE, vehicle_name = self.name)
         decoded_frame = imdecode(np.asarray(bytearray(response_image), dtype="uint8"), IMREAD_COLOR)
@@ -178,13 +178,13 @@ class Drone():
                 self.findCnt = 0 if self.findCnt <= 0 else self.findCnt - 1
             else:
                 self.findCnt += 1
-                if self.findCnt == 5:   # n번 이상 놓치면 찾을 수 없는 상태
+                if self.findCnt == 3:   # n번 이상 놓치면 찾을 수 없는 상태
                     self.isFind = False
                     self.findCnt = 0
         else:
             if self.aiResult["target_finded"]:
                 self.findCnt += 1
-                if self.findCnt == 2:   # n번 이상 찾아야 제대로 찾은 상태
+                if self.findCnt == 1:   # n번 이상 찾아야 제대로 찾은 상태
                     self.isFind = True
                     self.findCnt = 0
             else:
@@ -229,29 +229,55 @@ def run():
     i = 0
 
     while True:
-        print("====================== " + str(i))
+        # print("====================== " + str(i))
         if d.isFind:
             if len(d.serverRes) >= 2:
-                # 내 근처에 나보다 빠른 번호가 target을 찾았다면 나는 Main 혹은 Sub 루트
-                # 아니라면 추적
-                pass
+                nearByDrone = False
+                imSub = False
+                subIndex = 0
+                j = 0
+                for res in d.serverRes:
+                    if int((res["number"] + 1) % 3) == int(d.number):
+                        imSub = True
+                        subIndex = j
+                    if not int(res["number"]) == int(d.number):
+                        diffx = float(res["x"]) - d.npos["x_val"]
+                        diffy = float(res["y"]) - d.npos["y_val"]
+                        if (diffx**2) + (diffy**2) < 500:
+                            nearByDrone = True
+                        
+                    j += 1
+                
+                if nearByDrone:
+                    if imSub:
+                        d.doSubPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT - 1, d.serverRes[subIndex]["x"], d.serverRes[subIndex]["y"])
+                    else:
+                        d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
+                else:
+                    d.doTracking(2, MAIN_HEIGHT - 2)
             else:
                 # 추적(속도, 높이)
                 d.doTracking(2, MAIN_HEIGHT - 2)
         else:
             if len(d.serverRes) >= 1:
                 imSub = False
+                subIndex = 0
+                j = 0
                 for res in d.serverRes:
-                    pass
-                # 내 앞 번호가 찾았으면 sub
-                # 아니라면 main 패트롤
-                d.doSubPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT - 1, d.serverRes[0]["x"], d.serverRes[0]["y"])
-                pass
+                    if int((res["number"] + 1) % 3) == int(d.number):
+                        imSub = True
+                        subIndex = j
+                    j += 1
+
+                if imSub:
+                    d.doSubPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT - 1, d.serverRes[subIndex]["x"], d.serverRes[subIndex]["y"])
+                else:
+                    d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
             else:
                 d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
 
         d.capture(i, CAMERA_NAME, TARGET)
-        # d.postServer(i)
+        d.postServer(i)
         i += 1
 
     d.landing()
