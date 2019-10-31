@@ -1,6 +1,6 @@
 <template>
     <div class="sector">
-      <p class="mainTitle">SERVICE.</p>
+      <p class="mainTitle">APPLICATION</p>
       <v-tabs color="black" dark slider-color="white" centered>
         <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
         <v-tab-item v-for="(service,index) in services" :key="index">
@@ -13,7 +13,7 @@
                   {{ service.card_text }}</v-card-text>
                 <v-divider></v-divider>
                 <v-card-text> 기능 더 알아보기 
-                    <v-btn icon to="/service" id="goService">
+                    <v-btn icon id="goService">
                       <i class="fas fa-arrow-right"></i>
                     </v-btn>
                 </v-card-text>
@@ -33,14 +33,7 @@
 
 <script>
 export default {
-    name:'Service',
-    methods: {
-    getImgUrl(img) {
-      return require("../assets/" + img);
-    }
-  },
-
-  data() {
+    data() {
     return {
       services: [
         {
@@ -56,18 +49,34 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    getImgUrl(img) {
+      return require("../assets/" + img);
+    }
   }
 }
 </script>
 
 <style scoped>
-.service_title{
-  text-align:center;
-  font-family: "LotteMartDream", sans-serif;
-}
-
-#goService {
+#goService:hover{
   margin-left:10px;
   margin-bottom:10px;
+  left:10%;
+  animation: bounceArrow 0.9s infinite ease-out;
+}
+
+@keyframes bounceArrow {
+    0%,
+    20%,
+    100% {
+        transform: translateX(-60px);
+    }
+    30% {
+        transform: translateX(-65px);
+    }
+    50% {
+        transform: translateX(-60px);
+    }
 }
 </style>
