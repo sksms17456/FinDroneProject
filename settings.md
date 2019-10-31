@@ -102,3 +102,59 @@ class DistanceSensorData(MsgpackMixin):
     relative_pose = Pose()
 ```
 
+# Last 셋팅
+```json
+{
+  "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md",
+  "SettingsVersion": 1.2,
+  "SimMode": "Multirotor",
+  "CameraDefaults": {
+      "CaptureSettings": [
+          {
+              "ImageType": 0,
+              "Width": 640,
+              "Height": 480
+          }
+      ],
+      "Gimbal":{
+        "Stabilization":0,
+        "Pitch": 0, "Roll":0, "Yaw":0
+    }
+  },
+  "Vehicles": {
+      "Drone1": {
+          "VehicleType": "simpleflight",
+          "X": 0, "Y": 0, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      },
+      "Drone2": {
+          "VehicleType": "simpleflight",
+          "X": 160, "Y": 0, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      },
+      "Drone3": {
+          "VehicleType": "simpleflight",
+          "X": 160, "Y": 160, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      }
+  }
+}
+```

@@ -247,7 +247,8 @@ def run():
                         diffx = float(res["x"]) - d.npos["x_val"]
                         diffy = float(res["y"]) - d.npos["y_val"]
                         if (diffx**2) + (diffy**2) < 500:
-                            nearByDrone = True
+                            if int(res["number"]) < int(d.number):
+                                nearByDrone = True
                         
                     j += 1
                 
