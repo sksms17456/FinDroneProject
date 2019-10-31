@@ -1,20 +1,22 @@
 <template>
     <div class="sector">
-      <p class="mainTitle">SYSTEM.</p>
-      <h1>시스템을 소개합니다.</h1>
-      <v-layout row justify-center>
-        <v-flex v-for="(step,index) in steps" :key="index" xs4>
-          <v-card class="hidden-sm-and-down; ma-4">
-            <v-img pd-4 :src="step.src" aspect-ratio="1.7" contain></v-img>
-            <v-card-title primary-title style="text-align:center">
-              <div style="width:100%">
-                <h3 class="headline mb-0">{{ step.card_title }}</h3>
-                <div>{{ step.card_text }}</div>
-              </div>
-            </v-card-title>
-          </v-card>
-        </v-flex>
-      </v-layout>
+      <p class="mainTitle" id="systemTitle">SYSTEM.</p>
+      <v-container id="systemContainer">
+        <v-img :src="getImgUrl('System.png')"></v-img>
+        <v-layout row justify-center>
+          <v-flex v-for="(step,index) in steps" :key="index" xs4>
+            <v-card class="hidden-sm-and-down; my-4">
+              <v-img pd-1 :src="step.src" aspect-ratio="1.7" contain></v-img>
+              <v-card-title primary-title style="text-align:center">
+                <div style="width:100%; height:100px">
+                  <h3 class="headline mb-0">{{ step.card_title }}</h3>
+                  <div>{{ step.card_text }}</div>
+                </div>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </div>
 </template>
 
@@ -48,3 +50,14 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#systemTitle {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+#systemContainer {
+  width: 900px!important;
+}
+</style>

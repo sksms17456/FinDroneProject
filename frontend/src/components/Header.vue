@@ -3,7 +3,6 @@
     <v-container id="headerContainer">
       <v-toolbar-items>
         <v-btn to="/home" flat id="headerLogoBox">
-          <!-- <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/> -->
           <v-img id="headerLogo" :src="getImgUrl('logoText.png')" contain/>
         </v-btn>
         <div><v-btn to="/about" flat>About</v-btn></div>
@@ -70,6 +69,7 @@ export default {
 
 #headerContainer {
   margin: 0;
+  padding-left: 0;
 }
 
 #headerLogoBox {

@@ -3,7 +3,6 @@
         <div v-if="call==='home'">
             <v-img :height="height">
                 <birdBackground />
-                <goDownBtn />
             </v-img>
             <!-- <v-img :src="getImgUrl('background_landing.png')" :height="height">
                 <section id="bilog-bilog"></section>
