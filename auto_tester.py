@@ -15,34 +15,42 @@ from util import spinSquare, oneSquare
 # 기본 드론 정보
 DRONE_INFOS = {
     "name":"Drone1",
-    "type":"all"
+    "start":{
+        "x_val":669.859375,
+        "y_val":-31697.015625,
+        "z_val":16057.371094
+    }
 }
-# START_POS = {"x_val":60049.859375, "y_val":1822.984375, "z_val":13177.371094}
-# MAIN_SPIN = {
-#     "pos":[
-#         [60049.859375, 1822.984375],
-#         [60099.859375, 1822.984375],
-#         [60099.859375, 1872.984375],
-#         [60049.859375, 1872.984375]
-#     ],
-#     "max":20,
-#     "gap":10
+# DRONE_INFOS = {
+#     "name":"Drone2",
+#     "start":{
+#         "x_val":829.859375,
+#         "y_val":-31697.015625,
+#         "z_val":16057.371094
+#     }
 # }
-START_POS = {"x_val":669.859375, "y_val":-31697.015625, "z_val":16057.371094}
+# DRONE_INFOS = {
+#     "name":"Drone3",
+#     "start":{
+#         "x_val":829.859375,
+#         "y_val":-31537.015625,
+#         "z_val":16057.371094
+#     }
+# }
 MAIN_SPIN = {
     "pos":[
         [669.859375, -31697.015625],
-        [719.859375, -31697.015625],
-        [719.859375, -31647.015625],
-        [669.859375, -31647.015625]
+        [829.859375, -31697.015625],
+        [829.859375, -31537.015625],
+        [669.859375, -31537.015625]
     ],
-    "max":10,
+    "max":20,
     "gap":20
 }
 
 # 움직일 때 쓸 높이와 최대 이동 거리
 MAIN_HEIGHT = 15
-MAX_MOVE_LENGTH = 3
+MAX_MOVE_LENGTH = 5
 
 # 캡쳐에 쓰일 변수
 CAMERA_NAME = '3' # 아래
@@ -52,11 +60,10 @@ TARGET = None
 detector = object_detector.Detector()
 
 class Drone():
-    def __init__(self, info, startPos, routeInfo):
+    def __init__(self, info, routeInfo):
         self.name = info["name"]
         self.number = info["name"][-1:]
-        self.type = info["type"]
-        self.spos = startPos
+        self.spos = info["start"]
         self.npos = {"x_val":0., "y_val":0., "z_val":0.}
         self.isFind = False
         self.aiResult = None
@@ -65,7 +72,16 @@ class Drone():
 
         self.mainRoute = spinSquare.square(routeInfo["pos"], routeInfo["max"], routeInfo["gap"]).makeRoute().getRoute()
         self.mainRouteLen = len(self.mainRoute)
-        self.nowMainRouteNum = 1
+        minDiff = 100000
+        minIndex = 0
+        i = 0
+        for route in self.mainRoute:
+            diff = (self.spos["x_val"] - route[0])**2 + (self.spos["y_val"] - route[1])**2
+            if minDiff > diff:
+                minDiff = diff
+                minIndex = i
+            i += 1
+        self.nowMainRouteNum = minIndex
 
         self.oneSquareService = oneSquare.square()
         self.subRoute = []
@@ -208,7 +224,7 @@ class Drone():
 
 def run():
     cv2.startWindowThread()
-    d = Drone(DRONE_INFOS, START_POS, MAIN_SPIN)
+    d = Drone(DRONE_INFOS, MAIN_SPIN)
     d.takeoff()
     i = 0
 
@@ -224,6 +240,9 @@ def run():
                 d.doTracking(2, MAIN_HEIGHT - 2)
         else:
             if len(d.serverRes) >= 1:
+                imSub = False
+                for res in d.serverRes:
+                    pass
                 # 내 앞 번호가 찾았으면 sub
                 # 아니라면 main 패트롤
                 d.doSubPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT - 1, d.serverRes[0]["x"], d.serverRes[0]["y"])
@@ -232,7 +251,7 @@ def run():
                 d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
 
         d.capture(i, CAMERA_NAME, TARGET)
-        d.postServer(i)
+        # d.postServer(i)
         i += 1
 
     d.landing()

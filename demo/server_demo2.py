@@ -30,10 +30,10 @@ def update_drone():
 
     datas = [
         {
-            "number":1,
-            "x":0,
-            "y":0,
-            "isFind":False
+            "number":result.getlist('number'),
+            "x":result.getlist('x'),
+            "y":result.getlist('y'),
+            "isFind":result.getlist('isFind')
         },
         {
             "number":2,
