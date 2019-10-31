@@ -3,7 +3,8 @@
     <v-container id="headerContainer">
       <v-toolbar-items>
         <v-btn to="/home" flat id="headerLogoBox">
-          <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/>
+          <!-- <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/> -->
+          <v-img id="headerLogo" :src="getImgUrl('logoText.png')" contain/>
         </v-btn>
         <div><v-btn to="/about" flat>About</v-btn></div>
         <div><v-btn to="/system" flat>System</v-btn></div>
