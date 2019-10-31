@@ -1,6 +1,6 @@
 <template>
     <div class="sector">
-      <p class="mainTitle" id="systemTitle">SYSTEM.</p>
+      <h1 id="systemTitle">SYSTEM.</h1>
       <v-container id="systemContainer">
         <v-img :src="getImgUrl('System.png')"></v-img>
         <v-layout row justify-center>
