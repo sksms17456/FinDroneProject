@@ -54,7 +54,7 @@ MAX_MOVE_LENGTH = 5
 
 # 캡쳐에 쓰일 변수
 CAMERA_NAME = '3' # 아래
-TARGET = None
+TARGET = "person"
 
 # Object Detect 객체 생성
 detector = object_detector.Detector()
@@ -88,7 +88,7 @@ class Drone():
         self.subRouteLen = 0
         self.nowSubRouteNum = 0
 
-        self.drone = airsim.MultirotorClient()
+        self.drone = airsim.MultirotorClient(ip="70.12.247.112")
         self.drone.confirmConnection()
     
     def takeoff(self):
@@ -109,6 +109,7 @@ class Drone():
         self.drone.reset()
 
     def moveToV(self, x, y, z, c=1):
+        self.drone.rotateToYawAsync(0, vehicle_name=self.name).join()
         self.drone.moveByVelocityAsync(x, y, z, c, vehicle_name=self.name).join()
         self.drone.moveByVelocityAsync(0, 0, 0, 1, vehicle_name=self.name).join()
         
@@ -208,7 +209,7 @@ class Drone():
             "iter":i
         }
 
-        res = requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+        res = requests.post('http://70.12.247.45:5000/api/droneUpdate', data=datas)
         self.serverRes = res.json()["list"]
 
     def getNowPosition(self):
@@ -237,7 +238,9 @@ def run():
                 subIndex = 0
                 j = 0
                 for res in d.serverRes:
-                    if int((res["number"] + 1) % 3) == int(d.number):
+                    num = int(res["number"]) + 1
+                    num = num if num <= 3 else num % 3
+                    if num == int(d.number):
                         imSub = True
                         subIndex = j
                     if not int(res["number"]) == int(d.number):
@@ -264,7 +267,9 @@ def run():
                 subIndex = 0
                 j = 0
                 for res in d.serverRes:
-                    if int((res["number"] + 1) % 3) == int(d.number):
+                    num = int(res["number"]) + 1
+                    num = num if num <= 3 else num % 3
+                    if num == int(d.number):
                         imSub = True
                         subIndex = j
                     j += 1
@@ -275,7 +280,6 @@ def run():
                     d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
             else:
                 d.doMainPatrol(MAX_MOVE_LENGTH, MAIN_HEIGHT)
-
         d.capture(i, CAMERA_NAME, TARGET)
         d.postServer(i)
         i += 1
