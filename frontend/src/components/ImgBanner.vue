@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="call==='home'">
-            <v-img :height="height">
+            <v-img height="100vh">
                 <birdBackground />
             </v-img>
             <!-- <v-img :src="getImgUrl('background_landing.png')" :height="height">
@@ -29,7 +29,7 @@
             </v-carousel> -->
         </div>
         <div v-else-if="call==='service'">
-            <v-img :src="getImgUrl('controltower.gif')" :height="height">
+            <v-img :src="getImgUrl('controltower.gif')" height="100vh">
                 <span
                     class="text-shadow display-2 text-weight"
                     style="font-size:15vmin!important; color:white"
@@ -64,8 +64,7 @@ export default {
     },
     props: {
         call:{type:String, default:"home"},
-        text: { type: String },
-        height: { type: String, default: "100vh" }
+        text: { type: String }
     },
     methods:{
         getImgUrl(img){
