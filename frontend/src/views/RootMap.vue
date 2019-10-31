@@ -1,20 +1,17 @@
 <template>
     <div>
-        <div class="float" style="height:722px; width:398px; background:black;">
-        </div>
-        <div class="float" style="height:722px; width:722px;">
-            <img id="img" src="../assets/map.jpg" style="width:inherit; position:absolute;">
-            <canvas id="myCanvas" width="722" height="722" style=" position:absolute; z-index:2;">
+        <div class="float" style="height:722px;">
+            <img id="img" src="../assets/map.jpg" style="height: inherit; width:inherit; position:absolute;">
+            <canvas id="myCanvas" width="989.338px" height="722px" style=" position:absolute; z-index:2;">
                 Your browser does not support the canvas element.
             </canvas>
-        </div>
-        <div class="float" style="height:722px; width:399px; background:black;">
         </div>
     </div>
 </template>
 
 <script>
 import $ from 'jquery';
+import axios from 'axios';
 
 export default {
     name: "RootMap",
@@ -26,16 +23,16 @@ export default {
                     y : 80,
                 },
                 {
-                    x : 80,
-                    y : 480,
+                    x : 273,
+                    y : 134,
                 },
                 {
-                    x : 480,
-                    y : 480,
+                    x : 852,
+                    y : 140,
                 },
                 {
-                    x : 480,
-                    y : 80,
+                    x : 826,
+                    y : 665,
                 }
             ]
         }
@@ -48,12 +45,23 @@ export default {
         drawRoute(){
             var curThis = this
             this.polling = setInterval(() => {
+                const path = `/api/getImg`
+                    axios.get(path)
+                    .then(response => {
+                        const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
+                        for(var i=0; i<3; i++){
+                            console.log('Drone',(i+1),'x : ',pos[i][0],' y : ',pos[i][1]);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
                 $(function(){
                     var canvas = document.getElementById("myCanvas");
                     var ctx = canvas.getContext("2d");
                     var ctx2 = canvas.getContext("2d");
                     var img = document.getElementById("img");
-                    ctx.drawImage(img, 0, 0, 722, 722);
+                    ctx.drawImage(img, 0, 0, 989.338, 722);
                     
                     ctx2.fillStyle = "rgba(0, 0, 255, 0.15)";
                     ctx2.fillRect(60, 60, 440, 440);
@@ -69,7 +77,7 @@ export default {
                     curThis.drones[1].x += 3;
                     curThis.drones[2].y -= 3;
                     curThis.drones[3].x -= 3;
-                    for(var i=0; i<4; i++){
+                    for(var i=1; i<4; i++){
                         ctx.fillRect(curThis.drones[i].x, curThis.drones[i].y, 8, 8);
                     }
                 }); 
@@ -81,7 +89,7 @@ export default {
                 var canvas = document.getElementById("myCanvas");
                 var ctx = canvas.getContext("2d");
                 var img = document.getElementById("img");
-                ctx.drawImage(img, 0, 0, 722, 722);
+                ctx.drawImage(img, 0, 0, 989.338, 722);
             });
         }
     }
@@ -91,5 +99,8 @@ export default {
 <style>
 .float {
     float:left;
+}
+.v-content__wrap{
+    background: black;
 }
 </style>
