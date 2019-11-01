@@ -20,6 +20,13 @@ yarn-error.log*
 *.sln
 *.sw?
 
+images
+
 # Tensorflow Example
 /tensorflow
-/drone_object_detection/images
+
+# Cache
+drone_object_detection/__pycache__
+drone_object_detection/core/__pycache__
+drone_object_detection/utils/__pycache__
+util/__pycache__
