@@ -14,13 +14,17 @@ import airsim
 import cv2
 from cv2 import imdecode, imencode, IMREAD_COLOR
 
-from drone_object_detection import object_detector
+# from drone_object_detection import object_detector
 
 # Object Detect 객체 생성
-detector = object_detector.Detector()
+# detector = object_detector.Detector()
 
 # connect to the AirSim simulator
+<<<<<<< HEAD
+# client = airsim.MultirotorClient(ip='70.12.247.45')
+=======
 # client = airsim.MultirotorClient(ip='70.12.247.73')
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True)
@@ -60,7 +64,7 @@ def frame_generator(sec):
       cv2.imshow('cam', result['image'])
       # cv2.imshow('cam', decoded_frame)
       datas = {
-          "name":"Drone_1",
+          "name":"Drone_2",
           "x":1,
           "y":2,
           "z":3,
@@ -68,7 +72,11 @@ def frame_generator(sec):
           "timestamp":time.time(),
           "iter":i
       }
+<<<<<<< HEAD
+      requests.post('http://70.12.247.73:5000/api/droneUpdate', data=datas)
+=======
       # requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
       client.moveToPositionAsync(x_base, y_base, z_base, v)
       time.sleep(0.2)
       x_base = x_base + x
@@ -81,10 +89,14 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+<<<<<<< HEAD
+frame_generator(25)
+=======
 frame_generator(100)
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
 client.reset()
 client.enableApiControl(False)
  
 # Closes all the frames
 cv2.destroyAllWindows()
-detector.closeDetector()
+# detector.closeDetector()
