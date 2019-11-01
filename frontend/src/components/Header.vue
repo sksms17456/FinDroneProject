@@ -126,6 +126,7 @@ export default {
 
 #deskToolbar {
   box-shadow: none;
+  background-color: transparent;
 }
 
 #headerContainer {

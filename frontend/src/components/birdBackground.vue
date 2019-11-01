@@ -178,7 +178,9 @@
 
         }
       </script>
-      <div id="container"></div>
+      <v-img height="100vh">
+        <div id="container"></div>
+      </v-img>
     </div>
 </template>
 
@@ -217,10 +219,6 @@ export default {
   },
 
   mounted() {
-	  
-	//   $('#container').css({'cursor':'url('+this.getImgUrl('stop.png')+'), auto'});
-	// document.getElementsByTagName("body")[0].style.cursor = "url('http://wiki-devel.sugarlabs.org/images/e/e2/Arrow.cur'), auto";
-
     this.BirdGeometry = this.BirdGeometryF();
 
     this.init();
@@ -242,7 +240,6 @@ export default {
       );
       this.camera.position.z = 350;
       this.scene = new THREE.Scene();
-    //   this.scene.background = new THREE.Color(0x000000);
       this.scene.fog = new THREE.Fog(0xffffff, 100, 1000);
       this.renderer = new THREE.WebGLRenderer();
       this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -253,31 +250,14 @@ export default {
       document.addEventListener("mousemove", this.onDocumentMouseMove, false);
       document.addEventListener("touchstart", this.onDocumentTouchStart, false);
       document.addEventListener("touchmove", this.onDocumentTouchMove, false);
-      //
       window.addEventListener("resize", this.onWindowResize, false);
-      // var gui = new GUI();
-      // var effectController = {
-      //   separation: 20.0,
-      //   alignment: 20.0,
-      //   cohesion: 20.0,
-      //   freedom: 0.75
-      // };
 
       this.valuesChanger();
-      // gui
-      //   .add(effectController, "separation", 0.0, 100.0, 1.0)
-      //   .onChange(this.valuesChanger);
-      // gui
-      //   .add(effectController, "alignment", 0.0, 100, 0.001)
-      //   .onChange(this.valuesChanger);
-      // gui
-      //   .add(effectController, "cohesion", 0.0, 100, 0.025)
-      //   .onChange(this.valuesChanger);
-      // gui.close();
 
       // Load the background texture
       var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("dark-gradient2.jpg"));
       // var texture = THREE.ImageUtils.loadTexture(this.getImgUrl("background3.jpg"));
+
       var backgroundMesh = new THREE.Mesh(
         new THREE.PlaneGeometry(window.innerWidth, window.innerHeight, 0),
         new THREE.MeshBasicMaterial({
@@ -328,7 +308,6 @@ export default {
       birdG.addAttribute("reference", references);
       birdG.addAttribute("birdVertex", birdVertex);
 
-      // this.addAttribute( 'normal', new Float32Array( points * 3 ), 3 );
       var v = 0;
       function verts_push() {
         for (var i = 0; i < arguments.length; i++) {
@@ -351,12 +330,6 @@ export default {
         var i = ~~(v / 3);
         var x = (i % this.WIDTH) / this.WIDTH;
         var y = ~~(i / this.WIDTH) / this.WIDTH;
-        // var c = new THREE.Color(
-        // 	0x444444 +
-        // 	~ ~ ( v / 9 ) /this.BIRDS * 0x666666
-        // );
-
-        // const order =  ~~(v / 9) / this.BIRDS
 
         const order = Math.floor(v / 9 / this.BIRDS);
         const key = order.toString();
@@ -403,9 +376,6 @@ export default {
         const r2 = THREE.Math.clamp(c1.r + Math.random() * c2.r, 0, 1);
         const g2 = THREE.Math.clamp(c1.g + Math.random() * c2.g, 0, 1);
         const b2 = THREE.Math.clamp(c1.b + Math.random() * c2.b, 0, 1);
-        // const r2 = (c1.r + Math.random() * c2.r).clamp(0,1)
-        // const g2 = (c1.g + Math.random() * c2.g).clamp(0,1)
-        // const b2 = (c1.b + Math.random() * c2.b).clamp(0,1)
 
         c = new THREE.Color(r2, g2, b2);
       } else if ("varianceGradient".indexOf("mix") === 0) {
@@ -579,25 +549,12 @@ export default {
 };
 </script>
 <style scoped>
-.index {
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-  /* background-color: #141a48; */
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
-}
 #container {
   position: absolute;
   width: 100%;
   top: 0;
   bottom: 0;
   overflow: hidden;
-  /* cursor: url(http://cur.cursors-4u.net/mechanics/mec-5/mec473.cur), auto !important; */
   cursor: url('../assets/dronpointer.png'), auto !important;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 홈 화면(sector1) -->
-    <ImgBanner call="home"/>
+    <birdBackground/>
     <!-- 간단소개 (sector2) -->
     <About/>
     <!-- 시스템 소개 (sector3) -->
@@ -14,17 +14,17 @@
 </template>
 
 <script>
-import ImgBanner from "../components/ImgBanner";
-import About from './About'
-import System from './System'
-import Service from './Service'
-import Application from './Application'
+import birdBackground from '../components/birdBackground'
+import About from '../components/About'
+import System from '../components/System'
+import Service from '../components/Service'
+import Application from '../components/Application'
 import $ from "jquery";
 
 export default {
   name: "Home",
   components: {
-    ImgBanner,
+    birdBackground,
     About,
     System,
     Service,

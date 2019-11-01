@@ -20,19 +20,6 @@
             </div>
         </v-layout>
     </v-layout>
-
-    <!-- <v-layout row wrap>
-        <v-flex xs4>
-            <v-img :src="getImgUrl('control_left.png')" contain style="height:100px;widht:100px"></v-img>
-        </v-flex> 
-        <v-flex xs4>
-        </v-flex>  
-        <v-flex xs4>
-            <v-img :src="getImgUrl('control_right.png')" contain style="height:100px;widht:100px"></v-img>
-        </v-flex>    
-    </v-layout> -->
-
-    
 </v-container>
 </template>
 

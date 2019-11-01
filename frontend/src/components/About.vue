@@ -23,13 +23,14 @@
       <div id="more">
         <span id="more_link_text"><mark>'출발 드론팀'에 대해 더 궁금하신가요?</mark></span>
 
+        <!-- 팀소개 다이얼로그 -->
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
           <template v-slot:activator="{ on }">
             <v-btn class="button" fab v-on="on"> <i class="fas fa-users"></i> </v-btn>
           </template>
 
           <v-card>
-            <v-toolbar dark color="rgba(0, 159, 227, 0.7)">
+            <v-toolbar dark color="#002148">
               <v-btn icon dark @click="dialog = false">
                 <i class="fas fa-times"></i>
               </v-btn>
@@ -37,10 +38,10 @@
               <v-spacer></v-spacer>
             </v-toolbar>
 
-            <v-tabs color="rgba(0, 159, 227, 0.7)" dark slider-color="yellow" centered>
+            <v-tabs color="#002148" dark slider-color="yellow" centered>
               <v-tab v-for="(member,index) in members" :key="index" ripple>{{member.position}}</v-tab>
               
-              <v-tab-item v-for="(member,index) in members" :key="index">
+              <v-tab-item v-for="(member,index) in members" :key="index" >
                 <v-layout row wrap mt-4>
                   <v-flex xs6>
                     <v-card style="text-align:center;">
@@ -83,6 +84,13 @@ export default {
       dialog:false,
       members:[
         {
+          position:'Team',
+          name:'Start Drone Team',
+          discription:'SSAFY 19조',
+          github:'https://github.com/diterun',
+          src:this.getImgUrl('realLogo.png')
+        },
+        {
           position:'CTO',
           name:'King HaNam',
           discription:'모든걸 마스터한 남자',
@@ -92,7 +100,7 @@ export default {
         {
           position:'Unreal',
           name:'Kang Hyun',
-          discription:'모든걸 마스터한 남자',
+          discription:'모든 것을 창조하는 조물주',
           github:'https://github.com/mmhyun90',
           src:'https://avatars1.githubusercontent.com/u/18240086?s=460&v=4'
         },
@@ -141,6 +149,7 @@ export default {
           "px rgba(0,159,227,.7)"
       );
     });
+    
   },
   methods:{
     getImgUrl(img){

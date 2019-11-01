@@ -2,11 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Intro from './views/Intro.vue'
 import Home from './views/Home.vue'
-import About from './views/About.vue'
-import Service from './views/Service.vue'
 import ErrorPage from './views/Error.vue'
 import RootMap from './views/RootMap.vue'
-import MultiMonitor from './components/MultiMonitor.vue'
+import Central from './views/Central.vue'
 
 Vue.use(Router)
 
@@ -24,19 +22,9 @@ export default new Router({
             component: Home
         },
         {
-            path: '/about',
-            name: 'about',
-            component: About
-        },
-        {
-            path: '/service',
-            name: 'serive',
-            component: Service
-        },
-        {
             path: '/central',
             name: 'central',
-            component: MultiMonitor
+            component: Central
         },
         {
             path: '/rootmap',

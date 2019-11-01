@@ -1,219 +1,424 @@
 <template>
-  <div>
-    <ImgBanner call="central" height="100vh">
-      <div style="line-height:1.1em; font-weight:bold;text-align:center" slot="text" class="layout align-center justify-center row fill-height">
-               
-         <br/> WATCH THE DRONES
-         <br/> FIND YOUR TARGET
-      </div>
-    </ImgBanner>
+	<div>
+		<div style="width:50%; float:left;">
+			<div class="droneName divcolor" style="height:10%">
+				<v-btn to="/home" style="width:50px; margin-bottom:16px;" flat>
+					<v-icon class="iconClass" >fas fa-home</v-icon>
+				</v-btn>
+				<div style="width:500px; display:inline-block;">
+					Drone-{{target.idx}}
+				</div>
+				<v-btn to="/rootmap" style="width:50px; margin-bottom:16px;" flat>
+					<v-icon class="iconClass">fas fa-map-marked-alt</v-icon>
+				</v-btn>				
+			</div>
+			<div style="height:628px">
+				<img
+				src='../assets/detect.png'
+				id="screen_img"
+				width="100%"
+				height="100%"
+            	>
+			</div>
+			<div style="height:10%">
+				<div class="dronePos divcolor">{{target.x_pos}} </div>
+				<div class="dronePos divcolor">{{target.y_pos}} </div>
+				<div class="dronePos divcolor">{{target.z_pos}} </div>
+			</div>
+		</div>
 
-    <div class="layout align-center justify-center" ma-0>
-    <v-btn flat dark @click="goDown" round class="text-xs-center hidden-sm-and-down">
-      <v-icon dark class="bounce_ball" style="margin:auto; font-weight:bold; color:white;">mdi mdi-arrow-down</v-icon>
-    </v-btn>
-    </div>
-
-    <v-container grid-list-xs id="simulation">
-        <h1 style="text-align:center">실시간 드론 중계 현황</h1>
-        <v-layout row wrap style="margin-top:10px">
-            <v-flex xs12 md4>
-              <v-card>
-                    <v-card-title primary-title class="justify-center">
-                        Target Log Information
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                      <template>
-                        <v-data-table
-                          :headers="headers"
-                          :items="target"
-                           class="elevation-1"
-                        >
-                          <template v-slot:items="props">
-                            <td class="text-xs-right">{{ props.item.time }}</td>
-                            <td class="text-xs-right">{{ props.item.posx }}</td>
-                            <td class="text-xs-right">{{ props.item.posy }}</td>
-                            <td class="text-xs-right">{{ props.item.posz }}</td>
-                          </template>
-                        </v-data-table>
-                      </template>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-
-            <v-flex xs12 md8>
-                <v-card>
-                    <v-card-title primary-title class="justify-center">
-                        Map Pin
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                        핀 찍는 이미지 파일 전송하는 거 만들어줘요~ 플리즈~
-                        <v-img
-                        :src="getImgUrl('mappin.gif')"
-                        height="200px"
-                        >
-                        </v-img>
-                    </v-card-text>
-                </v-card>
-                <v-layout row wrap>
-              <v-flex v-for="(drone,index) in drones" :key="index" xs4>
-                <v-card >
-                    <v-card-title primary-title class="justify-center">
-                        Drone - {{index+1}} 화면
-                    </v-card-title>
-                    <v-divider></v-divider>
-                    <v-card-text>
-                        드론 {{index+1}}} 화면 보여줘요~
-                        <div class="v-responsive v-image droneImg" :id="index">
-                            <div class="v-responsive__sizer" style="padding-bottom: 66.6667%;"></div>
-                            <img class="v-image__image v-image__image--cover" :id="'drone_img_'+index" :src="require('../../../drone_output/output'+index+'.jpg')"/>
-                            <div class="v-responsive__content"></div>
-                        </div>
-                    </v-card-text>
-                </v-card>
-            </v-flex>
-        </v-layout>
-            </v-flex>
-        </v-layout>
-    </v-container>
-  </div>
+		<div class = "div_border" style="width:50%; float:left;">
+			<div id="container" style="width:100%"></div>
+			<div id="menu" style="width:inherit">
+				<button id="table">TABLE</button>
+				<button id="sphere">SPHERE</button>
+				<button id="helix">HELIX</button>
+				<button id="grid">GRID</button>
+			</div>
+    	</div>
+	</div>    
 </template>
 
 <script>
-import ImgBanner from '../components/ImgBanner'
+import * as THREE from '../plugins/three.module.js';
+import { TWEEN } from '../plugins/tween.module.min.js';
+import { TrackballControls } from '../plugins/TrackballControls.js';
+import { CSS3DRenderer, CSS3DObject } from '../plugins/CSS3DRenderer.js';
 import axios from 'axios'
 import $ from 'jquery'
 
-  export default {
-    name:"Central",
-    components:{
-      ImgBanner
+export default {
+    name:'MultiMonitor',
+    data(){
+        return{
+			mapImg: 'mappin.gif',
+			// dialog:false,
+			target : {
+				idx : 1,
+				x_pos : 0,
+				y_pos : 0,
+				z_pos : 0,
+			},
+            table : [
+				"1", "0.0", "0.0", "0.0", 1, 1,
+				"2", "0.0", "0.0", "4.002602", 2, 1,
+				"3", "0.0", "0.0", "6.941", 3, 1,
+				"4", "0.0", "0.0", "0.0", 4, 1,
+				"5", "0.0", "0.0", "0.0", 5, 1,
+				"6", "0.0", "0.0", "0.0", 6, 1,
+				"7", "0.0", "0.0", "0.0", 7, 1,
+				"8", "0.0", "0.0", "0.0", 8, 1,
+				"9", "0.0", "0.0", "0.0", 1, 2,
+				"10", "0.0", "0.0", "0.0", 2, 2,
+				"11", "0.0", "0.0", "0.0", 3, 2,
+				"12", "0.0", "0.0", "0.0", 4, 2,
+				"13", "0.0", "0.0", "0.0", 5, 2,
+				"14", "0.0", "0.0", "0.0", 6, 2,
+				"15", "0.0", "0.0", "0.0", 7, 2,
+				"16", "0.0", "0.0", "0.0", 8, 2,
+				"17", "0.0", "0.0", "0.0", 1, 3,
+				"18", "0.0", "0.0", "0.0", 2, 3,
+				"19", "0.0", "0.0", "0.0", 3, 3,
+				"20", "0.0", "0.0", "0.0", 4, 3,
+				"21", "0.0", "0.0", "0.0", 5, 3,
+				"22", "0.0", "0.0", "0.0", 6, 3,
+				"23", "0.0", "0.0", "0.0", 7, 3,
+				"24", "0.0", "0.0", "0.0", 8, 3,
+				"25", "0.0", "0.0", "0.0", 1, 4,
+				"26", "0.0", "0.0", "0.0", 2, 4,
+				"27", "0.0", "0.0", "0.0", 3, 4,
+				"28", "0.0", "0.0", "0.0", 4, 4,
+				"29", "0.0", "0.0", "0.0", 5, 4,
+				"30", "0.0", "0.0", "0.0", 6, 4,				
+				"31", "0.0", "0.0", "0.0", 7, 4,
+				"32", "0.0", "0.0", "0.0", 8, 4,
+				"33", "0.0", "0.0", "0.0", 1, 5,
+				"34", "0.0", "0.0", "0.0", 2, 5,
+				"35", "0.0", "0.0", "0.0", 3, 5,
+				"36", "0.0", "0.0", "0.0", 4, 5,
+				"37", "0.0", "0.0", "0.0", 5, 5,
+				"38", "0.0", "0.0", "0.0", 6, 5,
+				"39", "0.0", "0.0", "0.0", 7, 5,
+				"40", "0.0", "0.0", "0.0", 8, 5,
+				"41", "0.0", "0.0", "0.0", 1, 6,
+				"42", "0.0", "0.0", "0.0", 2, 6,
+				"43", "0.0", "0.0", "0.0", 3, 6,
+				"44", "0.0", "0.0", "0.0", 4, 6,
+				"45", "0.0", "0.0", "0.0", 5, 6,
+				"46", "0.0", "0.0", "0.0", 6, 6,
+				"47", "0.0", "0.0", "0.0", 7, 6,
+				"48", "0.0", "0.0", "0.0", 8, 6,				
+			],
+            camera:'',
+            scene:'',
+            renderer:'',
+			controls:'',
+			objects : [],
+			targets : { table: [], sphere: [], helix: [], grid: [] },
+        }
+	},
+	created(){
+		this.getImgUrlFromBack();
+	},
+    mounted(){
+        this.init();
+		this.animate();
     },
-    data () {
-      return {
-        simulationOffset:0,
-        headers:[
-          // {
-          //   text: 'Target',
-          //   align: 'left',
-          //   sortable: false,
-          //   value: 'name'
-          // },
-          { text: '시간', value: 'time' },
-          { text: 'X좌표', value: 'posx' },
-          { text: 'Y좌표', value: 'posy' },
-          { text: 'Z좌표', value: 'posz' }
-        ],
-        target:[
-          {
-            name:'Target',
-            src:'footerlogo.png',
-            time:'3',
-            posx:'0',
-            posy:'0',
-            posz:'0',
-            state:''
-          }],
-        drones:[
-          {
-            name:'Drone1',
-            src:'footerlogo.png',
-            time:'',
-            posy:'',
-            posx:'',
-            posz:'',
-            state:''
-          },
-          {
-            name:'Drone2',
-            src:'footerlogo.png',
-            time:'',
-            posy:'',
-            posx:'',
-            posz:'',
-            state:''
-          },
-          {
-            name:'Drone3',
-            src:'footerlogo.png',
-            time:'',
-            posx:'',
-            posy:'',
-            posz:'',
-            state:''
-          }]
-      }
-    },
-    created(){
-      this.getImgUrlFromBack();
-    },
-    methods: {
-      getImgUrl(img){
-        return require('../assets/'+img)
-      },
-      getImgUrlFromBack(){
-        var curThis = this
-        this.polling = setInterval(() => {
-          const path = `/api/getImg`
-            axios.get(path)
-            .then(response => {
-              const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
-              const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
-              for(var i=0; i<3; i++){
-                curThis.drones[i].src = contain[i]
-                console.log(pos)
-                curThis.target[0].posx = pos[1][0]
-                curThis.target[0].posy = pos[1][1]
-                curThis.target[0].posz = pos[1][2]
+    methods:{
+        getImgUrl(img){
+            return require('../assets/'+img);
+		},
+		getImgUrlFromBack(){
+			var curThis = this
+			this.polling = setInterval(() => {
+				const path = `/api/getImg`
+					axios.get(path)
+					.then(response => {
+						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
+						const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
+						const find = [response.data.find0, response.data.find1, response.data.find2]
+						for(var i=0; i<3; i++){
+							curThis.table[i*6+1] = String(pos[i][0]);
+							curThis.table[i*6+2] = String(pos[i][1]);
+							curThis.table[i*6+3] = String(pos[i][2]);
+							const path = '/api/getDroneImg?drone='+i+'&num_img'+contain[i]
+							document.getElementsByClassName('details '+String(i+1))[0].innerHTML = String(pos[i][0]) + '<br>' +String(pos[i][1]) + '<br>' + String(pos[i][2]);
+							document.getElementsByClassName('symbol '+String(i+1))[0].src = path;
+							if(curThis.target.idx==(i+1)){
+								$('#screen_img').attr("src",path);
+							}
+							if(find[i]){
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
+							}else {
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+							}
+						}
+						var idx = curThis.target.idx;
+						curThis.target.x_pos = pos[idx-1][0];
+						curThis.target.y_pos = pos[idx-1][1];
+						curThis.target.z_pos = pos[idx-1][2];
+					})
+					.catch(error => {
+						console.log(error)
+					})
+			}, 500)
+		},
+        init() {
+			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+			this.camera.position.z = 1600
+            this.scene = new THREE.Scene();
+            var self= this;
+				// table
+			for ( var i = 0; i < this.table.length; i += 6 ) {
+				var element = document.createElement( 'div' );
+				element.className = 'element' + String(( i / 6) + 1);
+                element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
 
-                const path = '/api/getDroneImg?drone='+i +'&num_img=' + contain[i]
-                console.log(curThis.drones[i].src)
-                $('#drone_img_'+ i).attr("src", path)
-              }
-            })
-            .catch(error => {
-              console.log(error)
-            })
-          }, 1000)
-      },
-      goDown(){
-        this.simulationOffset = $('#simulation').offset();
-        $('html, body').animate({scrollTop : this.simulationOffset.top-100}, 400);
-      }
+				var number = document.createElement( 'div' );
+				number.className = 'number';
+				number.style = 'text-align:center; width:100%; top:2px; font-size:15px; right:0px;'
+				number.textContent = ( i / 6 ) + 1;
+                element.appendChild( number );
+
+				var symbol = document.createElement( 'img' );
+				symbol.className = 'symbol '+ String(( i / 6 ) + 1);
+				symbol.id = 'symbol ' + String(( i / 6 ) + 1);
+				symbol.style = 'top:20px; height:90px;'
+                symbol.src=this.getImgUrl('footerlogo.png')
+                element.appendChild( symbol );
+                
+				var details = document.createElement( 'div' );
+				details.className = 'details '+ String(( i / 6 ) + 1);
+				details.id = 'details '+ String(( i / 6 ) + 1);
+				details.style = 'bottom:5px;'
+				details.innerHTML = this.table[ i + 1 ] + '<br>' + this.table[ i + 2 ] + '<br>' + this.table[ i + 3 ];
+                element.appendChild( details );
+				
+				element.addEventListener('click',function() {
+					document.getElementsByClassName('details 4')[0].innerHTML = '1.1' + '<br>' + '2.2' + '<br>' + '3.3'
+					self.target.idx = this.getElementsByClassName('number')[0].textContent;
+					self.target.x_pos = self.table[((self.target.idx-1)*6)+1];
+					self.target.y_pos = self.table[((self.target.idx-1)*6)+2];
+					self.target.z_pos = self.table[((self.target.idx-1)*6)+3];
+				},false)
+
+				var object = new CSS3DObject( element );
+				object.position.x = Math.random() * 4000 - 2000;
+				object.position.y = Math.random() * 4000 - 2000;
+				object.position.z = Math.random() * 4000 - 2000;
+				this.scene.add( object );
+                this.objects.push( object );
+                
+				var object = new THREE.Object3D();
+				object.position.x = ( this.table[ i + 4 ] * 140 ) - 620;
+				object.position.y = - ( this.table[ i + 5 ] * 180 ) + 660;
+				this.targets.table.push( object );
+            }
+                
+				// sphere
+			var vector = new THREE.Vector3();
+			for ( var i = 0, l = this.objects.length; i < l; i ++ ) {
+				var phi = Math.acos( - 1 + ( 2 * i ) / l );
+				var theta = Math.sqrt( l * Math.PI ) * phi;
+				var object = new THREE.Object3D();
+				object.position.setFromSphericalCoords( 800, phi, theta );
+				vector.copy( object.position ).multiplyScalar( 2 );
+				object.lookAt( vector );
+				this.targets.sphere.push( object );
+			}
+			    // helix
+			var vector = new THREE.Vector3();
+			for ( var i = 0, l = this.objects.length; i < l; i ++ ) {
+				var theta = i * 0.175 + Math.PI;
+				var y = - ( i * 8 ) + 450;
+				var object = new THREE.Object3D();
+				object.position.setFromCylindricalCoords( 900, theta, y );
+				vector.x = object.position.x * 2;
+				vector.y = object.position.y;
+				vector.z = object.position.z * 2;
+				object.lookAt( vector );
+				this.targets.helix.push( object );
+			}
+				// grid
+			for ( var i = 0; i < this.objects.length; i ++ ) {
+				var object = new THREE.Object3D();
+				object.position.x = ( ( i % 5 ) * 400 ) - 800;
+				object.position.y = ( - ( Math.floor( i / 5 ) % 5 ) * 400 ) + 800;
+				object.position.z = ( Math.floor( i / 25 ) ) * 1000 - 2000;
+				this.targets.grid.push( object );
+			}
+				//
+			this.renderer = new CSS3DRenderer();
+			this.renderer.setSize( window.innerWidth/2, window.innerHeight );
+			document.getElementById( 'container' ).appendChild( this.renderer.domElement );
+            
+                //
+			this.controls = new TrackballControls( this.camera, this.renderer.domElement );
+			this.controls.minDistance = 500;
+			this.controls.maxDistance = 6000;
+			this.controls.addEventListener( 'change', this.render );
+            var button = document.getElementById( 'table' );
+            var self = this;
+			button.addEventListener( 'click', function () {
+				self.transform( self.targets.table, 2000 );
+			}, false );
+            var button = document.getElementById( 'sphere' );
+			button.addEventListener( 'click', function () {
+				self.transform( self.targets.sphere, 2000 );
+			}, false );
+			var button = document.getElementById( 'helix' );
+			button.addEventListener( 'click', function () {
+				self.transform( self.targets.helix, 2000 );
+			}, false );
+			var button = document.getElementById( 'grid' );
+			button.addEventListener( 'click', function () {
+				self.transform( self.targets.grid, 2000 );
+			}, false );
+			this.transform( this.targets.table, 2000 );
+                //
+			window.addEventListener( 'resize', this.onWindowResize, false );
+        },
+		transform( targets, duration ) {
+			TWEEN.removeAll();
+			for ( var i = 0; i < this.objects.length; i ++ ) {
+				var object = this.objects[ i ];
+				var target = targets[ i ];
+				new TWEEN.Tween( object.position )
+					.to( { x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration )
+					.easing( TWEEN.Easing.Exponential.InOut )
+					.start();
+				new TWEEN.Tween( object.rotation )
+					.to( { x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration )
+					.easing( TWEEN.Easing.Exponential.InOut )
+					.start();
+			}
+			new TWEEN.Tween( this )
+				.to( {}, duration * 2 )
+				.onUpdate( this.render )
+				.start();
+        },
+        
+		onWindowResize() {
+			this.camera.aspect = window.innerWidth / window.innerHeight;
+			this.camera.updateProjectionMatrix();
+			this.renderer.setSize( window.innerWidth, window.innerHeight );
+			this.render();
+        },
+        
+		animate() {
+			requestAnimationFrame( this.animate );
+			TWEEN.update();
+			this.controls.update();
+        },
+        
+		render() {
+			this.renderer.render( this.scene, this.camera );
+		}
     }
-  }
+}
 </script>
+		
 
 <style scoped>
-.bounce_ball {
-    background: transparent;
-    width: 80px;
-    height: 35px;
-    background-size: 100%;
-    left: 50%;
-    bottom: 10px;
-    margin-left: -22px;
-    z-index: 4;
-    opacity: 0.9;
-    -webkit-animation: bounceball 0.9s infinite ease-out;
+#container{
+    background-color:black;
 }
-.bounce_ball:hover {
-    background-color: black;
-    border-radius: 10rem;
+a {
+	color: #8ff;
 }
-@-webkit-keyframes bounceball {
-    0%,
-    20%,
-    100% {
-        -webkit-transform: translateY(-60px);
-    }
-    30% {
-        -webkit-transform: translateY(-75px);
-    }
-    50% {
-        -webkit-transform: translateY(-51px);
-    }
+
+#menu {
+    position: absolute;
+    bottom: 20px;
+	width: 100%;
+	text-align: center;
+}
+
+.element {
+	width: 120px;
+	height: 160px;
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.5);
+	border: 1px solid rgba(127,255,255,0.25);
+	font-family: Helvetica, sans-serif;
+	text-align: center;
+    line-height: normal;
+	cursor: default;
+}
+			
+.element:hover {
+	box-shadow: 0px 0px 12px rgba(0,255,255,0.75);
+	border: 1px solid rgba(127,255,255,0.75);
+}
+		
+.element .number {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 12px;
+	color: rgba(127,255,255,0.75);
+}
+
+.element .symbol {
+	position: absolute;
+    top: 40px;
+	left: 0px;
+	right: 0px;
+	font-size: 60px;
+	font-weight: bold;
+	color: rgba(255,255,255,0.75);
+	text-shadow: 0 0 10px rgba(0,255,255,0.95);
+    width:120px;
+    height:70px;
+}
+
+.element .details {
+	position: absolute;
+	bottom: 15px;
+	left: 0px;
+	right: 0px;
+	font-size: 12px;
+	color: rgba(127,255,255,0.75);
+}
+
+.iconClass{
+	font-size:40px;
+	color: rgba(127,255,255,0.75)!important;
+}
+
+
+.divcolor{
+	background-color: rgba(1, 69, 71, 9.267);
+}
+.droneName{
+	font-size: 40px;
+	color: rgba(127,255,255,0.75);
+	text-align: center;
+	font-weight: bold;
+}
+
+.dronePos{
+	display:inline-block; 
+	width:33.3%;
+	text-align: center;
+	font-weight: bold;
+	color: rgba(155, 255, 255, 0.75);
+	font-size:20px;
+}
+button {
+    color: rgba(155,255,255,0.75);
+	background: transparent;
+	outline: 1px solid rgba(127,255,255,0.75);
+	border: 0px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+			
+button:hover {
+	background-color: rgba(0,255,255,0.5);
+}
+
+button:active {
+	color: #000000;
+	background-color: rgba(0,255,255,0.75);
 }
 </style>
