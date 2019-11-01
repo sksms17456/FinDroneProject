@@ -492,8 +492,8 @@ export default {
       this.renderer.setSize(window.innerWidth, window.innerHeight);
     },
     onDocumentMouseMove(event) {
-      this.mouseX = event.clientX - this.windowHalfX - 200;
-      this.mouseY = event.clientY - this.windowHalfY - 100;
+      this.mouseX = event.clientX - this.windowHalfX;
+      this.mouseY = event.clientY - this.windowHalfY;
     },
     onDocumentTouchStart(event) {
       if (event.touches.length === 1) {

@@ -59,6 +59,8 @@ export default {
     }else {
       this.introPage = true;
     }
+
+    document.getElementById('mainDisplay').onwheel = function(){ return false; }
   },
   methods:{
     goHome(){
