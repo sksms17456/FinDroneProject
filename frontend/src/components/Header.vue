@@ -1,24 +1,39 @@
 <template>
-  <v-toolbar id="deskToolbar" style="z-index:19; box-shadow:none;" fixed>
-    <v-spacer></v-spacer>
-      <v-container text-md-center>
-        <v-toolbar-side-icon class="hidden-sm-and-up"></v-toolbar-side-icon>
-        <v-toolbar-items class="hidden-sm-and-down" >
-          <v-flex xs3 text-md-right><v-btn to="/" flat>Home</v-btn></v-flex>
-          <v-flex xs2><v-btn to="/about" flat>About</v-btn></v-flex>
-          <v-card style="background:transparent;font-size:1.7em" flat to="/">
-              <v-img id="headerLogo" :src="getImgUrl('dronelogo.png')" contain/>
-              <v-flex xs2><v-btn id="headerTitle" flat large style="text-transform : none !important" to="/">FinDrone</v-btn></v-flex>
-          </v-card>
-          <v-flex xs2><v-btn to="/service" flat>Service</v-btn></v-flex>
-          <v-flex xs3 text-md-left><v-btn to="/central" flat>Central</v-btn></v-flex>
+  <v-toolbar id="deskToolbar" fixed>
+    <v-container id="headerContainer">
+      <v-toolbar-items>
+        <v-btn v-scroll="onScroll"
+               @click="toTop"
+               to="/home"
+               flat 
+               id="headerLogoBox">
+          <v-img id="headerLogo" :src="getImgUrl('logoText.png')" contain/>
+        </v-btn>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toAbout"
+                 flat>About</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toSystem"
+                 flat>System</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toService"
+                 flat>Service</v-btn>
+        </div>
+        <div>
+          <v-btn v-scroll="onScroll"
+                 @click="toApplication"
+                 flat>Application</v-btn>
+        </div>
+        <div>
+          <v-btn to="/central" flat>Central</v-btn>
+        </div>
       </v-toolbar-items>
-      </v-container>
-      <v-spacer></v-spacer>
-     <!-- <v-toolbar-items>
-        <v-btn flat>Log In - Sign Up</v-btn>
-        <v-btn flat>Log Out</v-btn>
-     </v-toolbar-items> -->
+    </v-container>
   </v-toolbar>
 </template>
 
@@ -26,41 +41,71 @@
 import $ from "jquery";
 
 export default {
+  name: 'mainHeader',
   methods:{
     getImgUrl(img){
       return require('../assets/'+img)
+    },
+    toTop() {
+      window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toAbout() {
+      window.scrollTo({
+          top: $('#aboutBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toSystem() {
+      window.scrollTo({
+          top: $('#systemBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toService() {
+      window.scrollTo({
+          top: $('#serviceBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    toApplication() {
+      window.scrollTo({
+          top: $('#applicationBox').offset().top - $('#deskToolbar').height(),
+          left: 0,
+          behavior: "smooth"
+      });
+    },
+    onScroll() {
+      this.offsetTop = window.scrollY;
     }
   },
   mounted() {
+    var curThis = this
     $(document).ready(function() {
       $(window).scroll(function() {
         var deskToolbarElement = document.getElementById("deskToolbar");
-        // var mobileToolbarElement = document.getElementById( "mobileToolbar"); 
         var headerLogoElement = document.getElementById("headerLogo");
-        var headerTitelElement = document.getElementById("headerTitle");
         var headerBtn = document.getElementsByClassName("v-btn");
-        if ($(window).scrollTop() < 300) {
-          deskToolbarElement.style.background = "transparent";
-          deskToolbarElement.style.boxShadow = "none";
-          deskToolbarElement.style.height="25vh";
-          $('.v-btn').css('color','white');
-          headerLogoElement.style.height="auto";
-          headerTitelElement.style.fontSize="1.7em";
-          // mobileToolbarElement.style.background = "transparent";
-          // mobileToolbarElement.style.boxShadow = "none";
-          } else {
-            deskToolbarElement.style.background = "#f1f0f0f2";
-            deskToolbarElement.style.boxShadow ="0px 1px 10px grey";
-            $('.v-btn').css('color','black');
-            deskToolbarElement.style.height="16vh"
-            headerLogoElement.style.height="7vh";
-            headerTitelElement.style.fontSize="1.1em";
-            // mobileToolbarElement.style.background = "white";
-            // mobileToolbarElement.style.boxShadow ="0px 1px 10px grey";
+
+        if(curThis.$route.path === '/central' || curThis.$route.path === '/rootmap'){
+          deskToolbarElement.style.display = "none";
+        } else {
+          if ($(window).scrollTop() < 300) {
+            deskToolbarElement.style.background = "transparent";
           }
+          else {
+            deskToolbarElement.style.background = "#fff";
+          }
+        }
       }).scroll();
     });
-  },
+  }
 }
 </script>
 
@@ -68,6 +113,44 @@ export default {
 .v-btn{
   font-size:1.55em;
   font-weight:bold;
+}
+.v-btn:hover{
+  background-color: transparent;
+}
+
+.v-btn--active:before, .v-btn:hover:before, .v-btn:focus:before {
+  background-color: transparent;
+  border-bottom: 2px solid black;
+  opacity: 1;
+}
+
+#deskToolbar {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+#headerContainer {
+  margin: 0;
+  padding-left: 0;
+}
+
+#headerLogoBox {
+  margin-right: 10px;
+  border-right: 1.7px solid gray;
+}
+
+#headerLogoBox::before {
+  border-bottom: none;
+}
+
+#headerLogoBox:hover {
+  background-color: rgba(0,0,0,0.1);
+}
+
+#headerLogo {
+  width: 80px;
+  padding-right: 50px;
+  height: 30px;
 }
 
 </style>
