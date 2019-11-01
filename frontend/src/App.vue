@@ -3,15 +3,14 @@
     <div id="introPage">
       <Intro v-if="introPage" @goHome="goHome"/>
     </div>
-
     <div>
       <v-content v-if="!introPage">
         <Header/>
+         <v-img id="floatingLogo" :src="getImgUrl('FinDrone_Logo.png')" contain></v-img>
         <router-view/>
         <Footer/>
       </v-content>
     </div>
-
   </v-app>
 </template>
 
@@ -66,6 +65,9 @@ export default {
     goHome(){
       this.introPage=false;
       this.$router.push('/home').catch(err => {})
+    },
+    getImgUrl(img){
+      return require('./assets/'+img);
     }
   }
 
@@ -75,5 +77,13 @@ export default {
 <style scoped>
 #mainDisplay {
   background-color: white;
+}
+#floatingLogo{
+  position:fixed; 
+  height:100px;
+  width:100px;
+  z-index:1; 
+  right:20px; 
+  bottom:0;
 }
 </style>

@@ -38,8 +38,7 @@ export default {
       }
     };
     eventBus.$on("goToMenu", move => {
-      console.log(move)
-          this.animationSetting(move);
+        this.animationSetting(move);
     });
   },
   methods: {
