@@ -1,33 +1,19 @@
 <template>
     <div class="sector" id="serviceBox">
       <h1>SERVICE.</h1>
-      <v-tabs color="black" dark slider-color="white" centered>
-        <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
-        <v-tab-item v-for="(service,index) in services" :key="index">
-          <v-layout row wrap mt-4>
-            <v-flex xs6>
-              <v-card style="text-align:center;">
-                
-                <v-card-text>
-                  <h1>{{service.card_title}}</h1><br/>
-                  {{ service.card_text }}</v-card-text>
-                <v-divider></v-divider>
-                <v-card-text> 기능 더 알아보기 
-                    <v-btn icon to="/service" id="goService">
-                      <i class="fas fa-arrow-right"></i>
-                    </v-btn>
-                </v-card-text>
-              </v-card>
-            </v-flex>
-
-            <v-flex xs6>
-              <v-card>
-                <v-img :src="service.src" aspect-ratio="1.7" contain></v-img>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-      </v-tabs>
+      <v-layout row justify-center>
+          <v-flex v-for="(step,index) in steps" :key="index" xs4>
+            <v-card class="hidden-sm-and-down; my-4">
+              <v-img pd-1 :src="step.src" aspect-ratio="1.7" contain></v-img>
+              <v-card-title primary-title style="text-align:center">
+                <div style="width:100%; height:100px">
+                  <h3 class="headline mb-0">{{ step.card_title }}</h3>
+                  <div>{{ step.card_text }}</div>
+                </div>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-layout>
     </div>
 </template>
 
@@ -40,34 +26,26 @@ export default {
     }
   },
 
-  data() {
-    return {
-      services: [
-        {
-          src: this.getImgUrl("monitoring.gif"),
-          card_title: "수색 현장 모니터링",
-          card_text:
-            "수색하고 있는 드론의 화면을 웹상에서 간편하게 볼 수 있습니다."
-        },
-        {
-          src: this.getImgUrl("mappin.gif"),
-          card_title: "타겟 위치 변화 시각화",
-          card_text: "지정한 타겟이 이동하는 위치를 쉽게 파악할 수 있습니다."
+  data(){
+        return{
+            steps: [
+                {
+                src: this.getImgUrl("launch.png"),
+                card_title: "STEP 01 LAUNCH",
+                card_text: "사람, 동물 등의 목표물을 입력하면 3대의 드론이 입력된 목표물을 찾기위해 이륙합니다."
+                },
+                {
+                src: this.getImgUrl("detect.png"),
+                card_title: "STEP 02 DETECT",
+                card_text: "Spin Square 알고리즘을 기반으로 지정된 영역을 수색하기 시작합니다."
+                },
+                {
+                src: this.getImgUrl("stop.png"),
+                card_title: "STEP 03 TRACE",
+                card_text: "목표물을 발견하면 각 드론들이 전체 수색 / 근방 수색 / 타겟 추적으로 전환되어 임무를 수행합니다."
+                }
+            ]
         }
-      ]
-    };
   }
 }
 </script>
-
-<style scoped>
-.service_title{
-  text-align:center;
-  font-family: "LotteMartDream", sans-serif;
-}
-
-#goService {
-  margin-left:10px;
-  margin-bottom:10px;
-}
-</style>
