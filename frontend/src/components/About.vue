@@ -29,45 +29,47 @@
             <v-btn class="button" fab v-on="on"> <i class="fas fa-users"></i> </v-btn>
           </template>
 
-          <v-card>
-            <v-toolbar dark color="#002148">
-              <v-btn icon dark @click="dialog = false">
-                <i class="fas fa-times"></i>
-              </v-btn>
-              <v-toolbar-title>Introduce Our Team</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
+          <v-img :src="getImgUrl('Team.jpg')" style="height:100vh;">
+            <!-- 메인 카드 영역 -->
+            <v-card>
+              <v-toolbar style="background:transparent; box-shadow:none; position:fixed;">
+                <v-btn icon @click="dialog = false">
+                  <i class="fas fa-times"></i>
+                </v-btn>
+                <v-toolbar-title style="font-weight:bold;">Introduce Our Team</v-toolbar-title>
+                <v-spacer></v-spacer>
+              </v-toolbar>
+            </v-card>
 
-            <v-tabs color="#002148" dark slider-color="yellow" centered>
-              <v-tab v-for="(member,index) in members" :key="index" ripple>{{member.position}}</v-tab>
-              
-              <v-tab-item v-for="(member,index) in members" :key="index" >
-                <v-layout row wrap mt-4>
-                  <v-flex xs6>
-                    <v-card style="text-align:center;">
-                      <v-card-text>
-                        <h1>{{member.name}}</h1><br/>
-                        {{ member.discription }}</v-card-text>
-                      <v-divider></v-divider>
-                      <v-card-text>
-                        <span>더 알아보기</span>
-                        <i id="goMoreInfo" class="fas fa-arrow-right"></i>
-                         <v-btn icon :href="member.github">
-                              <i class='fab fa-github'></i>
-                         </v-btn>
-                      </v-card-text>
-                    </v-card>
+            <!-- 인물별 hover 카드 -->
+            <!-- 하남 -->
+            <div v-for="elem in members" :key="elem.position">
+              <div class="teamMember" :id="elem.target">
+                <div class="corner top left"></div>
+                <div class="corner top right"></div>
+                <div class="corner bottom left"></div>
+                <div class="corner bottom right"></div>
+              </div>
+              <v-card class="memberInfo" :id="elem.info">
+                <v-layout>
+                  <!-- 프로필 사진 -->
+                  <v-flex xs5>
+                    <v-img :src="elem.src" class="memberImage"></v-img>
                   </v-flex>
 
-                  <v-flex xs6>
-                    <v-card>
-                      <v-img :src="member.src" aspect-ratio="1.7" contain></v-img>
-                    </v-card>
+                  <!-- 정보 -->
+                  <v-flex xs7>
+                    <v-container>
+                      <h1>{{elem.name}}</h1>
+                      <h4>{{elem.discription}}</h4><br/>
+
+                      <p>{{elem.position}}</p>
+                    </v-container>
                   </v-flex>
                 </v-layout>
-              </v-tab-item>
-            </v-tabs>
-          </v-card>
+              </v-card>
+            </div>
+          </v-img>
       </v-dialog>
       </div>
 
@@ -78,52 +80,62 @@
 import $ from 'jquery'
 
 export default {
-  name:'About',
+  name: "About",
   data(){
     return{
       dialog:false,
       members:[
-        {
-          position:'Team',
-          name:'Start Drone Team',
-          discription:'SSAFY 19조',
-          github:'https://github.com/diterun',
-          src:this.getImgUrl('realLogo.png')
-        },
+        // {
+        //   position:'Team',
+        //   name:'Start Drone Team',
+        //   discription:'SSAFY 19조',
+        //   github:'https://github.com/diterun',
+        //   src:this.getImgUrl('realLogo.png'),
+        // },
         {
           position:'CTO',
           name:'King HaNam',
           discription:'모든걸 마스터한 남자',
           github:'https://github.com/diterun',
-          src:'https://avatars0.githubusercontent.com/u/27193194?s=460&v=4'
+          src:'https://avatars0.githubusercontent.com/u/27193194?s=460&v=4',
+          target: 'HanamTarget',
+          info: 'HanamInfo'
         },
         {
           position:'Unreal',
           name:'Kang Hyun',
           discription:'모든 것을 창조하는 조물주',
           github:'https://github.com/mmhyun90',
-          src:'https://avatars1.githubusercontent.com/u/18240086?s=460&v=4'
+          src:'https://avatars1.githubusercontent.com/u/18240086?s=460&v=4',
+          target: 'HyunTarget',
+          info: 'HyunInfo'
         },
         {
           position:'AI',
           name:'Lee GiIn',
           discription:'AI를 뛰어넘는 Human Intelligence',
           github:'https://github.com/marco0332',
-          src:'https://avatars2.githubusercontent.com/u/27988544?s=460&v=4'
+          src:'https://avatars2.githubusercontent.com/u/27988544?s=460&v=4',
+          target: 'GinTarget',
+          info: 'GinInfo'
         },
         {
           position:'FrontEnd',
           name:'Jeong HaeIn',
-          discription:'버스승객',
+          discription:'웹마스터',
           github:'https://github.com/jhi93',
-          src:'https://avatars0.githubusercontent.com/u/31469550?s=460&v=4'
+          src:'https://avatars1.githubusercontent.com/u/31469550?s=400&v=4',
+          target: 'HaeinTarget',
+          info: 'HaeinInfo'
         },
         {
           position:'BackEnd',
           name:'Park HyunBin',
           discription:'모든걸 정점찍은 남자',
           github:'https://github.com/sksms17456',
-          src:'https://avatars0.githubusercontent.com/u/19828721?s=460&v=4'
+          src:'https://avatars0.githubusercontent.com/u/19828721?s=460&v=4',
+          target: 'BinTarget',
+          info: 'BinInfo'
         }
       ]
     }
@@ -160,7 +172,6 @@ export default {
 </script>
 
 <style scoped>
-
 #about_Title {
   text-transform: uppercase;
   font-size: 72px;
@@ -208,7 +219,6 @@ export default {
   padding: 0 20px;
   border-radius:0;
   letter-spacing: 0.12rem;
-  /* background-color:antiquewhite; */
   text-decoration: underline;
 }
 
@@ -252,6 +262,122 @@ mark {
   animation: bounceArrow 0.9s infinite ease-out;
 }
 
+.teamMember {
+  position: fixed;
+  display: block;
+  background-color: transparent;
+  box-shadow: none;
+  height: 90px;
+  width: 90px;
+}
+
+.teamMember > div.corner {
+  display: block;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-color: #ffc83b;
+}
+
+.teamMember:hover > div.corner {
+  animation: targeting 1.5s infinite;
+}
+
+.top {
+    top: 0px;
+    border-top-style: solid;
+    border-top-width: 6px;
+}
+
+.bottom {
+    bottom: 0px;
+    border-bottom-style: solid;
+    border-bottom-width: 6px;
+}
+
+.left {
+    left: 0px;
+    border-left-style: solid;
+    border-left-width: 6px;
+}
+
+.right {
+    right: 0px;
+    border-right-style: solid;
+    border-right-width: 6px;
+}
+
+.memberInfo {
+  height: 300px;
+  width: 500px;
+  z-index: 15;
+  display: none;
+}
+
+.memberImage {
+  height: 300px;
+}
+
+.teamMember:hover ~ .memberInfo {
+  background-color: #ffc83b;
+  position: absolute;
+}
+
+#HanamTarget {
+  left: 15.3vw;
+  top: 25.2vh;
+}
+
+#HanamTarget:hover ~ #HanamInfo{
+  display: block;
+  top: 45vh;
+  left: 8vw;
+}
+
+#HyunTarget {
+  left: 80vw;
+  top: 24.5vh;
+}
+
+#HyunTarget:hover ~ #HyunInfo{
+  display: block;
+  top: 45vh;
+  left: 60vw;
+}
+
+#BinTarget {
+  left: 49.2vw;
+  top: 35.2vh;
+}
+
+#BinTarget:hover ~ #BinInfo{
+  display: block;
+  top: 55vh;
+  left: 36vw;
+}
+
+#HaeinTarget {
+  left: 30.5vw;
+  top: 26.5vh;
+}
+
+#HaeinTarget:hover ~ #HaeinInfo{
+  display: block;
+  top: 5vh;
+  left: 40vw;
+}
+
+#GinTarget {
+  left: 63.2vw;
+  top: 29vh;
+}
+
+#GinTarget:hover ~ #GinInfo{
+  display: block;
+  top: 4vh;
+  left: 25vw;
+}
+
 @keyframes ring {
   0% {
     width: 30px;
@@ -265,17 +391,20 @@ mark {
   }
 }
 
-@keyframes bounceArrow {
-    0%,
-    20%,
-    100% {
-        transform: translateX(-60px);
-    }
-    30% {
-        transform: translateX(-65px);
-    }
-    50% {
-        transform: translateX(-60px);
-    }
+@keyframes targeting {
+  0% {
+    width: 30px;
+    height: 30px;
+  }
+  50% {
+    width: 38px;
+    height: 38px;
+    border-color: #fc9a41;
+    border-width: 8px;
+  }
+  100% {
+    width: 30px;
+    height: 30px;
+  }
 }
 </style>
