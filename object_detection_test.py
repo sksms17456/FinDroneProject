@@ -20,7 +20,11 @@ from cv2 import imdecode, imencode, IMREAD_COLOR
 # detector = object_detector.Detector()
 
 # connect to the AirSim simulator
+<<<<<<< HEAD
 # client = airsim.MultirotorClient(ip='70.12.247.45')
+=======
+# client = airsim.MultirotorClient(ip='70.12.247.73')
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True)
@@ -40,7 +44,7 @@ cv2.startWindowThread()
 def frame_generator(sec):
   x = 1
   y = 1
-  z = -1.0
+  z = -2.0
   v = 0.3
   x_base = 0
   y_base = 0
@@ -50,14 +54,14 @@ def frame_generator(sec):
       response_image = client.simGetImage(CAMERA_NAME, IMAGE_TYPE)
       np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
 
-      # decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
-      # result = detector.run_object_detector(decoded_frame, target_class)
+      decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
+      result = detector.run_object_detector(decoded_frame, target_class)
 
       # cv2.imwrite('images/output{}.jpg'.format(i), result['image'])
       # cv2.imwrite('frontend/dist/img/output.af79af48.jpg', result['image'])
       # cv2.imwrite('frontend/src/assets/output.jpg', result['image'])
       
-      # cv2.imshow('cam', result['image'])
+      cv2.imshow('cam', result['image'])
       # cv2.imshow('cam', decoded_frame)
       datas = {
           "name":"Drone_2",
@@ -68,7 +72,11 @@ def frame_generator(sec):
           "timestamp":time.time(),
           "iter":i
       }
+<<<<<<< HEAD
       requests.post('http://70.12.247.73:5000/api/droneUpdate', data=datas)
+=======
+      # requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
       client.moveToPositionAsync(x_base, y_base, z_base, v)
       time.sleep(0.2)
       x_base = x_base + x
@@ -81,7 +89,11 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+<<<<<<< HEAD
 frame_generator(25)
+=======
+frame_generator(100)
+>>>>>>> e723ab8d921ac96dcfac8e2d04f9ae0ae4932c4f
 client.reset()
 client.enableApiControl(False)
  
