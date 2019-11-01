@@ -1,8 +1,8 @@
 <template>
     <div class="sector" id="systemBox">
       <div id="systemTitle"> 
-        <p id="systemMTitle">SYSTEM</p>
-        <p id="systemSTitle1"><span id="systemSTitle2">/ 구성도</span></p>
+        <p id="sm0">SYSTEM</p>
+        <p id="sm1"><span id="sm2">/ 구성도</span></p>
       </div>
       <v-container id="systemContainer">
         <v-layout>
@@ -21,27 +21,14 @@
 </template>
 
 <script>
-import { eventBus } from '../main'
 import $ from 'jquery'
 
 export default {
     methods: {
         getImgUrl(img) {
             return require("../assets/" + img);
-        }, 
-        settingStyle(){
-          console.log("불림")
-          $('#systemMTitle').css({"animation-name":"showup 7s"});
-          $('#systemSTitle1').css({"animation-name":"reveal 7s"});
-          $('#systemSTitle2').css({"animation-name":"slidein 7s"});
-      }
-    },
-    mounted(){
-        eventBus.$on("goToMenu", move => {
-          this.settingStyle();
-      });
+        }
     }
-     
 }
 </script>
 
@@ -49,7 +36,9 @@ export default {
 @import 'https://fonts.googleapis.com/css?family=Baloo+Paaji';
 
 #systemContainer {
-  width: 900px!important;
+  max-width: 1400px;
+  width: 1400px;
+  height: 570px;
   padding:0;
 }
 
@@ -69,16 +58,16 @@ p {
   margin-bottom: 0px;
 }
 
-#systemMTitle {
+.systemMTitle {
   animation: showup 7s;
 }
 
-#systemSTitle1 {
+.systemSTitle1 {
   width:0px;
   animation: reveal 7s;
 }
 
-#systemSTitle2 {
+.systemSTitle2 {
   margin-left:-200px;
   animation: slidein 7s;
 }

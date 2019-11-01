@@ -20,6 +20,7 @@ import System from '../components/System'
 import Service from '../components/Service'
 import Application from '../components/Application'
 import $ from "jquery";
+import { eventBus } from '../main'
 
 export default {
   name: "Home",
@@ -36,12 +37,38 @@ export default {
         this.$router.push("/home");
       }
     };
+    eventBus.$on("goToMenu", move => {
+      console.log(move)
+          this.animationSetting(move);
+    });
   },
   methods: {
     getImgUrl(img) {
       return require("../assets/" + img);
+    },
+    animationSetting(move){
+      if(move=='system'){
+        var mt = document.getElementById('sm0');
+        mt.classList.add("systemMTitle");
+
+        var mt1 = document.getElementById('sm1');
+        mt1.classList.add("systemSTitle1");
+
+        var mt2 = document.getElementById('sm2');
+        mt2.classList.add("systemSTitle2");
+      }else{
+        var mt = document.getElementById('sm0');
+        mt.classList.remove("systemMTitle");
+
+        var mt1 = document.getElementById('sm1');
+        mt1.classList.remove("systemSTitle1");
+
+        var mt2 = document.getElementById('sm2');
+        mt2.classList.remove("systemSTitle2");
+      }
     }
   },
+  
 };
 </script>
 
