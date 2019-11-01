@@ -39,7 +39,7 @@
 
 <script>
 import $ from "jquery";
-
+import { eventBus } from '../main'
 export default {
   name: 'mainHeader',
   methods:{
@@ -66,6 +66,8 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      
+      eventBus.$emit("goToMenu",'system');
     },
     toService() {
       window.scrollTo({

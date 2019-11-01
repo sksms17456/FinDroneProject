@@ -25,7 +25,6 @@ export default {
       return require("../assets/" + img);
     }
   },
-
   data(){
         return{
             steps: [
@@ -46,6 +45,6 @@ export default {
                 }
             ]
         }
-  }
+  },
 }
 </script>
