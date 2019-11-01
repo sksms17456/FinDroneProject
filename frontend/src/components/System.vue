@@ -1,22 +1,47 @@
 <template>
     <div class="sector" id="systemBox">
-      <div id="systemTitle"> <p id="systemMTitle">SYSTEM</p> <p><span id="systemSTitle">/ 구성도</span></p></div>
+      <div id="systemTitle"> 
+        <p id="systemMTitle">SYSTEM</p>
+        <p id="systemSTitle1"><span id="systemSTitle2">/ 구성도</span></p>
+      </div>
       <v-container id="systemContainer">
-        <v-img :src="getImgUrl('System.png')"></v-img>
-        <h3>1. Unreal Engine : 실제 상황을 가정한 가상 현실로 실종자를 찾는 드론 시뮬레이션 환경</h3>
-        <h3>2. Controller : 드론의 Mobile AP에 해당하며 수색알고리즘과 AI 이미치 처리기술 탑재 </h3>
-        <h3>3. Server : 드론들의 정보를 수집하여 모든 드론에게 정보를 BroadCast 및 사용자에게 드론 정보 시각화</h3>
+        <v-layout>
+          <v-flex xs7>
+            <v-img :src="getImgUrl('System.png')"></v-img>
+          </v-flex>
+​
+          <v-flex xs5 style="text-align:left">
+            <h2>1. Unreal Engine</h2><span style="font-size: 1.25em">실제 상황을 가정한 가상 현실로 실종자를 찾는 드론 시뮬레이션 환경</span><br/><br/>
+            <h2>2. Controller</h2><span style="font-size: 1.25em">드론의 Mobile AP에 해당하며 수색알고리즘과 AI 이미치 처리기술 탑재</span><br/><br/>
+            <h2>3. Server</h2><span style="font-size: 1.25em">드론들의 정보를 수집하여 모든 드론에게 정보를 BroadCast 및<br/>사용자에게 드론 정보 시각화</span><br/><br/>
+          </v-flex>
+        </v-layout>
       </v-container>
     </div>
 </template>
 
 <script>
+import { eventBus } from '../main'
+import $ from 'jquery'
+
 export default {
     methods: {
         getImgUrl(img) {
             return require("../assets/" + img);
-        }
+        }, 
+        settingStyle(){
+          console.log("불림")
+          $('#systemMTitle').css({"animation-name":"showup 7s"});
+          $('#systemSTitle1').css({"animation-name":"reveal 7s"});
+          $('#systemSTitle2').css({"animation-name":"slidein 7s"});
+      }
+    },
+    mounted(){
+        eventBus.$on("goToMenu", move => {
+          this.settingStyle();
+      });
     }
+     
 }
 </script>
 
@@ -44,16 +69,16 @@ p {
   margin-bottom: 0px;
 }
 
-p:first-of-type {
+#systemMTitle {
   animation: showup 7s;
 }
 
-p:last-of-type {
+#systemSTitle1 {
   width:0px;
   animation: reveal 7s;
 }
 
-p:last-of-type span {
+#systemSTitle2 {
   margin-left:-200px;
   animation: slidein 7s;
 }
