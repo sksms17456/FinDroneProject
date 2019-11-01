@@ -6,7 +6,7 @@
                 Your browser does not support the canvas element.
             </canvas>
         </div>
-        <div style="width: 618px;height:722px; float:right; background:black;">
+        <div style="width: 635px;height:722px; float:right; background:black;">
             <v-item-group style="height:568px;">
                 <v-container grid-list-md style="width:inherit; height:inherit;">
                     <v-layout wrap class="align-center justify-center">

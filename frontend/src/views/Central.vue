@@ -48,7 +48,7 @@ import axios from 'axios'
 import $ from 'jquery'
 
 export default {
-    name:'MultiMonitor',
+    name:'Central',
     data(){
         return{
 			mapImg: 'mappin.gif',
@@ -136,7 +136,7 @@ export default {
 					.then(response => {
 						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
 						const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
-						const find = [response.data.find0, response.data.find1, response.data.find2]
+						// const find = [response.data.find0, response.data.find1, response.data.find2]
 						for(var i=0; i<3; i++){
 							curThis.table[i*6+1] = String(pos[i][0]);
 							curThis.table[i*6+2] = String(pos[i][1]);
@@ -147,11 +147,11 @@ export default {
 							if(curThis.target.idx==(i+1)){
 								$('#screen_img').attr("src",path);
 							}
-							if(find[i]){
-								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
-							}else {
-								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
-							}
+							// if(find[i]){
+							// 	document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
+							// }else {
+							// 	document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+							// }
 						}
 						var idx = curThis.target.idx;
 						curThis.target.x_pos = pos[idx-1][0];
@@ -171,7 +171,7 @@ export default {
 				// table
 			for ( var i = 0; i < this.table.length; i += 6 ) {
 				var element = document.createElement( 'div' );
-				element.className = 'element' + String(( i / 6) + 1);
+				element.className = 'element ' + String(( i / 6) + 1);
                 element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
 
 				var number = document.createElement( 'div' );
