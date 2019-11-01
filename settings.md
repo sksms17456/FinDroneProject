@@ -84,4 +84,77 @@ real_T max_distance = 4000.0f / 1;
     }
 }
 ```
+> C:\Users\multicampus\AppData\Local\Programs\Python\Python36\lib\site-packages\airsim  
+airsim 1.2.4 version의 문제
+```py
+# client.py의 getDistanceSensorData의 lidar_name을
+# distance_sensor_name으로 수정!
+    def getDistanceSensorData(self, lidar_name = '', vehicle_name = ''):
+        return DistanceSensorData.from_msgpack(self.client.call('getDistanceSensorData', distance_sensor_name, vehicle_name))
+```
+```py
+# types.py 맨 아래에 추가
+class DistanceSensorData(MsgpackMixin):
+    time_stamp = np.uint64(0)
+    distance = Quaternionr()
+    min_distance = Quaternionr()
+    max_distance = Quaternionr()
+    relative_pose = Pose()
+```
 
+# Last 셋팅
+```json
+{
+  "SeeDocsAt": "https://github.com/Microsoft/AirSim/blob/master/docs/settings.md",
+  "SettingsVersion": 1.2,
+  "SimMode": "Multirotor",
+  "CameraDefaults": {
+      "CaptureSettings": [
+          {
+              "ImageType": 0,
+              "Width": 640,
+              "Height": 480
+          }
+      ],
+      "Gimbal":{
+        "Stabilization":0,
+        "Pitch": 0, "Roll":0, "Yaw":0
+    }
+  },
+  "Vehicles": {
+      "Drone1": {
+          "VehicleType": "simpleflight",
+          "X": 0, "Y": 0, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      },
+      "Drone2": {
+          "VehicleType": "simpleflight",
+          "X": 160, "Y": 0, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      },
+      "Drone3": {
+          "VehicleType": "simpleflight",
+          "X": 160, "Y": 160, "Z": 0, "Yaw": 0,
+          "AutoCreate": true,
+          "Sensors": {
+              "Distance1": {
+                  "SensorType": 5,
+                  "Enabled" : true
+              }
+          }
+      }
+  }
+}
+```

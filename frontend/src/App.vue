@@ -8,7 +8,6 @@
       <v-content v-if="!introPage">
         <Header/>
         <router-view/>
-        <Scrolltotop/>
         <Footer/>
       </v-content>
     </div>
@@ -20,14 +19,12 @@
 import Intro from './views/Intro'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Scrolltotop from './components/ScrollToTop'
 
 export default {
   name: 'App',
   components:{
     Intro,
     Header,
-    Scrolltotop,
     Footer
   },
   data () {
@@ -40,14 +37,15 @@ export default {
       // 경로 변경에 반응하여...
       var deskToolbarElement = document.getElementById("deskToolbar");
       var deskFooterElement = document.getElementById('footer');
+
       if(to.path === '/central' || to.path === '/rootmap'){
         deskToolbarElement.style.display = "none";
         deskFooterElement.style.display = "none";
-
       }
       else{
         deskToolbarElement.style.display = "block";
         deskFooterElement.style.display = "block";
+        deskToolbarElement.style.background = "transparent";
       }
     }
   },

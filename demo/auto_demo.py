@@ -8,7 +8,7 @@ START_POS = {"x_val":60049.859375, "y_val":1822.984375, "z_val":13177.371094}
 NAME = "Drone1"
 MIN_HEIGHT = 10
 MAX_HEIGHT = 15
-MAX_MOVE_LENGTH = 3
+MAX_MOVE_LENGTH = 1
 
 class Drone():
     def __init__(self, name, minh, maxh, max_len, spos):
@@ -81,7 +81,7 @@ class Drone():
         # print()
         # print()
 
-        self.moveToV(x, y, 0, 5)
+        self.moveToV(x, y, 0, 2)
 
     def getNowPosition(self):
         pos = self.drone.simGetGroundTruthKinematics(vehicle_name=self.name).position
@@ -90,6 +90,10 @@ class Drone():
         self.npos["y_val"] = self.spos["y_val"] + pos.y_val
         self.npos["z_val"] = self.spos["z_val"] - pos.z_val
         self.h = float(self.drone.getDistanceSensorData(vehicle_name=self.name, distance_sensor_name="Distance1").distance)
+        print(self.npos["x_val"])
+        print(self.npos["y_val"])
+        print(self.npos["z_val"])
+        print(self.h)
 
         return self.npos
 
@@ -98,7 +102,8 @@ d = Drone(NAME, MIN_HEIGHT, MAX_HEIGHT, MAX_MOVE_LENGTH, START_POS)
 def run():
     d.takeoff()
 
-    for _ in range(20):
+    for i in range(20):
+        print("====================== " + str(i))
         d.fly()
         d.target["x_val"] += 5
 

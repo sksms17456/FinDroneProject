@@ -50,14 +50,14 @@ def frame_generator(sec):
       response_image = client.simGetImage(CAMERA_NAME, IMAGE_TYPE)
       np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
 
-      # decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
-      # result = detector.run_object_detector(decoded_frame, target_class)
+      decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
+      result = detector.run_object_detector(decoded_frame, target_class)
 
       # cv2.imwrite('images/output{}.jpg'.format(i), result['image'])
       # cv2.imwrite('frontend/dist/img/output.af79af48.jpg', result['image'])
       # cv2.imwrite('frontend/src/assets/output.jpg', result['image'])
       
-      # cv2.imshow('cam', result['image'])
+      cv2.imshow('cam', result['image'])
       # cv2.imshow('cam', decoded_frame)
       datas = {
           "name":"Drone_1",
@@ -68,7 +68,7 @@ def frame_generator(sec):
           "timestamp":time.time(),
           "iter":i
       }
-      requests.post('http://70.12.247.73:5000/api/droneUpdate', data=datas)
+      # requests.post('http://localhost:5000/api/droneUpdate', data=datas)
       client.moveToPositionAsync(x_base, y_base, z_base, v)
       time.sleep(0.2)
       x_base = x_base + x
