@@ -1,5 +1,5 @@
 <template>
-<v-container style="height:100vh;" >
+<v-container style="height:100vh">
     <v-layout row wrap style="height:60vh">
     </v-layout>
     
@@ -20,19 +20,6 @@
             </div>
         </v-layout>
     </v-layout>
-
-    <!-- <v-layout row wrap>
-        <v-flex xs4>
-            <v-img :src="getImgUrl('control_left.png')" contain style="height:100px;widht:100px"></v-img>
-        </v-flex> 
-        <v-flex xs4>
-        </v-flex>  
-        <v-flex xs4>
-            <v-img :src="getImgUrl('control_right.png')" contain style="height:100px;widht:100px"></v-img>
-        </v-flex>    
-    </v-layout> -->
-
-    
 </v-container>
 </template>
 
@@ -43,40 +30,38 @@ export default {
     name:'Intro',
     data(){
         return{
-            launch:'false',
-            bgImage:'../assets/samle.png'
         }
     },
     mounted(){
-        const curSelf = this
-        // $('.application--wrap').css('background-image',self.getImgUrl('sample.png'))
+        const curSelf = this;
+
         $("input[type=range]").on("change", function(e) {
             var value = $('').val();
-        if(value > 0) {
-            transValue = 1 - ((value * 2) / 100);
-            transValue = transValue <= 0 ? 0 : transValue;
-            $("label", $("label").parent()).css({
-                opacity: transValue
-            });
-        }
-        }).on("mouseup", function(e) {
-        const self = this;
-        var value = $(this).val();
-
-        if(value != 100) {
-            for(var i = value; i >= 0; i--) {
-            (function changeValue(value) {
-                setTimeout(function () { 
-                $(self).val(value);
-                }, (100 - value) * 3);
-            })(i);
+            if(value > 0) {
+                transValue = 1 - ((value * 2) / 100);
+                transValue = transValue <= 0 ? 0 : transValue;
+                $("label", $("label").parent()).css({
+                    opacity: transValue
+                });
             }
-            $("label", $(self).parent()).animate({
-            opacity:1
-            }, 500, "linear");
-        }else{
-            curSelf.goHome();
-        }
+        }).on("mouseup", function(e) {
+            const self = this;
+            var value = $(this).val();
+
+            if(value != 100) {
+                for(var i = value; i >= 0; i--) {
+                (function changeValue(value) {
+                    setTimeout(function () { 
+                    $(self).val(value);
+                    }, (100 - value) * 3);
+                })(i);
+                }
+                $("label", $(self).parent()).animate({
+                opacity:1
+                }, 500, "linear");
+            }else{
+                curSelf.goHome();
+            }
         });
     },
     methods:{
@@ -84,19 +69,22 @@ export default {
             return require('../assets/'+img)
         },
         goHome(){
-            console.log("goHome")
-            this.$emit('goHome','') 
+            var self= this;
+            $('#introPage').css("background-image", "url("+self.getImgUrl('sample3.gif')+")")
+            .css("background-size","cover");
+            setTimeout(function() {self.$emit('goHome','')}, 3000);
         }
     }
 }
 </script>
-<style scoped>
+
+<style>
 #introPage{
-    background: url('../assets/sample2.png') center !important;
+    background: url('../assets/sample2.png') center;
+    background-size:cover;
 }
- .container {
+.container {
     width: 780px;
-    margin: 0 auto;
 }
 .slide-wrap {
   width: 650px;

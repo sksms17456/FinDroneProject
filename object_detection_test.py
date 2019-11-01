@@ -20,7 +20,7 @@ from drone_object_detection import object_detector
 detector = object_detector.Detector()
 
 # connect to the AirSim simulator
-# client = airsim.MultirotorClient(ip='70.12.247.59')
+# client = airsim.MultirotorClient(ip='70.12.247.73')
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True)
@@ -40,7 +40,7 @@ cv2.startWindowThread()
 def frame_generator(sec):
   x = 1
   y = 1
-  z = -1.0
+  z = -2.0
   v = 0.3
   x_base = 0
   y_base = 0
@@ -50,14 +50,14 @@ def frame_generator(sec):
       response_image = client.simGetImage(CAMERA_NAME, IMAGE_TYPE)
       np_response_image = np.asarray(bytearray(response_image), dtype="uint8")
 
-      # decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
-      # result = detector.run_object_detector(decoded_frame, target_class)
+      decoded_frame = imdecode(np_response_image, IMREAD_COLOR)
+      result = detector.run_object_detector(decoded_frame, target_class)
 
       # cv2.imwrite('images/output{}.jpg'.format(i), result['image'])
       # cv2.imwrite('frontend/dist/img/output.af79af48.jpg', result['image'])
       # cv2.imwrite('frontend/src/assets/output.jpg', result['image'])
       
-      # cv2.imshow('cam', result['image'])
+      cv2.imshow('cam', result['image'])
       # cv2.imshow('cam', decoded_frame)
       datas = {
           "name":"Drone_1",
@@ -68,7 +68,7 @@ def frame_generator(sec):
           "timestamp":time.time(),
           "iter":i
       }
-      requests.post('http://localhost:5000/api/droneUpdate', data=datas)
+      # requests.post('http://localhost:5000/api/droneUpdate', data=datas)
       client.moveToPositionAsync(x_base, y_base, z_base, v)
       time.sleep(0.2)
       x_base = x_base + x
@@ -81,7 +81,7 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-frame_generator(20)
+frame_generator(100)
 client.reset()
 client.enableApiControl(False)
  
