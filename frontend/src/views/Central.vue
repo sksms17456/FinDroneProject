@@ -2,14 +2,14 @@
 	<div>
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
-				<v-btn to="/home" style="width:50px; margin-bottom:16px;" flat>
-					<v-icon class="iconClass" >fas fa-home</v-icon>
+				<v-btn to="/home" class="button" flat>
+					<img src = "../assets/homeIcon.png" style="width:55px; height:55px;">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
-				<v-btn to="/rootmap" style="width:50px; margin-bottom:16px;" flat>
-					<v-icon class="iconClass">fas fa-map-marked-alt</v-icon>
+				<v-btn to="/rootmap" class="button" flat>
+                    <img src = "../assets/mapIcon.png" style="width:55px; height:55px;">
 				</v-btn>				
 			</div>
 			<div style="height:628px">
@@ -319,7 +319,7 @@ export default {
 </script>
 		
 
-<style scoped>
+<style>
 #container{
     background-color:black;
 }
@@ -332,6 +332,11 @@ a {
     bottom: 20px;
 	width: 100%;
 	text-align: center;
+}
+
+.button{
+    height: 80px;
+    padding: 0px;
 }
 
 .element {
