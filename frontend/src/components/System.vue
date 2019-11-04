@@ -52,12 +52,12 @@ export default {
   content: '';
   width: 3px;
   height: 3.5em;
-  background-color: black;
-  transition: background-color 1s ease;
+  background-color: #d5ad5899;
+  transition: background-color 3s ease;
 }
 
 #vertical_line_system.on {
-  background-color: rgba(91, 155, 213)!important;
+  background-color: #11436a!important;
 }
 
 #computerBackground {
@@ -86,8 +86,8 @@ export default {
 }
 
 #systemTitle.on {
-  color: rgba(91, 155, 213);
-  text-shadow: rgb(237, 145, 69, 0.6) 3.125px 3.98px;
+  color: #11436a;
+  text-shadow: #d5ad5899 3.125px 3.98px;
 }
 
 .systemSTitle {

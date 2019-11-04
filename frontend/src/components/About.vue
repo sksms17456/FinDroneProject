@@ -202,14 +202,14 @@ export default {
   margin: 2.5em 0 1em;
   padding: 0 3.5em;
   font-family: "LotteMartDream", sans-serif;
-  color: white;
+  color: #3f3f3f;
   font-size: 1.5em;
   transition: color 3s ease;
 }
 
 #hello_text.on {
-  color: #3f3f3f;
-  animation: fade_in 2s cubic-bezier(0.075, 0.62, 0.305, 1);
+  animation: fade_in 3.2s;
+  /* animation: fade_in 2s cubic-bezier(0.075, 0.62, 0.305, 1); */
 }
 
 #more {
@@ -399,8 +399,9 @@ mark {
 }
 
 @keyframes fade_in {
-  0% { bottom: -50px }
-  100% {bottom: 0px }
+  0% { bottom: -50px; opacity: 0 }
+  50% { bottom: -50px; opacity: 0 }
+  100% {bottom: 0px; opacity: 1 }
 }
 
 @keyframes ring {

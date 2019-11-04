@@ -46,16 +46,22 @@ export default {
       return require("../assets/" + img);
     },
     animationSetting(move){
-      if(move=='system'){
-        this.ableSystem();
-      } else{
-        this.disableSystem();
-      }
-
       if(move=='about'){
         this.ableAbout()
       } else {
         this.disableAbout()
+      }
+
+      if(move=='system'){
+        this.ableSystem();
+      } else {
+        this.disableSystem();
+      }
+
+      if(move=='service'){
+        this.ableService();
+      } else {
+        this.disableService();
       }
     },
     ableAbout(){
@@ -119,7 +125,43 @@ export default {
       computer.classList.remove('on');
 
       $('#structure').animate({'opacity':'0','margin-left':'-300px'},1500);
-    }
+    },
+    ableService(){
+      var vertical = document.getElementById('vertical_line_service');
+      var lightbulb = document.getElementById('icon_service');
+      var title = document.getElementById('service_Title');
+      var card0 = document.getElementById('Card_0');
+      var card1 = document.getElementById('Card_1');
+      var card2 = document.getElementById('Card_2');
+      var ai_img = document.getElementById('ai_img');
+      var ai_text = document.getElementById('ai_text');
+      vertical.classList.add('on');
+      lightbulb.classList.add('on');
+      title.classList.add('on');
+      card0.classList.add('on');
+      card1.classList.add('on');
+      card2.classList.add('on');
+      ai_img.classList.add('on');
+      ai_text.classList.add('on');
+    },
+    disableService(){
+      var vertical = document.getElementById('vertical_line_service');
+      var lightbulb = document.getElementById('icon_service');
+      var title = document.getElementById('service_Title');
+      var card0 = document.getElementById('Card_0');
+      var card1 = document.getElementById('Card_1');
+      var card2 = document.getElementById('Card_2');
+      var ai_img = document.getElementById('ai_img');
+      var ai_text = document.getElementById('ai_text');
+      vertical.classList.remove('on');
+      lightbulb.classList.remove('on');
+      title.classList.remove('on');
+      card0.classList.remove('on');
+      card1.classList.remove('on');
+      card2.classList.remove('on');
+      ai_img.classList.remove('on');
+      ai_text.classList.remove('on');
+    },
   },
   
 };
@@ -137,5 +179,8 @@ export default {
 .sector{
   text-align:center;
   height:100vh;
+}
+#applicationBox {
+  height:73vh;
 }
 </style>
