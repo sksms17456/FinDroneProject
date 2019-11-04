@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="float" style="height:864px;">
-            <img id="img" src="../assets/noDroneMap.jpg" style="height:864px; width:1110px; position:absolute;">
+            <img id="img" :src='getImgUrl("noDroneMap.jpg")' style="height:864px; width:1110px; position:absolute;">
             <canvas id="myCanvas" width="1110px" height="864px" style=" position:absolute; z-index:2;">
                 Your browser does not support the canvas element.
             </canvas>
@@ -44,10 +44,10 @@
             </v-item-group>
             <div style="background:black; height:296px; text-align:center; padding-top:100px;">
                 <v-btn to="/central" class="button" flat>
-                    <img src = "../assets/centralIcon.png" class="buttonImg">
+                    <img :src='getImgUrl("centralIcon.png")' class="buttonImg">
 				</v-btn>				
                 <v-btn to="/home" class="button" flat>
-					<img src = "../assets/homeIcon.png" class="buttonImg">
+					<img :src='getImgUrl("homeIcon.png")' class="buttonImg">
 				</v-btn>
             </div>
         </div>
@@ -93,6 +93,9 @@ export default {
         this.drawRoute();
     },
     methods:{
+        getImgUrl(img){
+            return require('../assets/'+img);
+		},
         drawRoute(){
             var curThis = this
             this.polling = setInterval(() => {

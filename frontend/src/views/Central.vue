@@ -3,18 +3,18 @@
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
 				<v-btn to="/home" class="button" flat>
-					<img src = "../assets/homeIcon.png" class="buttonImg">
+					<img :src='getImgUrl("homeIcon.png")' class="buttonImg">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
 				<v-btn to="/rootmap" class="button" flat>
-                    <img src = "../assets/mapIcon.png" class="buttonImg">
+                    <img :src='getImgUrl("mapIcon.png")' class="buttonImg">
 				</v-btn>				
 			</div>
 			<div style="height:628px">
 				<img
-				src='../assets/detect.png'
+				:src='getImgUrl("detect.png")'
 				id="screen_img"
 				width="100%"
 				height="100%"
@@ -26,7 +26,7 @@
 				<div class="dronePos divcolor">{{target.z_pos}} </div>
 			</div>
 			<div style="text-align:-webkit-center; padding-top:15px; background:linear-gradient(50deg, black, transparent);">
-				<img src='../assets/logoText.png'
+				<img :src='getImgUrl("logoText.png")'
 				width="500px"
 				height="124px"
 				>
@@ -177,7 +177,12 @@ export default {
 			for ( var i = 0; i < this.table.length; i += 6 ) {
 				var element = document.createElement( 'div' );
 				element.className = 'element ' + String(( i / 6) + 1);
-                element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+				// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+				if(i<18){
+					element.style.backgroundColor = 'rgba(0,127,127,0.8)';
+				}else{
+					element.style.backgroundColor = 'rgba(0,127,127,0.1)';
+				}
 
 				var number = document.createElement( 'div' );
 				number.className = 'number';
