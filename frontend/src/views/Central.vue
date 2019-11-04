@@ -2,13 +2,13 @@
 	<div>
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
-				<v-btn to="/home" class="button" flat>
+				<v-btn to="/home" class="buttons" flat>
 					<img :src='getImgUrl("homeIcon.png")' class="buttonImg">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
-				<v-btn to="/rootmap" class="button" flat>
+				<v-btn to="/rootmap" class="buttons" flat>
                     <img :src='getImgUrl("mapIcon.png")' class="buttonImg">
 				</v-btn>				
 			</div>
@@ -344,7 +344,7 @@ a {
 	text-align: center;
 }
 
-.button{
+.buttons{
     height: 42px;
     padding: 0px;
 	min-width: 42px;
