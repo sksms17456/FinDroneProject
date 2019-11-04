@@ -1,33 +1,27 @@
 <template>
     <div class="sector" id="applicationBox">
-      <h1>APPLICATION</h1>
-      <v-tabs color="black" dark slider-color="white" centered>
-        <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
-        <v-tab-item v-for="(service,index) in services" :key="index">
-          <v-layout row wrap mt-4>
-            <v-flex xs6>
-              <v-card style="text-align:center;">
-                
-                <v-card-text>
-                  <h1>{{service.card_title}}</h1><br/>
-                  {{ service.card_text }}</v-card-text>
-                <v-divider></v-divider>
-                <v-card-text> 기능 더 알아보기 
-                    <v-btn icon id="goService">
-                      <i class="fas fa-arrow-right"></i>
-                    </v-btn>
-                </v-card-text>
-              </v-card>
-            </v-flex>
+      <h1 id="appTitle">APPLICATION</h1>
+      <v-container fluid id="appContainer">
+        <v-layout row wrap>
+          
+          <v-flex xs6>
+            <h1>드론 이제 FinDrone으로 쉬워집니다.</h1>
+                <v-tabs fixed-tabs>
+                  <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
 
-            <v-flex xs6>
-              <v-card>
-                <v-img :src="service.src" aspect-ratio="1.7" contain></v-img>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-      </v-tabs>
+                  <v-tab-item v-for="(service,index) in services" :key="index">
+                    <h1>{{ service.card_text }}</h1>
+                  </v-tab-item>
+                </v-tabs>            
+          </v-flex>
+
+          <v-flex xs6>
+            <img src="../assets/monitor.jpg" contain style="width:700px;height:500px"/>  
+          </v-flex>
+          
+        </v-layout>
+          
+        </v-container>
     </div>
 </template>
 
@@ -59,7 +53,22 @@ export default {
 </script>
 
 <style scoped>
-#goService:hover{
+#appTitle{
+  font-family: 'Baloo Paaji', cursive;
+  font-size: 60px;
+  margin-top:20px;
+  margin-bottom:20px;
+}
+
+#appContainer{
+  max-width: 1400px;
+  width: 1400px;
+  height: 570px;
+}
+
+
+
+/* #goService:hover{
   margin-left:10px;
   margin-bottom:10px;
   left:10%;
@@ -78,5 +87,5 @@ export default {
     50% {
         transform: translateX(-60px);
     }
-}
+} */
 </style>

@@ -91,17 +91,16 @@ export default {
 }
 
 .systemSTitle {
-  animation: showup 7s;
+  animation: showup 10s;
 }
 
 .systemSTitle1 {
   width:0px;
-  animation: reveal 7s;
+  animation: reveal 5s;
 }
 
 .systemSTitle2 {
-  margin-left:-200px;
-  animation: slidein 7s;
+  animation: slidein 9s;
 }
 
 p {
@@ -148,17 +147,17 @@ p {
 }
 
 @keyframes slidein {
-    0% { margin-left:-10px; }
-    20% { margin-left:-10px; }
+    0% { margin-left:5px; }
+    20% { margin-left:5px; }
     35% { margin-left:0px; }
     100% { margin-left:0px; }
 }
 
 @keyframes reveal {
-    0% {opacity:0;width:0px;}
-    20% {opacity:1;width:0px;}
-    30% {width:200px;}
-    80% {opacity:1;}
+    0% {opacity:1;width:220px;}
+    20% {opacity:1;width:220px;}
+    30% {width:0px;}
+    80% {opacity:0;}
     100% {opacity:0;width:200x;}
 }
 
