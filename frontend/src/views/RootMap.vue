@@ -1,12 +1,12 @@
 <template>
     <div>
-        <div class="float" style="height:722px;">
-            <img id="img" src="../assets/noDroneMap.jpg" style="height: 722px; width:901px; position:absolute;">
-            <canvas id="myCanvas" width="901px" height="722px" style=" position:absolute; z-index:2;">
+        <div class="float" style="height:864px;">
+            <img id="img" src="../assets/noDroneMap.jpg" style="height: 864px; width:1110px; position:absolute;">
+            <canvas id="myCanvas" width="1110px" height="864px" style=" position:absolute; z-index:2;">
                 Your browser does not support the canvas element.
             </canvas>
         </div>
-        <div style="width: 635px;height:722px; float:right; background:black;">
+        <div style="width: 635px;height:864px; width:426px;float:right; background:black;">
             <v-item-group style="height:568px;">
                 <v-container grid-list-md style="width:inherit; height:inherit;">
                     <v-layout wrap class="align-center justify-center">
@@ -24,7 +24,7 @@
                                 class="d-flex align-center"
                                 dark
                                 height="120"
-                                width="440"
+                                width="340"
                                 @click="toggle"
                                 >
                                     <v-scroll-y-transition>
@@ -42,7 +42,7 @@
                     </v-layout> 
                 </v-container>
             </v-item-group>
-            <div style="background:black; height:154px; text-align:center">
+            <div style="background:black; height:296px; text-align:center; padding-top:100px;">
                 <v-btn to="/central" class="button" flat>
                     <img src = "../assets/centralIcon.png" style="width:80px; height:80px;">
 				</v-btn>				
@@ -62,10 +62,13 @@ export default {
     name: "RootMap",
     data(){
         return{
+            scale : 3.9875,
+            mapWidth:1110,
+            mapHeight:864,
             drones : [
                 {
-                    x : -670,
-                    y : 31697,
+                    x : 627.23,
+                    y : -31727.1,
                 },
                 {
                     x : 0,
@@ -93,7 +96,7 @@ export default {
         drawRoute(){
             var curThis = this
             this.polling = setInterval(() => {
-                const path = `/api/getImg`
+                const path = `/api/getInfo`
                     axios.get(path)
                     .then(response => {
                         const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
@@ -112,32 +115,50 @@ export default {
                     var ctx = canvas.getContext("2d");
                     var img = document.getElementById("img");
 
-                    ctx.drawImage(img, 0, 0, 901, 722);
+                    ctx.drawImage(img, 0, 0, curThis.mapWidth, curThis.mapHeight);
                     ctx.fillStyle = "#FF0000";
                     for(var i=1; i<4; i++){
-                        ctx.fillRect((curThis.drones[i].x+curThis.drones[0].x)*3.375 + 137, (curThis.drones[i].y+curThis.drones[0].y)*3.375 + 100, 8, 8);
+                        ctx.fillRect((curThis.drones[i].x-curThis.drones[0].x)*curThis.scale, (curThis.drones[i].y-curThis.drones[0].y)*curThis.scale, 8, 8);
                     }
 
                     ctx.beginPath();
                     ctx.lineWidth = "3";
                     ctx.strokeStyle = "blue";
-                    ctx.rect(117, 80,580, 580);
+                    ctx.rect((669.86-curThis.drones[0].x)*curThis.scale - curThis.scale*10, (-31697.01-curThis.drones[0].y)*curThis.scale - curThis.scale*10, 180*curThis.scale, 180*curThis.scale);
                     ctx.stroke();
                     
                     ctx.fillStyle = "rgba(0, 0, 255, 0.1)";
-                    ctx.fillRect(117, 80, 580, 580);
+                    ctx.fillRect((669.86-curThis.drones[0].x)*curThis.scale - curThis.scale*10, (-31697.01-curThis.drones[0].y)*curThis.scale - curThis.scale*10, 180*curThis.scale, 180*curThis.scale);
                     
+                    const path = `/api/getFindArea`
+                        axios.get(path)
+                        .then(response => {
+                            if(response.data.isFind){
+                                const pos = [response.data.x, response.data.y]
+                                ctx.beginPath();
+                                ctx.strokeStyle = "green";
+                                ctx.arc((pos[0]-curThis.drones[0].x)*curThis.scale, (pos[1]-curThis.drones[0].y)*curThis.scale, 35.35*curThis.scale, 50, Math.PI*2, true);
+                                ctx.fillStyle = "rgba(0,255,0,0.1)";
+                                ctx.fill();
+                                ctx.stroke();
+                                console.log(pos)
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+
                     if(document.getElementsByClassName('error').length>0){
                         ctx.beginPath();
                         ctx.strokeStyle = "red";
                         var idx = document.getElementsByClassName('error')[0].firstChild.firstChild.textContent.substring(7,8);
-                        ctx.arc((curThis.drones[idx].x+curThis.drones[0].x)*3.375 + 137+4, (curThis.drones[idx].y+curThis.drones[0].y)*3.375 + 100+4, 50, 50, Math.PI*2, true);
+                        ctx.arc((curThis.drones[idx].x-curThis.drones[0].x)*curThis.scale + 4, (curThis.drones[idx].y-curThis.drones[0].y)*curThis.scale + 4, 50, 50, Math.PI*2, true);
                         ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
                         ctx.fill();
                         ctx.stroke();
                     }
                 }); 
-            }, 1000)
+            }, 500)
         },
         drawCanvas(){
             var curThis = this;
@@ -145,7 +166,7 @@ export default {
                 var canvas = document.getElementById("myCanvas");
                 var ctx = canvas.getContext("2d");
                 var img = document.getElementById("img");
-                ctx.drawImage(img, 0, 0, 901, 722);
+                ctx.drawImage(img, 0, 0, curThis.mapWidth, curThis.mapHeight);
             });
         }
     }
@@ -154,7 +175,7 @@ export default {
 
 <style scoped>
 .button{
-    width: 170px;
+    width: 80px;
     height: 80px;
     padding: 0px;
     margin-left: 50px;

@@ -3,13 +3,13 @@
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
 				<v-btn to="/home" class="button" flat>
-					<img src = "../assets/homeIcon.png" style="width:55px; height:55px;">
+					<img src = "../assets/homeIcon.png" style="width:45px; height:45px;">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
 				<v-btn to="/rootmap" class="button" flat>
-                    <img src = "../assets/mapIcon.png" style="width:55px; height:55px;">
+                    <img src = "../assets/mapIcon.png" style="width:45px; height:45px;">
 				</v-btn>				
 			</div>
 			<div style="height:628px">
@@ -24,6 +24,12 @@
 				<div class="dronePos divcolor">{{target.x_pos}} </div>
 				<div class="dronePos divcolor">{{target.y_pos}} </div>
 				<div class="dronePos divcolor">{{target.z_pos}} </div>
+			</div>
+			<div style="text-align: -webkit-center; padding-top:15px; background:linear-gradient(50deg, black, transparent);">
+				<img src='../assets/logoText.png'
+				width="500px"
+				height="124px"
+				>
 			</div>
 		</div>
 
@@ -131,7 +137,7 @@ export default {
 		getImgUrlFromBack(){
 			var curThis = this
 			this.polling = setInterval(() => {
-				const path = `/api/getImg`
+				const path = `/api/getInfo`
 					axios.get(path)
 					.then(response => {
 						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
@@ -147,11 +153,11 @@ export default {
 							if(curThis.target.idx==(i+1)){
 								$('#screen_img').attr("src",path);
 							}
-							// if(find[i]){
-							// 	document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
-							// }else {
-							// 	document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
-							// }
+							if(find[i]){
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
+							}else {
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+							}
 						}
 						var idx = curThis.target.idx;
 						curThis.target.x_pos = pos[idx-1][0];
@@ -165,7 +171,7 @@ export default {
 		},
         init() {
 			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-			this.camera.position.z = 1600
+			this.camera.position.z = 1800
             this.scene = new THREE.Scene();
             var self= this;
 				// table
@@ -335,8 +341,9 @@ a {
 }
 
 .button{
-    height: 80px;
+    height: 42px;
     padding: 0px;
+	min-width: 42px;
 }
 
 .element {
