@@ -83,7 +83,7 @@ export default {
 
 <style>
 #introPage{
-    background: url('../assets/intro.png') center;
+    background: url('../assets/realLogo.png') center;
     background-size:cover;
 }
 .container {
