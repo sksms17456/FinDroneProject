@@ -1,5 +1,12 @@
 <template>
     <div class="sector" id="systemBox">
+
+      <div id="vertical_line_system"></div>
+      <svg id="svg" viewBox="0 0 24 24">
+        <path id="computer" fill="#000000" d="M6,2C4.89,2 4,2.89 4,4V12C4,13.11 4.89,14 6,14H18C19.11,14 20,13.11 20,12V4C20,2.89 19.11,2 18,2H6M6,4H18V12H6V4M4,15C2.89,15 2,15.89 2,17V20C2,21.11 2.89,22 4,22H20C21.11,22 22,21.11 22,20V17C22,15.89 21.11,15 20,15H4M8,17H20V20H8V17M9,17.75V19.25H13V17.75H9M15,17.75V19.25H19V17.75H15Z" />
+      </svg>
+      <img id="computerBackground" src="../assets/computer.jpg" alt="computer" />
+
       <div id="systemTitle"> 
         <p id="sysTitle0">SYSTEM</p>
         <p id="sysTitle1"><span id="sysTitle2">/ 구성도</span></p>
@@ -34,8 +41,37 @@ export default {
 <style scoped>
 @import 'https://fonts.googleapis.com/css?family=Baloo+Paaji';
 
-#systemBox{
-  padding-top:80px;
+#svg {
+  width: 50px;
+  height: 50px;
+}
+
+#vertical_line_system {
+  position: relative;
+  left: 49.9%;
+  content: '';
+  width: 3px;
+  height: 3.5em;
+  background-color: black;
+  transition: background-color 1s ease;
+}
+
+#vertical_line_system.on {
+  background-color: rgba(91, 155, 213)!important;
+}
+
+#computerBackground {
+  position: absolute;
+  left: 49.05%;
+  margin-top: 6px;
+  width:30px;
+  opacity: 0;
+  transition: opacity 4s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  border-radius: 4px;
+}
+
+#computerBackground.on {
+  opacity: 1;
 }
 
 #systemTitle{
@@ -45,7 +81,15 @@ export default {
   overflow: hidden;
   height:90px;
   margin-bottom:60px;
+  color: rgba(111, 15, 13);
+  transition: text-shadow 3s ease, color 2s ease;
 }
+
+#systemTitle.on {
+  color: rgba(91, 155, 213);
+  text-shadow: rgb(237, 145, 69, 0.6) 3.125px 3.98px;
+}
+
 .systemSTitle {
   animation: showup 7s;
 }

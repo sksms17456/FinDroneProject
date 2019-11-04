@@ -87,6 +87,15 @@ export default {
 
       var st2 = document.getElementById('sysTitle2');
       st2.classList.add("systemSTitle2");
+
+      var vertical = document.getElementById('vertical_line_system');
+      var systemTitle = document.getElementById('systemTitle');
+      var computerBackground = document.getElementById('computerBackground');
+      var computer = document.getElementById('computer');
+      vertical.classList.add('on');
+      systemTitle.classList.add('on');
+      computerBackground.classList.add('on');
+      computer.classList.add('on');
         
       $('#structure').animate({'opacity':'1','margin-left':'0px'},1500);
     },
@@ -99,6 +108,16 @@ export default {
 
       var st2 = document.getElementById('sysTitle2');
       st2.classList.remove("systemSTitle2");
+
+      var vertical = document.getElementById('vertical_line_system');
+      var systemTitle = document.getElementById('systemTitle');
+      var computerBackground = document.getElementById('computerBackground');
+      var computer = document.getElementById('computer');
+      vertical.classList.remove('on');
+      systemTitle.classList.remove('on');
+      computerBackground.classList.remove('on');
+      computer.classList.remove('on');
+
       $('#structure').animate({'opacity':'0','margin-left':'-300px'},1500);
     }
   },
