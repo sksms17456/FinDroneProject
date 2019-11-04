@@ -38,8 +38,7 @@ export default {
       }
     };
     eventBus.$on("goToMenu", move => {
-      console.log(move)
-          this.animationSetting(move);
+        this.animationSetting(move);
     });
   },
   methods: {
@@ -48,44 +47,59 @@ export default {
     },
     animationSetting(move){
       if(move=='system'){
-        var mt = document.getElementById('sm0');
-        mt.classList.add("systemMTitle");
-
-        var mt1 = document.getElementById('sm1');
-        mt1.classList.add("systemSTitle1");
-
-        var mt2 = document.getElementById('sm2');
-        mt2.classList.add("systemSTitle2");
-      } else {
-        var mt = document.getElementById('sm0');
-        mt.classList.remove("systemMTitle");
-
-        var mt1 = document.getElementById('sm1');
-        mt1.classList.remove("systemSTitle1");
-
-        var mt2 = document.getElementById('sm2');
-        mt2.classList.remove("systemSTitle2");
+        this.ableSystem();
+      } else{
+        this.disabpleSystem();
       }
 
       if(move=='about'){
-        var vertical = document.getElementById('vertical_line');
-        var lightbulb = document.getElementById('lightbulb');
-        var title = document.getElementById('about_Title');
-        var about = document.getElementById('hello_text');
-        vertical.classList.add('on');
-        lightbulb.classList.add('on');
-        title.classList.add('on');
-        about.classList.add('on');
+        this.ableAbout()
       } else {
-        var vertical = document.getElementById('vertical_line');
-        var lightbulb = document.getElementById('lightbulb');
-        var title = document.getElementById('about_Title');
-        var about = document.getElementById('hello_text');
-        vertical.classList.remove('on');
-        lightbulb.classList.remove('on');
-        title.classList.remove('on');
-        about.classList.remove('on');
+        this.disableAbout()
       }
+    },
+    ableAbout(){
+      var vertical = document.getElementById('vertical_line');
+      var lightbulb = document.getElementById('lightbulb');
+      var title = document.getElementById('about_Title');
+      var about = document.getElementById('hello_text');
+      vertical.classList.add('on');
+      lightbulb.classList.add('on');
+      title.classList.add('on');
+      about.classList.add('on');
+    },
+    disableAbout(){
+      var vertical = document.getElementById('vertical_line');
+      var lightbulb = document.getElementById('lightbulb');
+      var title = document.getElementById('about_Title');
+      var about = document.getElementById('hello_text');
+      vertical.classList.remove('on');
+      lightbulb.classList.remove('on');
+      title.classList.remove('on');
+      about.classList.remove('on');
+    },
+    ableSystem(){
+      var st0 = document.getElementById('sysTitle0');
+      st0.classList.add("systemMTitle");
+
+      var st1 = document.getElementById('sysTitle1');
+      st1.classList.add("systemSTitle1");
+
+      var st2 = document.getElementById('sysTitle2');
+      st2.classList.add("systemSTitle2");
+        
+      $('#structure').animate({'opacity':'1','margin-left':'0px'},1500);
+    },
+    disableSystem(){
+      var st0 = document.getElementById('sysTitle0');
+      st0.classList.remove("systemMTitle");
+
+      var st1 = document.getElementById('sysTitle1');
+      st1.classList.remove("systemSTitle1");
+
+      var st2 = document.getElementById('sysTitle2');
+      st2.classList.remove("systemSTitle2");
+      $('#structure').animate({'opacity':'0','margin-left':'-300px'},1500);
     }
   },
   
@@ -103,6 +117,6 @@ export default {
 }
 .sector{
   text-align:center;
-  height: 100vh;
+  height:100vh;
 }
 </style>

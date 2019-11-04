@@ -5,7 +5,9 @@
 ## Step 1.
 
 ```
-git clone https://github.com/tensorflow/models.git
+git clone https://github.com/tensorflow/tensorflow
+cd tensorflow
+git clone https://github.com/tensorflow/models
 ```
 
 ## Step 2.
@@ -17,7 +19,7 @@ pip install pillow lxml jupyter matplotlib
 ## Step 3.
 
 ```
-cd tensorflow/models/research
+cd models/research
 git clone https://github.com/cocodataset/cocoapi.git
 ```
 
