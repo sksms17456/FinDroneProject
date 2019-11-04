@@ -49,7 +49,7 @@ export default {
       if(move=='system'){
         this.ableSystem();
       } else{
-        this.disabpleSystem();
+        this.disableSystem();
       }
 
       if(move=='about'){
