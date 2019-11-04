@@ -63,6 +63,12 @@ export default {
       } else {
         this.disableService();
       }
+
+      if(move=='application'){
+        this.ableApplication();
+      }else{
+        this.disableApplication();
+      }
     },
     ableAbout(){
       var vertical = document.getElementById('vertical_line');
@@ -162,6 +168,14 @@ export default {
       ai_img.classList.remove('on');
       ai_text.classList.remove('on');
     },
+    ableApplication(){
+      var appTitle = document.getElementById('appTitle');
+      appTitle.classList.add('on');
+    },
+    disableApplication(){
+      var appTitle = document.getElementById('appTitle');
+      appTitle.classList.remove('on');
+    }
   },
   
 };

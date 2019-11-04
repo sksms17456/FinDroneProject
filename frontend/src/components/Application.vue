@@ -4,18 +4,18 @@
       <v-container fluid id="appContainer">
         <v-layout row wrap>
           <v-flex xs6>
-            <h1>드론 이제 FinDrone으로 쉬워집니다.</h1>
+            <h1 class="appSubTitle">"FinDrone</h1> <br/>
+            <h1 class="appSubTitle">Find All"</h1> <br/>
                 <v-tabs fixed-tabs v-model="active">
-                  <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
-
-                  <v-tab-item v-for="(service,index) in services" :key="index" >
-                    <h1>{{ service.card_text }}</h1>
+                  <v-tab v-for="(service,index) in services" :key="index" ripple style="font-weight:bold;">{{service.card_title}}</v-tab>
+                  <v-tab-item v-for="(service,index) in services" :key="index" style="padding-top:30px;" >
+                    <span class="appSubContents">{{ service.card_text }}</span>
                   </v-tab-item>
                 </v-tabs>
           </v-flex>
 
-            <v-img id="firstImage" class="functionImage" :src='getImgUrl("monitoring.gif")' contain></v-img>
-            <v-img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain></v-img>
+            <img id="firstImage" class="functionImage" :src= 'getImgUrl("monitoring.gif")' contain />
+            <img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain />
             
           <v-flex xs6>
             <!-- <v-img class="functionImage" :src="services[active].src" contain></v-img> -->
@@ -78,6 +78,28 @@ export default {
   font-size: 60px;
   margin-top: 30px;
   margin-bottom:50px;
+  color: rgba(111, 15, 13);
+  transition: text-shadow 3s ease, color 2s ease;  
+}
+
+#appTitle.on{
+  color: #11436a;
+  text-shadow: #d5ad5899 3.125px 3.98px;
+}
+
+.appSubTitle{
+  font-family: "LotteMartDream";
+  font-size:45px;
+}
+
+.v-tabs__item.v-tabs__item--active{
+  font-family: "LotteMartDream";
+  font-weight: bold;
+}
+
+.appSubContents{
+  font-family: "LotteMartDream";
+  font-size:20px;
 }
 
 #appContainer{
@@ -89,10 +111,10 @@ export default {
 .functionImage{
   position: absolute;
   z-index:10; 
-  left:840px;
-  bottom:270px;
-  width:500px;
-  height:310px;
+  left:825px;
+  bottom:290px;
+  width:565px;
+  height:288px;
 }
 
 #firstImage{
