@@ -56,7 +56,7 @@ export default {
 
         var mt2 = document.getElementById('sm2');
         mt2.classList.add("systemSTitle2");
-      }else{
+      } else {
         var mt = document.getElementById('sm0');
         mt.classList.remove("systemMTitle");
 
@@ -65,6 +65,26 @@ export default {
 
         var mt2 = document.getElementById('sm2');
         mt2.classList.remove("systemSTitle2");
+      }
+
+      if(move=='about'){
+        var vertical = document.getElementById('vertical_line');
+        var lightbulb = document.getElementById('lightbulb');
+        var title = document.getElementById('about_Title');
+        var about = document.getElementById('hello_text');
+        vertical.classList.add('on');
+        lightbulb.classList.add('on');
+        title.classList.add('on');
+        about.classList.add('on');
+      } else {
+        var vertical = document.getElementById('vertical_line');
+        var lightbulb = document.getElementById('lightbulb');
+        var title = document.getElementById('about_Title');
+        var about = document.getElementById('hello_text');
+        vertical.classList.remove('on');
+        lightbulb.classList.remove('on');
+        title.classList.remove('on');
+        about.classList.remove('on');
       }
     }
   },
@@ -83,5 +103,6 @@ export default {
 }
 .sector{
   text-align:center;
+  height: 100vh;
 }
 </style>

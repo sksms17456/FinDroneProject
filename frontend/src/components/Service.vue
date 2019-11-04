@@ -1,7 +1,8 @@
 <template>
     <div class="sector" id="serviceBox">
       <h1>SERVICE.</h1>
-      <v-layout row justify-center>
+      <v-container>
+        <v-layout row justify-center>
           <v-flex v-for="(step,index) in steps" :key="index" xs4>
             <v-card class="hidden-sm-and-down; my-4">
               <v-img pd-1 :src="step.src" aspect-ratio="1.7" contain></v-img>
@@ -14,6 +15,7 @@
             </v-card>
           </v-flex>
         </v-layout>
+      </v-container>
     </div>
 </template>
 
