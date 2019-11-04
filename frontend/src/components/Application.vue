@@ -19,7 +19,7 @@
             
           <v-flex xs6>
             <!-- <v-img class="functionImage" :src="services[active].src" contain></v-img> -->
-            <img src="../assets/monitor.jpg" contain style="width:600px;height:400px"/>  
+            <img :src='getImgUrl("monitor.jpg")' contain style="width:600px;height:400px"/>  
           </v-flex>
           
         </v-layout>
