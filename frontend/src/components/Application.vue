@@ -1,40 +1,40 @@
 <template>
     <div class="sector" id="applicationBox">
-      <h1>APPLICATION</h1>
-      <v-tabs color="black" dark slider-color="white" centered>
-        <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
-        <v-tab-item v-for="(service,index) in services" :key="index">
-          <v-layout row wrap mt-4>
-            <v-flex xs6>
-              <v-card style="text-align:center;">
-                
-                <v-card-text>
-                  <h1>{{service.card_title}}</h1><br/>
-                  {{ service.card_text }}</v-card-text>
-                <v-divider></v-divider>
-                <v-card-text> 기능 더 알아보기 
-                    <v-btn icon id="goService">
-                      <i class="fas fa-arrow-right"></i>
-                    </v-btn>
-                </v-card-text>
-              </v-card>
-            </v-flex>
+      <h1 id="appTitle">APPLICATION</h1>
+      <v-container fluid id="appContainer">
+        <v-layout row wrap>
+          <v-flex xs6>
+            <h1 class="appSubTitle">"FinDrone</h1> <br/>
+            <h1 class="appSubTitle">Find All"</h1> <br/>
+                <v-tabs fixed-tabs v-model="active">
+                  <v-tab v-for="(service,index) in services" :key="index" ripple style="font-weight:bold;">{{service.card_title}}</v-tab>
+                  <v-tab-item v-for="(service,index) in services" :key="index" style="padding-top:30px;" >
+                    <span class="appSubContents">{{ service.card_text }}</span>
+                  </v-tab-item>
+                </v-tabs>
+          </v-flex>
 
-            <v-flex xs6>
-              <v-card>
-                <v-img :src="service.src" aspect-ratio="1.7" contain></v-img>
-              </v-card>
-            </v-flex>
-          </v-layout>
-        </v-tab-item>
-      </v-tabs>
+            <img id="firstImage" class="functionImage" :src= 'getImgUrl("monitoring.gif")' contain />
+            <img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain />
+            
+          <v-flex xs6>
+            <!-- <v-img class="functionImage" :src="services[active].src" contain></v-img> -->
+            <img :src='getImgUrl("monitor.jpg")' contain style="width:600px;height:400px"/>  
+          </v-flex>
+          
+        </v-layout>
+          
+        </v-container>
     </div>
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
     data() {
     return {
+      active:'0',
       services: [
         {
           src: this.getImgUrl("monitoring.gif"),
@@ -50,6 +50,20 @@ export default {
       ]
     };
   },
+  watch:{
+    active:function(){
+      switch(this.active){
+        case 0:
+          $('#secondImage').animate({'opacity':'0','margin-left':'10px'},1000);
+          $('#firstImage').animate({'opacity':'1','margin-left':'0px'},1000);
+          break;
+        case 1:
+          $('#firstImage').animate({'opacity':'0','margin-left':'10px'},1000);
+          $('#secondImage').animate({'opacity':'1','margin-left':'0px'},1000);
+          break;
+      }
+    }
+  },
   methods: {
     getImgUrl(img) {
       return require("../assets/" + img);
@@ -59,7 +73,64 @@ export default {
 </script>
 
 <style scoped>
-#goService:hover{
+#appTitle{
+  font-family: 'Baloo Paaji', cursive;
+  font-size: 60px;
+  margin-top: 30px;
+  margin-bottom:50px;
+  color: rgba(111, 15, 13);
+  transition: text-shadow 3s ease, color 2s ease;  
+}
+
+#appTitle.on{
+  color: #11436a;
+  text-shadow: #d5ad5899 3.125px 3.98px;
+}
+
+.appSubTitle{
+  font-family: "LotteMartDream";
+  font-size:45px;
+}
+
+.v-tabs__item.v-tabs__item--active{
+  font-family: "LotteMartDream";
+  font-weight: bold;
+}
+
+.appSubContents{
+  font-family: "LotteMartDream";
+  font-size:20px;
+}
+
+#appContainer{
+  max-width: 1400px;
+  width: 1400px;
+  height: 570px;
+}
+
+.functionImage{
+  position: absolute;
+  z-index:10; 
+  left:825px;
+  bottom:290px;
+  width:565px;
+  height:288px;
+}
+
+#firstImage{
+  opacity:0;
+  margin-left:-10px;
+  max-width:100%;
+}
+
+#secondImage{
+  opacity:0;
+  margin-left:-10px;
+  max-width:100%;
+}
+
+
+/* #goService:hover{
   margin-left:10px;
   margin-bottom:10px;
   left:10%;
@@ -78,5 +149,23 @@ export default {
     50% {
         transform: translateX(-60px);
     }
+} */
+
+/* #structure{
+  opacity:0;
+  margin-left:-300px;
+  max-width:100%; */
+/* } */
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
+
 </style>
