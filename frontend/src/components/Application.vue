@@ -3,20 +3,23 @@
       <h1 id="appTitle">APPLICATION</h1>
       <v-container fluid id="appContainer">
         <v-layout row wrap>
-          
           <v-flex xs6>
             <h1>드론 이제 FinDrone으로 쉬워집니다.</h1>
-                <v-tabs fixed-tabs>
+                <v-tabs fixed-tabs v-model="active">
                   <v-tab v-for="(service,index) in services" :key="index" ripple>{{service.card_title}}</v-tab>
 
-                  <v-tab-item v-for="(service,index) in services" :key="index">
+                  <v-tab-item v-for="(service,index) in services" :key="index" >
                     <h1>{{ service.card_text }}</h1>
                   </v-tab-item>
-                </v-tabs>            
+                </v-tabs>
           </v-flex>
 
+            <v-img id="firstImage" class="functionImage" :src='getImgUrl("monitoring.gif")' contain></v-img>
+            <v-img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain></v-img>
+            
           <v-flex xs6>
-            <img src="../assets/monitor.jpg" contain style="width:700px;height:500px"/>  
+            <!-- <v-img class="functionImage" :src="services[active].src" contain></v-img> -->
+            <img src="../assets/monitor.jpg" contain style="width:600px;height:400px"/>  
           </v-flex>
           
         </v-layout>
@@ -26,9 +29,12 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
     data() {
     return {
+      active:'0',
       services: [
         {
           src: this.getImgUrl("monitoring.gif"),
@@ -44,6 +50,20 @@ export default {
       ]
     };
   },
+  watch:{
+    active:function(){
+      switch(this.active){
+        case 0:
+          $('#secondImage').animate({'opacity':'0','margin-left':'10px'},1000);
+          $('#firstImage').animate({'opacity':'1','margin-left':'0px'},1000);
+          break;
+        case 1:
+          $('#firstImage').animate({'opacity':'0','margin-left':'10px'},1000);
+          $('#secondImage').animate({'opacity':'1','margin-left':'0px'},1000);
+          break;
+      }
+    }
+  },
   methods: {
     getImgUrl(img) {
       return require("../assets/" + img);
@@ -56,8 +76,8 @@ export default {
 #appTitle{
   font-family: 'Baloo Paaji', cursive;
   font-size: 60px;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 30px;
+  margin-bottom:50px;
 }
 
 #appContainer{
@@ -66,6 +86,26 @@ export default {
   height: 570px;
 }
 
+.functionImage{
+  position: absolute;
+  z-index:10; 
+  left:840px;
+  bottom:270px;
+  width:500px;
+  height:310px;
+}
+
+#firstImage{
+  opacity:0;
+  margin-left:-10px;
+  max-width:100%;
+}
+
+#secondImage{
+  opacity:0;
+  margin-left:-10px;
+  max-width:100%;
+}
 
 
 /* #goService:hover{
@@ -88,4 +128,22 @@ export default {
         transform: translateX(-60px);
     }
 } */
+
+/* #structure{
+  opacity:0;
+  margin-left:-300px;
+  max-width:100%; */
+/* } */
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 </style>
