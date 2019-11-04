@@ -48,11 +48,9 @@ drones = [
 def get_find_area():
     for drone in drones :
         if drone["isFind"]:
-            drone.__setitem__("isFind",True)
             return jsonify(drone)
-    # drones[1].__setitem__("isFind", True)
-    # return jsonify(drones[1])
     return jsonify({"isFind": False})
+
 
 @app.route('/api/droneUpdate', methods=['GET', 'POST'])
 def update_drone():
@@ -85,17 +83,6 @@ def update_drone():
 
 @app.route('/api/getInfo')
 def get_Info():
-    # response = {
-    #     'iter0': drones[0].get('iter'),
-    #     'iter1': drones[1].get('iter'),
-    #     'iter2': drones[2].get('iter'),
-    #     'pos0' : [drones[0].get('x'), drones[0].get('y'), drones[0].get('z')],
-    #     'pos1' : [drones[1].get('x'), drones[1].get('y'), drones[1].get('z')],
-    #     'pos2' : [drones[2].get('x'), drones[2].get('y'), drones[2].get('z')],
-    #     'find0' : drones[0].get('isFind'),
-    #     'find1' : drones[1].get('isFind'),
-    #     'find2' : drones[2].get('isFind')        
-    # }
     response = {}
     for i in range(0, 3) :
         response.__setitem__('iter{}'.format(i), drones[i].get('iter'))

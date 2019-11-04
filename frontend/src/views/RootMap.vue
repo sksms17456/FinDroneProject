@@ -1,12 +1,12 @@
 <template>
     <div>
         <div class="float" style="height:864px;">
-            <img id="img" src="../assets/noDroneMap.jpg" style="height: 864px; width:1110px; position:absolute;">
+            <img id="img" src="../assets/noDroneMap.jpg" style="height:864px; width:1110px; position:absolute;">
             <canvas id="myCanvas" width="1110px" height="864px" style=" position:absolute; z-index:2;">
                 Your browser does not support the canvas element.
             </canvas>
         </div>
-        <div style="width: 635px;height:864px; width:426px;float:right; background:black;">
+        <div style="width:635px; height:864px; width:426px; float:right; background:black;">
             <v-item-group style="height:568px;">
                 <v-container grid-list-md style="width:inherit; height:inherit;">
                     <v-layout wrap class="align-center justify-center">
@@ -44,10 +44,10 @@
             </v-item-group>
             <div style="background:black; height:296px; text-align:center; padding-top:100px;">
                 <v-btn to="/central" class="button" flat>
-                    <img src = "../assets/centralIcon.png" style="width:80px; height:80px;">
+                    <img src = "../assets/centralIcon.png" class="buttonImg">
 				</v-btn>				
                 <v-btn to="/home" class="button" flat>
-					<img src = "../assets/homeIcon.png" style="width:80px; height:80px;">
+					<img src = "../assets/homeIcon.png" class="buttonImg">
 				</v-btn>
             </div>
         </div>
@@ -126,7 +126,6 @@ export default {
                     ctx.strokeStyle = "blue";
                     ctx.rect((669.86-curThis.drones[0].x)*curThis.scale - curThis.scale*10, (-31697.01-curThis.drones[0].y)*curThis.scale - curThis.scale*10, 180*curThis.scale, 180*curThis.scale);
                     ctx.stroke();
-                    
                     ctx.fillStyle = "rgba(0, 0, 255, 0.1)";
                     ctx.fillRect((669.86-curThis.drones[0].x)*curThis.scale - curThis.scale*10, (-31697.01-curThis.drones[0].y)*curThis.scale - curThis.scale*10, 180*curThis.scale, 180*curThis.scale);
                     
@@ -138,10 +137,9 @@ export default {
                                 ctx.beginPath();
                                 ctx.strokeStyle = "green";
                                 ctx.arc((pos[0]-curThis.drones[0].x)*curThis.scale, (pos[1]-curThis.drones[0].y)*curThis.scale, 35.35*curThis.scale, 50, Math.PI*2, true);
+                                ctx.stroke();
                                 ctx.fillStyle = "rgba(0,255,0,0.1)";
                                 ctx.fill();
-                                ctx.stroke();
-                                console.log(pos)
                             }
                         })
                         .catch(error => {
@@ -149,16 +147,16 @@ export default {
                         })
 
                     if(document.getElementsByClassName('error').length>0){
+                        var idx = document.getElementsByClassName('error')[0].firstChild.firstChild.textContent.substring(7,8);
                         ctx.beginPath();
                         ctx.strokeStyle = "red";
-                        var idx = document.getElementsByClassName('error')[0].firstChild.firstChild.textContent.substring(7,8);
                         ctx.arc((curThis.drones[idx].x-curThis.drones[0].x)*curThis.scale + 4, (curThis.drones[idx].y-curThis.drones[0].y)*curThis.scale + 4, 50, 50, Math.PI*2, true);
+                        ctx.stroke();
                         ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
                         ctx.fill();
-                        ctx.stroke();
                     }
                 }); 
-            }, 500)
+            }, 1000)
         },
         drawCanvas(){
             var curThis = this;
@@ -180,6 +178,10 @@ export default {
     padding: 0px;
     margin-left: 50px;
     margin-right: 50px;
+}
+.buttonImg{
+    width: 80px;
+    height: 80px;
 }
 .iconClass{
     font-size:60px;

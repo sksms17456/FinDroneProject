@@ -3,13 +3,13 @@
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
 				<v-btn to="/home" class="button" flat>
-					<img src = "../assets/homeIcon.png" style="width:45px; height:45px;">
+					<img src = "../assets/homeIcon.png" class="buttonImg">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
 				<v-btn to="/rootmap" class="button" flat>
-                    <img src = "../assets/mapIcon.png" style="width:45px; height:45px;">
+                    <img src = "../assets/mapIcon.png" class="buttonImg">
 				</v-btn>				
 			</div>
 			<div style="height:628px">
@@ -25,7 +25,7 @@
 				<div class="dronePos divcolor">{{target.y_pos}} </div>
 				<div class="dronePos divcolor">{{target.z_pos}} </div>
 			</div>
-			<div style="text-align: -webkit-center; padding-top:15px; background:linear-gradient(50deg, black, transparent);">
+			<div style="text-align:-webkit-center; padding-top:15px; background:linear-gradient(50deg, black, transparent);">
 				<img src='../assets/logoText.png'
 				width="500px"
 				height="124px"
@@ -58,7 +58,6 @@ export default {
     data(){
         return{
 			mapImg: 'mappin.gif',
-			// dialog:false,
 			target : {
 				idx : 1,
 				x_pos : 0,
@@ -142,7 +141,7 @@ export default {
 					.then(response => {
 						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
 						const pos = [response.data.pos0, response.data.pos1, response.data.pos2]
-						// const find = [response.data.find0, response.data.find1, response.data.find2]
+						const find = [response.data.find0, response.data.find1, response.data.find2]
 						for(var i=0; i<3; i++){
 							curThis.table[i*6+1] = String(pos[i][0]);
 							curThis.table[i*6+2] = String(pos[i][1]);
@@ -344,6 +343,11 @@ a {
     height: 42px;
     padding: 0px;
 	min-width: 42px;
+}
+
+.buttonImg{
+	width: 45px;
+	height: 45px;
 }
 
 .element {
