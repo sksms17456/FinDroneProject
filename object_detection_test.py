@@ -20,7 +20,7 @@ from drone_object_detection import object_detector
 detector = object_detector.Detector()
 
 # connect to the AirSim simulator
-# client = airsim.MultirotorClient(ip='70.12.247.59')
+# client = airsim.MultirotorClient(ip='70.12.247.73')
 client = airsim.MultirotorClient()
 client.confirmConnection()
 client.enableApiControl(True)
@@ -40,7 +40,7 @@ cv2.startWindowThread()
 def frame_generator(sec):
   x = 1
   y = 1
-  z = -1.0
+  z = -2.0
   v = 0.3
   x_base = 0
   y_base = 0
@@ -81,7 +81,11 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+<<<<<<< HEAD
 frame_generator(30)
+=======
+frame_generator(100)
+>>>>>>> 484bfa5d51bdad1b092aa56182c30cedb30ace66
 client.reset()
 client.enableApiControl(False)
  
