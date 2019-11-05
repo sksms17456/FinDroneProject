@@ -12,16 +12,18 @@ from drone_object_detection.utils import visualization_utils as vis_util
 # Model preparation
 # What model to download.
 OS_PATH = os.path.dirname(__file__)
-MODEL_NAME = OS_PATH + '/ssd_mobilenet_v1_coco_2017_11_17'
+# MODEL_NAME = OS_PATH + '/ssd_mobilenet_v1_coco_2017_11_17'
+MODEL_NAME = OS_PATH + '/export_dir/faster_rcnn_inception_v2_coco_2018_01_28'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
-PATH_TO_LABELS = OS_PATH + '/data/mscoco_label_map.pbtxt'
+# PATH_TO_LABELS = OS_PATH + '/data/mscoco_label_map.pbtxt'
+PATH_TO_LABELS = OS_PATH + '/data/label_map.pbtxt'
 
 # Using more UPU memory
-GPU_config = tf.ConfigProto()
+GPU_config = tf.compat.v1.ConfigProto()
 GPU_config.gpu_options.allow_growth = True
 
 class Detector:
@@ -103,7 +105,7 @@ class Detector:
             instance_masks=output_dict.get('detection_masks'),
             use_normalized_coordinates=True,
             line_thickness=2,
-            min_score_thresh=0.8,
+            min_score_thresh=0.5,
             target_class=target_class_input
         )
         output_dict['image'] = image

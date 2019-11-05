@@ -34,7 +34,7 @@ time.sleep(0.8)
 # CAMERA_NAME = '0' # 정면
 CAMERA_NAME = '3' # 아래
 IMAGE_TYPE = airsim.ImageType.Scene
-target_class = 'person'
+target_class = 'missingPerson'
 
 cv2.startWindowThread()
 def frame_generator(sec):
@@ -81,7 +81,7 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-frame_generator(20)
+frame_generator(30)
 client.reset()
 client.enableApiControl(False)
  
