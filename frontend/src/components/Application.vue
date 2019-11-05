@@ -18,7 +18,6 @@
             <img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain />
             
           <v-flex xs6>
-            <!-- <v-img class="functionImage" :src="services[active].src" contain></v-img> -->
             <img :src='getImgUrl("monitor.jpg")' contain style="width:600px;height:400px"/>  
           </v-flex>
           
@@ -128,34 +127,6 @@ export default {
   margin-left:-10px;
   max-width:100%;
 }
-
-
-/* #goService:hover{
-  margin-left:10px;
-  margin-bottom:10px;
-  left:10%;
-  animation: bounceArrow 0.9s infinite ease-out;
-}
-
-@keyframes bounceArrow {
-    0%,
-    20%,
-    100% {
-        transform: translateX(-60px);
-    }
-    30% {
-        transform: translateX(-65px);
-    }
-    50% {
-        transform: translateX(-60px);
-    }
-} */
-
-/* #structure{
-  opacity:0;
-  margin-left:-300px;
-  max-width:100%; */
-/* } */
 
 @keyframes fadeInLeft {
     from {

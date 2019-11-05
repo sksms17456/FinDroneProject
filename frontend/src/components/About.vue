@@ -69,7 +69,12 @@
                     <h1>{{elem.name}}</h1>
                     <h4>{{elem.discription}}</h4><br/>
 
-                    <p>{{elem.position}}</p>
+                    <p>{{elem.position}}</p> <br/>
+                    <span>
+                      더 알아보기
+                    </span>
+                      <i class="fas fa-arrow-right moreInfo"></i>
+                      <v-btn style="padding-right:150px" icon :link="elem.src"> <v-icon>fab fa-github</v-icon> </v-btn>
                   </v-container>
                 </v-flex>
               </v-layout>
@@ -396,6 +401,26 @@ mark {
   display: block;
   top: 4vh;
   left: 25vw;
+}
+
+.moreInfo{
+  margin-left:90px;
+  margin-top:20px;
+  animation: bounceArrow 0.9s infinite ease-out;
+}
+
+@keyframes bounceArrow {
+    0%,
+    20%,
+    100% {
+        transform: translateX(-60px);
+    }
+    30% {
+        transform: translateX(-65px);
+    }
+    50% {
+        transform: translateX(-60px);
+    }
 }
 
 @keyframes fade_in {
