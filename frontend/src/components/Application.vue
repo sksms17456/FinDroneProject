@@ -39,12 +39,12 @@ export default {
           src: this.getImgUrl("monitoring.gif"),
           card_title: "수색 현장 모니터링",
           card_text:
-            "수색하고 있는 드론의 화면을 웹상에서 간편하게 볼 수 있습니다."
+            "수색하고 있는 드론의 화면을 실시간으로 웹상에서 간편하게 볼 수 있습니다."
         },
         {
           src: this.getImgUrl("mappin.gif"),
-          card_title: "타겟 위치 변화 시각화",
-          card_text: "지정한 타겟이 이동하는 위치를 쉽게 파악할 수 있습니다."
+          card_title: "드론 위치 변화 시각화",
+          card_text: "운용되고 있는 드론들이 이동하는 위치를 쉽게 파악할 수 있습니다."
         }
       ]
     };
