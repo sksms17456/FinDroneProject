@@ -155,7 +155,7 @@ export default {
 							if(find[i]){
 								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
 							}else {
-								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,0.8)';
 							}
 						}
 						var idx = curThis.target.idx;
@@ -177,7 +177,6 @@ export default {
 			for ( var i = 0; i < this.table.length; i += 6 ) {
 				var element = document.createElement( 'div' );
 				element.className = 'element ' + String(( i / 6) + 1);
-				// element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
 				if(i<18){
 					element.style.backgroundColor = 'rgba(0,127,127,0.8)';
 				}else{

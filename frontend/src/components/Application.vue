@@ -14,7 +14,7 @@
                 </v-tabs>
           </v-flex>
 
-            <img id="firstImage" class="functionImage" :src= 'getImgUrl("monitoring.gif")' contain />
+            <img id="firstImage" class="functionImage" :src='getImgUrl("monitoring.gif")' contain />
             <img id="secondImage" class="functionImage" :src='getImgUrl("mappin.gif")' contain />
             
           <v-flex xs6>
