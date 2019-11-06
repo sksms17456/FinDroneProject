@@ -168,11 +168,11 @@ class Drone():
         response_image = self.drone.simGetImage(cameraNum, self.IMAGE_TYPE, vehicle_name = self.name)
         decoded_frame = imdecode(np.asarray(bytearray(response_image), dtype="uint8"), IMREAD_COLOR)
 
-        resize_img = cv2.resize(decoded_frame, dsize=(256, 192), interpolation=cv2.INTER_CUBIC)
+        self.aiResult = detector.run_object_detector(decoded_frame, target)
+
+        resize_img = cv2.resize(self.aiResult['image'], dsize=(256, 192), interpolation=cv2.INTER_CUBIC)
         encoded_resize_img = cv2.imencode(".png", resize_img)
         self.request_img = np.asarray(bytearray(encoded_resize_img[1]), dtype="uint8")
-
-        self.aiResult = detector.run_object_detector(decoded_frame, target)
 
         if self.isFind:
             if self.aiResult["target_finded"]:
@@ -209,7 +209,7 @@ class Drone():
             "iter":i
         }
 
-        res = requests.post('http://70.12.247.45:5000/api/droneUpdate', data=datas)
+        res = requests.post('http://70.12.247.73:5000/api/droneUpdate', data=datas)
         self.serverRes = res.json()["list"]
 
     def getNowPosition(self):
