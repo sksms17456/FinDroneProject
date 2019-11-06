@@ -13,13 +13,11 @@ from drone_object_detection.utils import visualization_utils as vis_util
 # What model to download.
 OS_PATH = os.path.dirname(__file__)
 MODEL_NAME = OS_PATH + '/export_dir/ssd_mobilenet_v2_coco_2018_03_29'
-# MODEL_NAME = OS_PATH + '/export_dir/faster_rcnn_inception_v2_coco_2018_01_28'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
 
 # List of the strings that is used to add correct label for each box.
-# PATH_TO_LABELS = OS_PATH + '/data/mscoco_label_map.pbtxt'
 PATH_TO_LABELS = OS_PATH + '/data/label_map.pbtxt'
 
 # Using more UPU memory
