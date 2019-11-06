@@ -54,7 +54,7 @@ MAX_MOVE_LENGTH = 5
 
 # 캡쳐에 쓰일 변수
 CAMERA_NAME = '3' # 아래
-TARGET = "person"
+TARGET = "missingPerson"
 
 # Object Detect 객체 생성
 detector = object_detector.Detector()
@@ -88,7 +88,7 @@ class Drone():
         self.subRouteLen = 0
         self.nowSubRouteNum = 0
 
-        self.drone = airsim.MultirotorClient(ip="70.12.247.112")
+        self.drone = airsim.MultirotorClient(ip="70.12.247.95")
         self.drone.confirmConnection()
     
     def takeoff(self):
