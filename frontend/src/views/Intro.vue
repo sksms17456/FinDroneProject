@@ -3,7 +3,7 @@
     <v-layout row wrap style="height:60vh">
     </v-layout>
     
-    <v-layout row wrap style="height:30vh">
+    <v-layout row wrap style="height:30vh" id="playIntro">
         <v-layout row wrap style="vertical-align-mid">
             <v-flex mb-4 px-5 xs5>
                 <v-img :src="getImgUrl('launch_drone.png')" contain style="height:100px;widht:100px" ></v-img>
@@ -71,9 +71,12 @@ export default {
         },
         goHome(){
             var self= this;
-            $('#introPage').css("background-image", "url("+self.getImgUrl('sample3.gif')+")")
+            $('#introPage').css("background-image", "url("+self.getImgUrl('introplay.gif')+")")
             .css("background-size","cover");
-            setTimeout(function() {self.$emit('goHome','')}, 3000);
+            $('#playIntro').css('display','none');
+            setTimeout(function() {
+                self.$emit('goHome',''); 
+            }, 13000);
         },
         toggleFullScreen() {
           if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
@@ -104,7 +107,7 @@ export default {
 
 <style>
 #introPage{
-    background: url('../assets/sample2.png') center;
+    background: url('../assets/realLogo.png') center;
     background-size:cover;
 }
 .container {
