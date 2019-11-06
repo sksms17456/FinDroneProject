@@ -2,19 +2,19 @@
 	<div>
 		<div style="width:50%; float:left;">
 			<div class="droneName divcolor" style="height:10%">
-				<v-btn to="/home" style="width:50px; margin-bottom:16px;" flat>
-					<v-icon class="iconClass" >fas fa-home</v-icon>
+				<v-btn to="/home" class="buttons" flat>
+					<img :src='getImgUrl("homeIcon.png")' class="buttonImg">
 				</v-btn>
 				<div style="width:500px; display:inline-block;">
 					Drone-{{target.idx}}
 				</div>
-				<v-btn to="/rootmap" style="width:50px; margin-bottom:16px;" flat>
-					<v-icon class="iconClass">fas fa-map-marked-alt</v-icon>
+				<v-btn to="/rootmap" class="buttons" flat>
+                    <img :src='getImgUrl("mapIcon.png")' class="buttonImg">
 				</v-btn>				
 			</div>
 			<div style="height:628px">
 				<img
-				src='../assets/detect.png'
+				:src='getImgUrl("detect.png")'
 				id="screen_img"
 				width="100%"
 				height="100%"
@@ -24,6 +24,12 @@
 				<div class="dronePos divcolor">{{target.x_pos}} </div>
 				<div class="dronePos divcolor">{{target.y_pos}} </div>
 				<div class="dronePos divcolor">{{target.z_pos}} </div>
+			</div>
+			<div style="text-align:-webkit-center; padding-top:15px; background:linear-gradient(50deg, black, transparent);">
+				<img :src='getImgUrl("logoText.png")'
+				width="500px"
+				height="124px"
+				>
 			</div>
 		</div>
 
@@ -48,11 +54,10 @@ import axios from 'axios'
 import $ from 'jquery'
 
 export default {
-    name:'MultiMonitor',
+    name:'Central',
     data(){
         return{
 			mapImg: 'mappin.gif',
-			// dialog:false,
 			target : {
 				idx : 1,
 				x_pos : 0,
@@ -131,7 +136,7 @@ export default {
 		getImgUrlFromBack(){
 			var curThis = this
 			this.polling = setInterval(() => {
-				const path = `/api/getImg`
+				const path = `/api/getInfo`
 					axios.get(path)
 					.then(response => {
 						const contain = [response.data.iter0, response.data.iter1, response.data.iter2]
@@ -150,7 +155,7 @@ export default {
 							if(find[i]){
 								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = "darkred";
 							}else {
-								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+								document.getElementsByClassName('element '+String(i+1))[0].style.backgroundColor = 'rgba(0,127,127,0.8)';
 							}
 						}
 						var idx = curThis.target.idx;
@@ -165,14 +170,18 @@ export default {
 		},
         init() {
 			this.camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
-			this.camera.position.z = 1600
+			this.camera.position.z = 1800
             this.scene = new THREE.Scene();
             var self= this;
 				// table
 			for ( var i = 0; i < this.table.length; i += 6 ) {
 				var element = document.createElement( 'div' );
-				element.className = 'element' + String(( i / 6) + 1);
-                element.style.backgroundColor = 'rgba(0,127,127,' + ( Math.random() * 0.5 + 0.25 ) + ')';
+				element.className = 'element ' + String(( i / 6) + 1);
+				if(i<18){
+					element.style.backgroundColor = 'rgba(0,127,127,0.8)';
+				}else{
+					element.style.backgroundColor = 'rgba(0,127,127,0.1)';
+				}
 
 				var number = document.createElement( 'div' );
 				number.className = 'number';
@@ -319,7 +328,7 @@ export default {
 </script>
 		
 
-<style scoped>
+<style>
 #container{
     background-color:black;
 }
@@ -332,6 +341,17 @@ a {
     bottom: 20px;
 	width: 100%;
 	text-align: center;
+}
+
+.buttons{
+    height: 42px;
+    padding: 0px;
+	min-width: 42px;
+}
+
+.buttonImg{
+	width: 45px;
+	height: 45px;
 }
 
 .element {
