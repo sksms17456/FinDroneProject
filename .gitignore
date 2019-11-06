@@ -26,7 +26,12 @@ images
 /tensorflow
 
 # Cache
+drone_object_detection/object_detection/__pycache__
 drone_object_detection/__pycache__
 drone_object_detection/core/__pycache__
 drone_object_detection/utils/__pycache__
+drone_object_detection/train_dir
+drone_object_detection/eval_dir
+drone_object_detection/model_zoo
+drone_object_detection/export_dir/saved_model
 util/__pycache__

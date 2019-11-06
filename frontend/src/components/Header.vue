@@ -39,6 +39,7 @@
 
 <script>
 import $ from "jquery";
+import { eventBus } from '../main'
 
 export default {
   name: 'mainHeader',
@@ -52,6 +53,7 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      eventBus.$emit("goToMenu",'home');
     },
     toAbout() {
       window.scrollTo({
@@ -59,6 +61,7 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      eventBus.$emit("goToMenu",'about');
     },
     toSystem() {
       window.scrollTo({
@@ -66,6 +69,7 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      eventBus.$emit("goToMenu",'system');
     },
     toService() {
       window.scrollTo({
@@ -73,6 +77,7 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      eventBus.$emit("goToMenu",'service');
     },
     toApplication() {
       window.scrollTo({
@@ -80,6 +85,7 @@ export default {
           left: 0,
           behavior: "smooth"
       });
+      eventBus.$emit("goToMenu",'application');
     },
     onScroll() {
       this.offsetTop = window.scrollY;

@@ -67,3 +67,122 @@
 [INFO|main.py:92] 2019-10-28 17:44:55,609 > Program start [ model : ssd_mobilenet_v2_coco_2018_03_29, num steps : 50000 ]
 [INFO|main.py:24] 2019-10-28 17:44:55,621 > Transfer learning start
 [ERROR|main.py:37] 2019-10-28 17:47:43,974 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 09:40:41,525 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 4000 ]
+[INFO|main.py:24] 2019-11-06 09:40:41,528 > Transfer learning start
+[ERROR|main.py:37] 2019-11-06 09:40:55,367 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 09:41:53,853 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 4000 ]
+[INFO|main.py:24] 2019-11-06 09:41:53,856 > Transfer learning start
+[ERROR|main.py:37] 2019-11-06 09:43:20,625 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 09:43:36,344 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 200 ]
+[INFO|main.py:24] 2019-11-06 09:43:36,346 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 09:50:15,588 > Transfer learning Success [ Total learning time : 0 Hour 6 Minute 39 Second ]
+[INFO|main.py:64] 2019-11-06 09:50:15,588 > Evaluate model start [ Step number : 200 ]
+[ERROR|main.py:74] 2019-11-06 09:51:58,106 > Evaluate Model Error
+[INFO|main.py:92] 2019-11-06 09:54:39,572 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 100 ]
+[INFO|main.py:24] 2019-11-06 09:54:39,574 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 09:55:09,539 > Transfer learning Success [ Total learning time : 0 Hour 0 Minute 29 Second ]
+[INFO|main.py:64] 2019-11-06 09:55:09,539 > Evaluate model start [ Step number : 100 ]
+[ERROR|main.py:74] 2019-11-06 09:56:49,576 > Evaluate Model Error
+[INFO|main.py:92] 2019-11-06 09:57:32,412 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 100 ]
+[INFO|main.py:24] 2019-11-06 09:57:32,414 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 09:58:03,737 > Transfer learning Success [ Total learning time : 0 Hour 0 Minute 31 Second ]
+[INFO|main.py:119] 2019-11-06 09:58:03,738 > Program end [ Total time : 0 Hour 0 Minute 31 Second ]
+[INFO|main.py:120] 2019-11-06 09:58:03,738 > 
+[INFO|tfgenerator.py:168] 2019-11-06 10:10:16,423 > TF Record Generator Start
+[INFO|tfgenerator.py:168] 2019-11-06 10:13:25,039 > TF Record Generator Start
+[INFO|tfgenerator.py:168] 2019-11-06 10:14:53,211 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 10:14:53,274 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 10:14:53,274 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 10:14:53,274 >     1        missingPerson       557       140    
+[INFO|tfgenerator.py:201] 2019-11-06 10:14:54,004 > TF Record Generator End [ Total Generator time : 0 Hour 0 Minute 0 Second ]
+[INFO|main.py:92] 2019-11-06 10:15:16,536 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 100 ]
+[INFO|main.py:24] 2019-11-06 10:15:16,538 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 10:18:58,584 > Transfer learning Success [ Total learning time : 0 Hour 3 Minute 42 Second ]
+[INFO|main.py:119] 2019-11-06 10:18:58,584 > Program end [ Total time : 0 Hour 3 Minute 42 Second ]
+[INFO|main.py:120] 2019-11-06 10:18:58,584 > 
+[INFO|main.py:92] 2019-11-06 10:19:49,385 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 50 ]
+[INFO|main.py:24] 2019-11-06 10:19:49,387 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 10:20:18,454 > Transfer learning Success [ Total learning time : 0 Hour 0 Minute 29 Second ]
+[INFO|main.py:45] 2019-11-06 10:20:18,454 > Export model start
+[ERROR|main.py:58] 2019-11-06 10:20:26,027 > Export Model Error
+[INFO|main.py:92] 2019-11-06 10:20:56,819 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 150 ]
+[INFO|main.py:24] 2019-11-06 10:20:56,821 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 10:22:50,883 > Transfer learning Success [ Total learning time : 0 Hour 1 Minute 54 Second ]
+[INFO|main.py:45] 2019-11-06 10:22:50,883 > Export model start
+[INFO|main.py:60] 2019-11-06 10:23:01,552 > Export model Success
+[INFO|main.py:119] 2019-11-06 10:23:01,552 > Program end [ Total time : 0 Hour 2 Minute 4 Second ]
+[INFO|main.py:120] 2019-11-06 10:23:01,552 > 
+[INFO|main.py:92] 2019-11-06 10:25:11,091 > Program start [ model : ssd_mobilenet_v2_coco_2018_03_29, num steps : 200 ]
+[INFO|utils.py:79] 2019-11-06 10:25:11,091 > ssd_mobilenet_v2_coco_2018_03_29 Model not Exist. Download start
+[INFO|utils.py:110] 2019-11-06 10:25:44,164 > ssd_mobilenet_v2_coco_2018_03_29 Download success
+[INFO|main.py:24] 2019-11-06 10:25:44,183 > Transfer learning start
+[ERROR|main.py:37] 2019-11-06 10:29:44,309 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 10:30:22,103 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 200 ]
+[INFO|main.py:24] 2019-11-06 10:30:22,106 > Transfer learning start
+[ERROR|main.py:37] 2019-11-06 10:30:30,724 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 10:30:42,017 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 300 ]
+[INFO|main.py:24] 2019-11-06 10:30:42,020 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 10:41:40,254 > Transfer learning Success [ Total learning time : 0 Hour 10 Minute 58 Second ]
+[INFO|main.py:45] 2019-11-06 10:41:40,255 > Export model start
+[INFO|main.py:60] 2019-11-06 10:41:52,457 > Export model Success
+[INFO|main.py:119] 2019-11-06 10:41:52,458 > Program end [ Total time : 0 Hour 11 Minute 10 Second ]
+[INFO|main.py:120] 2019-11-06 10:41:52,458 > 
+[INFO|tfgenerator.py:168] 2019-11-06 10:52:32,616 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 10:52:32,691 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 10:52:32,691 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 10:52:32,691 >     1        missingPerson       617       155    
+[INFO|tfgenerator.py:201] 2019-11-06 10:52:33,706 > TF Record Generator End [ Total Generator time : 0 Hour 0 Minute 1 Second ]
+[INFO|main.py:92] 2019-11-06 10:52:42,916 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 300 ]
+[INFO|main.py:24] 2019-11-06 10:52:42,921 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 11:02:48,658 > Transfer learning Success [ Total learning time : 0 Hour 10 Minute 5 Second ]
+[INFO|main.py:45] 2019-11-06 11:02:48,658 > Export model start
+[INFO|main.py:60] 2019-11-06 11:02:59,979 > Export model Success
+[INFO|main.py:119] 2019-11-06 11:02:59,979 > Program end [ Total time : 0 Hour 10 Minute 17 Second ]
+[INFO|main.py:120] 2019-11-06 11:02:59,979 > 
+[INFO|tfgenerator.py:168] 2019-11-06 11:04:57,493 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 11:04:57,613 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 11:04:57,613 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 11:04:57,613 >     1        missingPerson       639       160    
+[INFO|main.py:92] 2019-11-06 11:05:53,394 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 2000 ]
+[INFO|main.py:24] 2019-11-06 11:05:53,398 > Transfer learning start
+[ERROR|main.py:37] 2019-11-06 11:26:27,347 > Transfer leaarning Error
+[INFO|main.py:92] 2019-11-06 11:26:35,077 > Program start [ model : faster_rcnn_inception_v2_coco_2018_01_28, num steps : 700 ]
+[INFO|main.py:24] 2019-11-06 11:26:35,081 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 11:28:37,809 > Transfer learning Success [ Total learning time : 0 Hour 2 Minute 2 Second ]
+[INFO|main.py:45] 2019-11-06 11:28:37,810 > Export model start
+[INFO|main.py:60] 2019-11-06 11:28:49,176 > Export model Success
+[INFO|main.py:119] 2019-11-06 11:28:49,177 > Program end [ Total time : 0 Hour 2 Minute 14 Second ]
+[INFO|main.py:120] 2019-11-06 11:28:49,177 > 
+[INFO|main.py:92] 2019-11-06 11:31:49,373 > Program start [ model : ssd_mobilenet_v2_coco_2018_03_29, num steps : 200 ]
+[INFO|utils.py:79] 2019-11-06 11:31:49,373 > ssd_mobilenet_v2_coco_2018_03_29 Model not Exist. Download start
+[INFO|utils.py:110] 2019-11-06 11:32:22,714 > ssd_mobilenet_v2_coco_2018_03_29 Download success
+[INFO|main.py:24] 2019-11-06 11:32:22,733 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 12:01:37,106 > Transfer learning Success [ Total learning time : 0 Hour 29 Minute 14 Second ]
+[INFO|main.py:45] 2019-11-06 12:01:37,106 > Export model start
+[INFO|main.py:60] 2019-11-06 12:01:47,784 > Export model Success
+[INFO|main.py:119] 2019-11-06 12:01:47,784 > Program end [ Total time : 0 Hour 29 Minute 58 Second ]
+[INFO|main.py:120] 2019-11-06 12:01:47,784 > 
+[INFO|tfgenerator.py:168] 2019-11-06 12:09:27,392 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 12:09:27,488 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 12:09:27,488 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 12:09:27,488 >     1        missingPerson       639       160    
+[INFO|tfgenerator.py:168] 2019-11-06 12:09:41,122 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 12:09:41,212 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 12:09:41,213 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 12:09:41,213 >     1        missingPerson       639       160    
+[INFO|tfgenerator.py:168] 2019-11-06 12:10:06,024 > TF Record Generator Start
+[INFO|tfgenerator.py:21] 2019-11-06 12:10:06,119 >                 TF Record Summary                 
+[INFO|tfgenerator.py:22] 2019-11-06 12:10:06,119 >     ID            NAME          Train    Validate 
+[INFO|tfgenerator.py:24] 2019-11-06 12:10:06,120 >     1        missingPerson       639       160    
+[INFO|main.py:92] 2019-11-06 12:12:30,383 > Program start [ model : ssd_mobilenet_v2_coco_2018_03_29, num steps : 100 ]
+[INFO|main.py:24] 2019-11-06 12:12:30,386 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 12:13:45,255 > Transfer learning Success [ Total learning time : 0 Hour 1 Minute 14 Second ]
+[INFO|main.py:45] 2019-11-06 12:13:45,255 > Export model start
+[ERROR|main.py:58] 2019-11-06 12:13:53,354 > Export Model Error
+[INFO|main.py:92] 2019-11-06 12:15:26,241 > Program start [ model : ssd_mobilenet_v2_coco_2018_03_29, num steps : 250 ]
+[INFO|main.py:24] 2019-11-06 12:15:26,244 > Transfer learning start
+[INFO|main.py:41] 2019-11-06 12:23:23,334 > Transfer learning Success [ Total learning time : 0 Hour 7 Minute 57 Second ]
+[INFO|main.py:45] 2019-11-06 12:23:23,334 > Export model start
+[INFO|main.py:60] 2019-11-06 12:23:33,994 > Export model Success
+[INFO|main.py:119] 2019-11-06 12:23:33,994 > Program end [ Total time : 0 Hour 8 Minute 7 Second ]
+[INFO|main.py:120] 2019-11-06 12:23:33,994 > 
