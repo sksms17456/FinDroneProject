@@ -12,8 +12,8 @@ from drone_object_detection.utils import visualization_utils as vis_util
 # Model preparation
 # What model to download.
 OS_PATH = os.path.dirname(__file__)
-# MODEL_NAME = OS_PATH + '/ssd_mobilenet_v1_coco_2017_11_17'
-MODEL_NAME = OS_PATH + '/export_dir/faster_rcnn_inception_v2_coco_2018_01_28'
+MODEL_NAME = OS_PATH + '/export_dir/ssd_mobilenet_v2_coco_2018_03_29'
+# MODEL_NAME = OS_PATH + '/export_dir/faster_rcnn_inception_v2_coco_2018_01_28'
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
@@ -105,7 +105,7 @@ class Detector:
             instance_masks=output_dict.get('detection_masks'),
             use_normalized_coordinates=True,
             line_thickness=2,
-            min_score_thresh=0.5,
+            min_score_thresh=0.50,
             target_class=target_class_input
         )
         output_dict['image'] = image

@@ -60,7 +60,8 @@ export default {
                 opacity:1
                 }, 500, "linear");
             }else{
-                curSelf.goHome();
+              curSelf.toggleFullScreen()
+              curSelf.goHome();
             }
         });
     },
@@ -73,6 +74,29 @@ export default {
             $('#introPage').css("background-image", "url("+self.getImgUrl('sample3.gif')+")")
             .css("background-size","cover");
             setTimeout(function() {self.$emit('goHome','')}, 3000);
+        },
+        toggleFullScreen() {
+          if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+            if (document.body.requestFullScreen) {
+                document.body.requestFullScreen();
+            } else if (document.body.mozRequestFullScreen) {
+                document.body.mozRequestFullScreen();
+            } else if (document.body.webkitRequestFullScreen) {
+                document.body.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+            } else if (document.body.msRequestFullscreen) {
+                document.body.msRequestFullscreen();
+            }
+          } else {
+            if (document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+          }
         }
     }
 }

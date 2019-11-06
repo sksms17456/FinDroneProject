@@ -81,11 +81,8 @@ def frame_generator(sec):
       if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-<<<<<<< HEAD
-frame_generator(30)
-=======
 frame_generator(100)
->>>>>>> 484bfa5d51bdad1b092aa56182c30cedb30ace66
+
 client.reset()
 client.enableApiControl(False)
  

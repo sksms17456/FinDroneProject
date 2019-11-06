@@ -2,7 +2,3 @@ item {
   id: 1
   name: 'missingPerson'
 }
-item {
-  id: 2
-  name: 'fox'
-}

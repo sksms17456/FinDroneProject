@@ -104,11 +104,11 @@ def main():
         while tmp_num < num_steps:
             remake_config(model, tmp_num, args)
             transfer_learning(logger, model, args)
-            evaluate_model(logger, model, tmp_num)
+            # evaluate_model(logger, model, tmp_num)
             tmp_num += int(args['evaluate_number'])
         remake_config(model, num_steps, args)
         transfer_learning(logger, model, args)
-        evaluate_model(logger, model, num_steps)
+        # evaluate_model(logger, model, num_steps)
     else:
         remake_config(model, num_steps, args)
         transfer_learning(logger, model, args)
