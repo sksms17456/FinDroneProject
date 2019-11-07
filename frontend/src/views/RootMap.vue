@@ -119,9 +119,15 @@ export default {
                     var img = document.getElementById("img");
 
                     ctx.drawImage(img, 0, 0, curThis.mapWidth, curThis.mapHeight);
-                    ctx.fillStyle = "#FF0000";
                     for(var i=1; i<4; i++){
+                        ctx.beginPath();
+                        ctx.fillStyle = "#FF0000";
                         ctx.fillRect((curThis.drones[i].x-curThis.drones[0].x)*curThis.scale, (curThis.drones[i].y-curThis.drones[0].y)*curThis.scale, 8, 8);
+                        ctx.strokeStyle = "red";
+                        ctx.arc((curThis.drones[i].x-curThis.drones[0].x)*curThis.scale + 4, (curThis.drones[i].y-curThis.drones[0].y)*curThis.scale + 4, 50, 50, Math.PI*2, true);
+                        ctx.stroke();
+                        ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
+                        ctx.fill();
                     }
 
                     ctx.beginPath();
@@ -155,7 +161,7 @@ export default {
                         ctx.strokeStyle = "red";
                         ctx.arc((curThis.drones[idx].x-curThis.drones[0].x)*curThis.scale + 4, (curThis.drones[idx].y-curThis.drones[0].y)*curThis.scale + 4, 50, 50, Math.PI*2, true);
                         ctx.stroke();
-                        ctx.fillStyle = "rgba(255, 0, 0, 0.15)";
+                        ctx.fillStyle = "rgba(255, 0, 0, 0.4)";
                         ctx.fill();
                     }
                 }); 
