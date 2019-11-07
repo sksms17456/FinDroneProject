@@ -60,7 +60,7 @@ export default {
                 opacity:1
                 }, 500, "linear");
             }else{
-              curSelf.toggleFullScreen()
+            //   curSelf.toggleFullScreen()
               curSelf.goHome();
             }
         });
